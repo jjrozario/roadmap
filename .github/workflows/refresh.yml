@@ -1,0 +1,41 @@
+name: Refresh Gantt Dashboard
+
+on:
+  # Manual trigger only — go to Actions tab → "Refresh Gantt Dashboard" → Run workflow
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for refresh (optional)'
+        required: false
+        default: 'Manual refresh'
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch data from Linear
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+        run: node scripts/fetch-linear.js
+
+      - name: Build HTML dashboard
+        run: node scripts/build-html.js
+
+      - name: Commit and push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html gantt-data.json
+          git diff --staged --quiet || git commit -m "🔄 Refresh dashboard $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push

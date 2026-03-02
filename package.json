@@ -1,0 +1,13 @@
+{
+  "name": "supplied-gantt-dashboard",
+  "version": "1.0.0",
+  "description": "Supplied product roadmap — auto-refreshed from Linear",
+  "scripts": {
+    "fetch": "node scripts/fetch-linear.js",
+    "build": "node scripts/build-html.js",
+    "refresh": "node scripts/fetch-linear.js && node scripts/build-html.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
