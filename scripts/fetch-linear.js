@@ -74,20 +74,26 @@ const PROJECTS_QUERY = `
   }
 `;
 
+// Uses top-level issues query filtered by project ID — more reliable than nested project.issues
 const ISSUES_QUERY = `
-  query Issues($projectId: ID!, $after: String) {
-    project(id: $projectId) {
-      issues(first: 100, after: $after, filter: { archivedAt: { null: true } }) {
-        pageInfo { hasNextPage endCursor }
-        nodes {
-          id identifier title url
-          state { name }
-          priority
-          dueDate
-          createdAt
-          completedAt
-          assignee { name }
-        }
+  query Issues($projectId: String!, $after: String) {
+    issues(
+      first: 100,
+      after: $after,
+      filter: {
+        project: { id: { eq: $projectId } },
+        archivedAt: { null: true }
+      }
+    ) {
+      pageInfo { hasNextPage endCursor }
+      nodes {
+        id identifier title url
+        state { name }
+        priority
+        dueDate
+        createdAt
+        completedAt
+        assignee { name }
       }
     }
   }
@@ -146,7 +152,7 @@ async function main() {
     try {
       const issues = await fetchAll(async (after) => {
         const d = await gql(ISSUES_QUERY, { projectId: proj.id, after });
-        return d.project.issues;
+        return d.issues;
       });
       issuesByProject[proj.id] = issues.map(iss => ({
         id: iss.id,
@@ -161,7 +167,7 @@ async function main() {
       }));
       console.log(`  ${proj.name}: ${issuesByProject[proj.id].length} issues`);
     } catch(e) {
-      console.warn(`  Warning: could not fetch issues for ${proj.name}: ${e.message}`);
+      console.warn(`  ⚠️  Could not fetch issues for "${proj.name}": ${e.message}`);
       issuesByProject[proj.id] = [];
     }
   }
