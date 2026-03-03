@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-03T10:55:44.846Z",
+  "refreshedAt": "2026-03-03T11:08:26.450Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -5256,7 +5256,7 @@
               "start": null,
               "end": null,
               "assignee": "julio@supplied.eu",
-              "priority": "High",
+              "priority": "Low",
               "url": "https://linear.app/supplied/issue/IMP-34/plan-payment-session-to-align-payout-fields-sources-and"
             },
             {
