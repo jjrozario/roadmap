@@ -107,19 +107,97 @@ body {
 .refresh-btn.loading .spin { animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── STATS BAR ──────────────────────────────────────────────────────────── */
-.stats {
+/* ── ALERT BAR ──────────────────────────────────────────────────────────── */
+.alert-bar {
   background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
   padding: 8px 20px;
-  display: flex; gap: 24px; align-items: center;
+  display: flex; gap: 6px; align-items: center;
   overflow-x: auto;
 }
-.stat { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-.stat-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-.stat-label { font-size: 10px; color: var(--text-muted); }
-.stat-count { font-size: 10px; color: var(--text); font-weight: 500; }
-.stat-divider { width: 1px; height: 16px; background: var(--border); }
+.alert-section-label {
+  font-size: 8px; color: var(--text-dim);
+  letter-spacing: 1.2px; white-space: nowrap;
+  margin-right: 4px; flex-shrink: 0;
+}
+.alert-badge {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px; border-radius: 5px;
+  font-size: 9px; cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s; white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.3px;
+  user-select: none; flex-shrink: 0;
+}
+.alert-badge:hover { opacity: 0.85; transform: translateY(-1px); }
+.alert-badge.active { border-color: currentColor !important; }
+.badge-urgent  { color: #ef4444; background: rgba(239,68,68,0.08); }
+.badge-urgent.active  { background: rgba(239,68,68,0.15); }
+.badge-high    { color: #f97316; background: rgba(249,115,22,0.08); }
+.badge-high.active    { background: rgba(249,115,22,0.15); }
+.badge-overdue { color: #f59e0b; background: rgba(245,158,11,0.08); }
+.badge-overdue.active { background: rgba(245,158,11,0.15); }
+.badge-clear   { color: var(--text-muted); background: var(--bg); border: 1px solid var(--border) !important; font-size: 8px; }
+.alert-num     { font-size: 16px; font-weight: 700; line-height: 1; }
+.alert-lbl     { font-size: 8px; letter-spacing: 0.8px; }
+.alert-divider { width: 1px; height: 22px; background: var(--border); flex-shrink: 0; margin: 0 2px; }
+.alert-all-clear {
+  font-size: 10px; color: #10b981;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ── PRIORITY / OVERDUE TAGS ─────────────────────────────────────────────── */
+.pri-tag {
+  font-size: 7px; border-radius: 2px;
+  padding: 1px 4px; flex-shrink: 0;
+  white-space: nowrap; letter-spacing: 0.5px;
+  font-weight: 600; line-height: 1.5;
+}
+.pri-urgent { color: #ef4444; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); }
+.pri-high   { color: #f97316; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.3); }
+.overdue-tag {
+  font-size: 7px; border-radius: 2px;
+  padding: 1px 4px; flex-shrink: 0;
+  white-space: nowrap; letter-spacing: 0.5px;
+  font-weight: 600; line-height: 1.5;
+  color: #f59e0b;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.3);
+  animation: overdueFlash 2.5s ease-in-out infinite;
+}
+@keyframes overdueFlash { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+/* ── ROW PRIORITY HIGHLIGHTS ─────────────────────────────────────────────── */
+@keyframes urgentPulse {
+  0%,100% { box-shadow: inset 3px 0 0 rgba(239,68,68,0.5); }
+  50%     { box-shadow: inset 3px 0 0 rgba(239,68,68,1); background: rgba(239,68,68,0.04); }
+}
+.row.row-urgent { animation: urgentPulse 1.6s ease-in-out infinite; }
+.row.row-urgent:hover { background: rgba(239,68,68,0.08) !important; }
+.row.row-high   { box-shadow: inset 3px 0 0 rgba(249,115,22,0.5); }
+.row.row-high:hover   { background: rgba(249,115,22,0.05) !important; }
+.row.row-overdue { box-shadow: inset 3px 0 0 rgba(245,158,11,0.5); }
+
+/* ── OVERDUE BAR STRIPE ─────────────────────────────────────────────────── */
+.bar-overdue::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent, transparent 4px,
+    rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 6px
+  );
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* ── FILTER ACTIVE NOTICE ────────────────────────────────────────────────── */
+.filter-notice {
+  font-size: 8px; color: var(--text-muted);
+  margin-left: auto; white-space: nowrap;
+  flex-shrink: 0; letter-spacing: 0.5px;
+}
 
 /* ── LEGEND ─────────────────────────────────────────────────────────────── */
 .legend {
@@ -137,7 +215,7 @@ body {
 /* ── GANTT LAYOUT ───────────────────────────────────────────────────────── */
 .gantt-wrapper {
   overflow: auto;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 160px);
 }
 .gantt-thead {
   display: flex;
@@ -242,7 +320,7 @@ body {
   border-radius: 6px; padding: 10px 14px;
   font-size: 11px; pointer-events: none;
   z-index: 9999; max-width: 260px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   line-height: 1.7;
   font-family: 'DM Mono', monospace;
 }
@@ -251,6 +329,8 @@ body {
 .tooltip-dates { font-size: 9px; color: var(--text-muted); }
 .tooltip-assignee { font-size: 9px; color: var(--text-muted); }
 .tooltip-link { font-size: 9px; color: var(--accent); margin-top: 3px; }
+.tooltip-priority { font-size: 9px; font-weight: 600; }
+.tooltip-overdue { font-size: 9px; color: #f59e0b; font-weight: 600; }
 
 /* ── ASSIGNEE TAG ───────────────────────────────────────────────────────── */
 .row-assignee {
@@ -283,6 +363,10 @@ body {
   </div>
 </div>
 
+<div class="alert-bar" id="alert-bar">
+  <span class="alert-section-label">NEEDS ATTENTION</span>
+</div>
+
 <div class="legend">
   ${[["Todo","#6366f1"],["In Progress","#f59e0b"],["In Review","#fb923c"],["In Test","#a78bfa"],["Blocked","#ef4444"],["Done","#10b981"],["Completed","#10b981"],["Planned","#8b5cf6"],["Backlog","#334155"]].map(([s,c])=>`
   <div class="legend-item">
@@ -311,6 +395,141 @@ const SC = {
   "Planned":"#8b5cf6","Paused":"#f97316","Cancelled":"#475569",
 };
 const sc = s => SC[s]||"#475569";
+
+// ── PRIORITY HELPERS ──────────────────────────────────────────────────────────
+const TODAY_STR = new Date().toISOString().split("T")[0];
+const DONE_STATES = new Set(["Done","Completed","Cancelled"]);
+
+function isActive(status) { return !DONE_STATES.has(status); }
+
+function priorityLevel(priority) {
+  if (priority === "Urgent") return "urgent";
+  if (priority === "High")   return "high";
+  return null;
+}
+
+function isOverdue(issue) {
+  if (!issue.end) return false;
+  if (!isActive(issue.status)) return false;
+  return issue.end < TODAY_STR;
+}
+
+function computeStats(data) {
+  let urgent = 0, high = 0, overdue = 0, total = 0;
+  for (const ini of data.initiatives) {
+    for (const proj of ini.projects) {
+      for (const iss of (proj.issues || [])) {
+        if (!isActive(iss.status)) continue;
+        total++;
+        const p = priorityLevel(iss.priority);
+        if (p === "urgent") urgent++;
+        else if (p === "high") high++;
+        if (isOverdue(iss)) overdue++;
+      }
+    }
+  }
+  return { urgent, high, overdue, total };
+}
+
+// ── FILTER STATE ──────────────────────────────────────────────────────────────
+let ACTIVE_FILTER = null; // null | 'urgent' | 'high' | 'overdue'
+
+function setFilter(f) {
+  ACTIVE_FILTER = (ACTIVE_FILTER === f) ? null : f;
+  render();
+  updateAlertBarActive();
+}
+
+function issueMatchesFilter(iss) {
+  if (!ACTIVE_FILTER) return true;
+  if (!isActive(iss.status)) return false;
+  if (ACTIVE_FILTER === "urgent")  return priorityLevel(iss.priority) === "urgent";
+  if (ACTIVE_FILTER === "high")    return priorityLevel(iss.priority) === "high";
+  if (ACTIVE_FILTER === "overdue") return isOverdue(iss);
+  return true;
+}
+
+function updateAlertBarActive() {
+  document.querySelectorAll(".alert-badge[data-filter]").forEach(b => {
+    b.classList.toggle("active", b.dataset.filter === ACTIVE_FILTER);
+  });
+  const notice = document.getElementById("filter-notice");
+  if (notice) notice.style.display = ACTIVE_FILTER ? "block" : "none";
+}
+
+// ── ALERT BAR ─────────────────────────────────────────────────────────────────
+function populateAlertBar(stats) {
+  const bar = document.getElementById("alert-bar");
+  bar.innerHTML = "";
+
+  const label = document.createElement("span");
+  label.className = "alert-section-label";
+  label.textContent = "NEEDS ATTENTION";
+  bar.appendChild(label);
+
+  if (stats.urgent === 0 && stats.high === 0 && stats.overdue === 0) {
+    const all = document.createElement("div");
+    all.className = "alert-all-clear";
+    all.innerHTML = \`✓ <span>All \${stats.total} active issues on track</span>\`;
+    bar.appendChild(all);
+    return;
+  }
+
+  const badges = [
+    { key: "urgent",  num: stats.urgent,  icon: "🔴", label: "URGENT",  cls: "badge-urgent" },
+    { key: "high",    num: stats.high,    icon: "🟠", label: "HIGH",    cls: "badge-high" },
+    { key: "overdue", num: stats.overdue, icon: "⚠️", label: "OVERDUE", cls: "badge-overdue" },
+  ];
+
+  let first = true;
+  for (const b of badges) {
+    if (b.num === 0) continue;
+    if (!first) {
+      const div = document.createElement("div");
+      div.className = "alert-divider";
+      bar.appendChild(div);
+    }
+    first = false;
+
+    const btn = document.createElement("button");
+    btn.className = \`alert-badge \${b.cls}\`;
+    btn.dataset.filter = b.key;
+    if (ACTIVE_FILTER === b.key) btn.classList.add("active");
+    btn.innerHTML = \`<span class="alert-num">\${b.num}</span><span class="alert-lbl">\${b.label}</span>\`;
+    btn.style.fontFamily = "'DM Mono', monospace";
+    btn.style.cursor = "pointer";
+    btn.style.background = "inherit";
+    btn.addEventListener("click", () => setFilter(b.key));
+    bar.appendChild(btn);
+  }
+
+  // Clear filter button
+  const div2 = document.createElement("div");
+  div2.className = "alert-divider";
+  bar.appendChild(div2);
+
+  const clearBtn = document.createElement("button");
+  clearBtn.className = "alert-badge badge-clear";
+  clearBtn.innerHTML = "✕ CLEAR FILTER";
+  clearBtn.style.fontFamily = "'DM Mono', monospace";
+  clearBtn.style.cursor = "pointer";
+  clearBtn.addEventListener("click", () => { ACTIVE_FILTER = null; render(); updateAlertBarActive(); });
+  bar.appendChild(clearBtn);
+
+  // Filter notice
+  const notice = document.createElement("span");
+  notice.className = "filter-notice";
+  notice.id = "filter-notice";
+  notice.textContent = "Showing filtered issues only";
+  notice.style.display = ACTIVE_FILTER ? "block" : "none";
+  bar.appendChild(notice);
+
+  // Summary text
+  const summary = document.createElement("span");
+  summary.style.cssText = "margin-left:auto;font-size:9px;color:var(--text-dim);white-space:nowrap;flex-shrink:0";
+  summary.textContent = \`\${stats.total} active issues total\`;
+  bar.appendChild(summary);
+}
 
 // ── DATE / RANGE ──────────────────────────────────────────────────────────────
 const RANGE_START = (() => { const d=new Date(); d.setMonth(d.getMonth()-3,1); return d.toISOString().split("T")[0]; })();
@@ -346,12 +565,16 @@ let DATA = null;
 const tip = document.getElementById("tooltip");
 let tipVisible = false;
 function showTip(e, d){
+  const priLevel = priorityLevel(d.priority);
+  const overdue  = d.end && isActive(d.status||"") && d.end < TODAY_STR;
+  const priColor = priLevel === "urgent" ? "#ef4444" : priLevel === "high" ? "#f97316" : null;
   tip.innerHTML = \`
     <div class="tooltip-title">\${d.label}</div>
     \${d.status ? \`<div class="tooltip-status" style="color:\${sc(d.status)}">\${d.status}</div>\`:""}
-    \${d.start ? \`<div class="tooltip-dates">\${d.start} → \${d.end||"ongoing"}</div>\`:""}
+    \${priColor ? \`<div class="tooltip-priority" style="color:\${priColor}">⚡ \${d.priority}</div>\`:""}
+    \${overdue  ? \`<div class="tooltip-overdue">⚠️ OVERDUE — due \${d.end}</div>\`:""}
+    \${d.start  ? \`<div class="tooltip-dates">\${d.start} → \${d.end||"ongoing"}</div>\`:""}
     \${d.assignee ? \`<div class="tooltip-assignee">👤 \${d.assignee}</div>\`:""}
-    \${d.priority ? \`<div class="tooltip-assignee">⚡ \${d.priority}</div>\`:""}
     \${d.clickable && d.url ? \`<div class="tooltip-link">↗ Open in Linear</div>\`:""}
   \`;
   tip.style.display="block";
@@ -366,15 +589,14 @@ function hideTip(){ tip.style.display="none"; tipVisible=false; }
 document.addEventListener("mousemove", e => { if(tipVisible) moveTip(e); });
 
 // ── BAR ───────────────────────────────────────────────────────────────────────
-// isClickable: true only for issue bars — opens Linear on click
-function makeBar(start, end, color, label, url, isIni, isClickable){
+function makeBar(start, end, color, label, url, isIni, isClickable, overdueFlag){
   if(!start) return null;
   const effEnd = end || new Date().toISOString().split("T")[0];
   const l = dPct(start), r = dPct(effEnd);
   if(l===null) return null;
   const w = Math.max((r||l)-l, 0.4);
   const bar = document.createElement("div");
-  bar.className = "bar" + (isIni?" initiative-bar":"") + (isClickable?" clickable-bar":"");
+  bar.className = "bar" + (isIni?" initiative-bar":"") + (isClickable?" clickable-bar":"") + (overdueFlag?" bar-overdue":"");
   bar.style.left=l+"%";
   bar.style.width=w+"%";
   bar.style.background=color;
@@ -383,15 +605,20 @@ function makeBar(start, end, color, label, url, isIni, isClickable){
     lbl.className="bar-label"; lbl.textContent=label;
     bar.appendChild(lbl);
   }
-  // Only add click handler for issue bars — prevents stopPropagation from swallowing row expand clicks
   if(url && isClickable) bar.addEventListener("click", e => { e.stopPropagation(); window.open(url,"_blank"); });
   return bar;
 }
 
 // ── ROW ───────────────────────────────────────────────────────────────────────
-function makeRow({indent, label, status, color, start, end, url, hasChildren, isExpanded, isIni, onClick, barData, barClickable, assignee}){
+function makeRow({indent, label, status, color, start, end, url, hasChildren, isExpanded, isIni, onClick, barData, barClickable, assignee, priority, overdueFlag}){
+  const priLevel = priority ? priorityLevel(priority) : null;
+
   const row = document.createElement("div");
-  row.className = "row" + (isIni?" initiative":"") + (hasChildren||onClick?" clickable":"");
+  let rowClass = "row" + (isIni?" initiative":"") + (hasChildren||onClick?" clickable":"");
+  if (!isIni && priLevel === "urgent") rowClass += " row-urgent";
+  else if (!isIni && priLevel === "high") rowClass += " row-high";
+  else if (!isIni && overdueFlag) rowClass += " row-overdue";
+  row.className = rowClass;
   if(onClick) row.addEventListener("click", onClick);
 
   // Label
@@ -414,6 +641,27 @@ function makeRow({indent, label, status, color, start, end, url, hasChildren, is
   nm.className = "row-name"; nm.textContent=label; nm.title=label;
   lc.appendChild(nm);
 
+  // Priority tag (urgent/high only, not on initiative rows)
+  if (!isIni && priLevel === "urgent") {
+    const pt = document.createElement("span");
+    pt.className = "pri-tag pri-urgent";
+    pt.textContent = "URGENT";
+    lc.appendChild(pt);
+  } else if (!isIni && priLevel === "high") {
+    const pt = document.createElement("span");
+    pt.className = "pri-tag pri-high";
+    pt.textContent = "HIGH";
+    lc.appendChild(pt);
+  }
+
+  // Overdue tag
+  if (!isIni && overdueFlag) {
+    const ot = document.createElement("span");
+    ot.className = "overdue-tag";
+    ot.textContent = "OVERDUE";
+    lc.appendChild(ot);
+  }
+
   if(status){
     const badge = document.createElement("span");
     badge.className="row-badge";
@@ -425,7 +673,7 @@ function makeRow({indent, label, status, color, start, end, url, hasChildren, is
   if(assignee){
     const asn = document.createElement("span");
     asn.className="row-assignee";
-    asn.textContent=assignee.split(" ")[0]; // first name only to save space
+    asn.textContent=assignee.split(" ")[0];
     asn.title=assignee;
     lc.appendChild(asn);
   }
@@ -433,10 +681,9 @@ function makeRow({indent, label, status, color, start, end, url, hasChildren, is
 
   // Bars
   const bc = document.createElement("div"); bc.className="row-bars";
-  // Today line
   const tl = document.createElement("div"); tl.className="today-line"; tl.style.left=TODAY_PCT+"%"; bc.appendChild(tl);
   if(start){
-    const bar = makeBar(start,end,color||sc(status),label,url,isIni,barClickable);
+    const bar = makeBar(start,end,color||sc(status),label,url,isIni,barClickable,overdueFlag&&!isIni);
     if(bar){
       const bd = barData||{label,status,start,end,url,clickable:barClickable};
       bar.addEventListener("mouseenter", e => showTip(e,bd));
@@ -459,9 +706,18 @@ function render(){
     return;
   }
   body.innerHTML="";
+
   for(const ini of DATA.initiatives){
     const iniKey=ini.id;
-    const iniExp=!!expanded[iniKey];
+
+    // If filter active: only show initiative if it has matching issues
+    if(ACTIVE_FILTER) {
+      const hasMatch = ini.projects.some(p => (p.issues||[]).some(i => issueMatchesFilter(i)));
+      if(!hasMatch) continue;
+    }
+
+    // When filter active, auto-expand everything
+    const iniExp = ACTIVE_FILTER ? true : !!expanded[iniKey];
     const dated=ini.projects.filter(p=>p.startDate||p.targetDate);
     const iniStart=dated.reduce((a,p)=>(!a||(p.startDate&&p.startDate<a))?p.startDate:a,null);
     const iniEnd=dated.reduce((a,p)=>(!a||(p.targetDate&&p.targetDate>a))?p.targetDate:a,null)||ini.targetDate;
@@ -470,7 +726,7 @@ function render(){
       indent:0, label:ini.name, status:ini.status,
       color:ini.color, start:iniStart, end:iniEnd, url:ini.url,
       hasChildren:ini.projects.length>0, isExpanded:iniExp, isIni:true,
-      onClick:()=>{ expanded[iniKey]=!iniExp; render(); },
+      onClick:()=>{ expanded[iniKey]=!expanded[iniKey]; render(); },
       barClickable:false,
       barData:{label:ini.name,status:ini.status,start:iniStart,end:iniEnd,url:ini.url,clickable:false}
     }));
@@ -478,18 +734,30 @@ function render(){
     if(iniExp){
       for(const proj of ini.projects){
         const projKey=iniKey+"_"+proj.id;
-        const projExp=!!expanded[projKey];
+
+        // If filter active: only show project if it has matching issues
+        if(ACTIVE_FILTER) {
+          const hasProjMatch = (proj.issues||[]).some(i => issueMatchesFilter(i));
+          if(!hasProjMatch) continue;
+        }
+
+        const projExp = ACTIVE_FILTER ? true : !!expanded[projKey];
         const hasIssues=proj.issues&&proj.issues.length>0;
         body.appendChild(makeRow({
           indent:1, label:proj.name, status:proj.status||"",
           color:proj.color, start:proj.startDate, end:proj.targetDate, url:proj.url,
           hasChildren:hasIssues, isExpanded:projExp, isIni:false,
-          onClick:hasIssues?()=>{ expanded[projKey]=!projExp; render(); }:null,
+          onClick:hasIssues?()=>{ expanded[projKey]=!expanded[projKey]; render(); }:null,
           barClickable:false,
           barData:{label:proj.name,status:proj.status,start:proj.startDate,end:proj.targetDate,url:proj.url,clickable:false}
         }));
+
         if(projExp&&hasIssues){
           for(const iss of proj.issues){
+            // Filter: skip non-matching issues when filter active
+            if(ACTIVE_FILTER && !issueMatchesFilter(iss)) continue;
+
+            const od = isOverdue(iss);
             body.appendChild(makeRow({
               indent:2, label:(iss.identifier+" "+iss.title).trim(),
               status:iss.status, color:sc(iss.status),
@@ -497,12 +765,13 @@ function render(){
               hasChildren:false, isExpanded:false, isIni:false, onClick:null,
               barClickable:true,
               assignee:iss.assignee||null,
+              priority:iss.priority||null,
+              overdueFlag:od,
               barData:{label:iss.title,status:iss.status,start:iss.start,end:iss.end,assignee:iss.assignee,priority:iss.priority,url:iss.url,clickable:true}
             }));
           }
         }
       }
-      // Visual gap between initiatives
       const gap=document.createElement("div"); gap.className="section-gap"; body.appendChild(gap);
     }
   }
@@ -512,13 +781,15 @@ function render(){
 async function init(){
   const btn = document.getElementById("refresh-btn");
   if(btn) btn.classList.add("loading");
-  render(); // show loading placeholder
+  render();
   try {
     const res = await fetch('./gantt-data.json?t='+Date.now());
     if(!res.ok) throw new Error('HTTP '+res.status);
     DATA = await res.json();
     const el = document.getElementById("refresh-time");
     if(el && DATA.refreshedAt) el.textContent = "UPDATED " + new Date(DATA.refreshedAt).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+    const stats = computeStats(DATA);
+    populateAlertBar(stats);
     render();
   } catch(err){
     console.error("Failed to load gantt-data.json", err);
