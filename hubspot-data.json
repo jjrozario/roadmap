@@ -1,7 +1,987 @@
 {
-  "refreshedAt": "2026-03-03T00:00:00.000Z",
+  "refreshedAt": "2026-03-03T12:47:54.693Z",
   "currency": "€",
-  "owners": [],
-  "tasks": [],
-  "deals": []
+  "owners": [
+    {
+      "id": "29853062",
+      "name": "Bas Bogerd",
+      "email": "bas@supplied.eu"
+    },
+    {
+      "id": "30619176",
+      "name": "andrei@supplied.eu",
+      "email": "andrei@supplied.eu"
+    },
+    {
+      "id": "30795957",
+      "name": "Sean Martens",
+      "email": "sean@revact.ai"
+    },
+    {
+      "id": "84681960",
+      "name": "Rick Joosten",
+      "email": "rick@revact.ai"
+    },
+    {
+      "id": "687091984",
+      "name": "Julio Lindveld",
+      "email": "julio@supplied.eu"
+    },
+    {
+      "id": "710450084",
+      "name": "Stephan Bohr",
+      "email": "stephan.bohr@bohr-advise.de"
+    },
+    {
+      "id": "901168591",
+      "name": "Johann Rozario",
+      "email": "johann@supplied.eu"
+    },
+    {
+      "id": "2008358619",
+      "name": "Vladimir Ivanov",
+      "email": "vladimir@supplied.eu"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "289059075305",
+      "subject": "Follow up with Rick Joosten",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-09-19",
+      "ownerId": "29274155",
+      "body": "Regarding email: Test email, sent on Tuesday, September 16, 2025 10:17 AM"
+    },
+    {
+      "id": "371355244765",
+      "subject": "Follow up with an email intro",
+      "status": "NOT_STARTED",
+      "type": "EMAIL",
+      "priority": "NONE",
+      "dueDate": "2025-12-02",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "361343795402",
+      "subject": "Follow up with Sander Poos",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-12-04",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "375030088948",
+      "subject": "Follow up with CoinJar on plans for CARF repporting",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-12-04",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">\"@⁨Johann⁩ pls ping me on Thursday so I can find out where we are at with it.\"</p><p style=\"margin:0;\">\"I know USA tax is the focus and we decided to do everything ourselves including tax cost base engine because of high costs. Except for submissions to IRS because of large fines if something goes wrong. I’d imagine our approach will be the same with dac8 - our team always wants to do everything in house but u never know. I think it’s a good time to ask.\"</p></div>"
+    },
+    {
+      "id": "361003004127",
+      "subject": "Try to meet them at next techleap event",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-12-04",
+      "ownerId": "901168591",
+      "body": null
+    },
+    {
+      "id": "379993648314",
+      "subject": "follow uo",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-12-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "381893363900",
+      "subject": "Find contacts and similar companies",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-12-07",
+      "ownerId": "901168591",
+      "body": null
+    },
+    {
+      "id": "361248214241",
+      "subject": "Try to meet at next Techleap event",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2025-12-22",
+      "ownerId": "901168591",
+      "body": null
+    },
+    {
+      "id": "361247638727",
+      "subject": "Touch base in a couple of months",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-01-06",
+      "ownerId": "901168591",
+      "body": null
+    },
+    {
+      "id": "402850241731",
+      "subject": "Apply to Relevant Partner Programs",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-01-07",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">Status of Partnership Applications here https://docs.google.com/document/d/1hiV4HmwL5fdZAZAJGmcJkCTqqeKVZBESaECDhqBYWhY/edit?tab=t.0</p></div>"
+    },
+    {
+      "id": "413654555838",
+      "subject": "Follow ups for Fini",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-01-15",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">Send a Video demo</p><p style=\"margin:0;\">List of checks we can do</p></div>"
+    },
+    {
+      "id": "410864203968",
+      "subject": "Follow up with FareHarbor",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-01-16",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\"><span style=\"color: #000000;\"><span style=\"font-size: 16px;\"><span style=\"background-color: oklab(0.678888 0.00325716 -0.011175 / 0.0784314);\"><span style=\"font-family: &quot;gg sans&quot;, &quot;Noto Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;\">75% of their customers are US, They offer automated reporting but its limited to a few things and customers dont know how to use most of their features - so there should be a software partner opportunity with them to re-sell. A big pain-point for them (fareharbor) is expanding/growth beyond us and therefore being compliance with onboarding in Asia and the Carribean (so the kyc/kyb but also the compliance requirements in those markets) is a pain point for them. they are using d-local in africa but not good. </span></span><span style=\"font-family: inherit;\">Next steps</span><span style=\"background-color: oklab(0.678888 0.00325716 -0.011175 / 0.0784314);\"><span style=\"font-family: &quot;gg sans&quot;, &quot;Noto Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;\">: send through a deck of what we do exactly that highlights 2 opportunities 1) Services to sell to their customers for the reporting and onboarding 2) Services that Fareharbor could use to enter new markets above</span></span></span></span></p></div>"
+    },
+    {
+      "id": "427621690616",
+      "subject": "Set meeting with NAHV",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "HIGH",
+      "dueDate": "2026-01-23",
+      "ownerId": "29853062",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">NAHV are looking for another Annual Reporting solution fairly urgently</p><ul><li><p style=\"margin:0;\">A lot of clients currently using Emilysystems.nl will churn this year and go somewhere else.</p></li><li><p style=\"margin:0;\">Right now NAHV are forced to use Audition - and they harte it due to the lack of integration capabilities</p></li></ul><p style=\"margin:0;\"><strong><span data-mention-id=\"29853062\" data-mention-name=\"Bas Bogerd\" style=\"color: #425b76;font-weight: 600;\">@Bas Bogerd</span></strong>to setup a time between <strong><span data-mention-id=\"901168591\" data-mention-name=\"Johann Rozario\" style=\"color: #425b76;font-weight: 600;\">@Johann Rozario</span></strong> and <span style=\"color: rgb(94, 94, 94);\">mja@nahv.nl ti discuss</span></p><p style=\"margin:0;\"><br class=\"hs-trailingbreak\"></p></div>"
+    },
+    {
+      "id": "426556720372",
+      "subject": "Follow up with Fagura",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-01-26",
+      "ownerId": "2008358619",
+      "body": "Regarding call logged on Wednesday, January 21, 2026 6:40 PM"
+    },
+    {
+      "id": "415496033523",
+      "subject": "Follow up with Creaim - presentation for Nils",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-01-27",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\"><br class=\"hs-trailingbreak\"></p></div>"
+    },
+    {
+      "id": "427394360546",
+      "subject": "Contact opnemen met Szallas.hu - DAC7 rapportage",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "MEDIUM",
+      "dueDate": "2026-01-29",
+      "ownerId": "687091984",
+      "body": "Lead voor DAC7 rapportage. Probeer contact op te nemen met Szallas.hu om de mogelijkheden te bespreken."
+    },
+    {
+      "id": "427441545446",
+      "subject": "Contact opnemen met Lekkeslaap - DAC7 rapportage",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "MEDIUM",
+      "dueDate": "2026-01-29",
+      "ownerId": "687091984",
+      "body": "Probeer contact op te nemen met Lekkeslaap (lekkeslaap.co.za) over DAC7 rapportage mogelijkheden."
+    },
+    {
+      "id": "451224532164",
+      "subject": "Reach out to Speedydd.Com",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "451358380280",
+      "subject": "Reach out to ANWB",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "451546909901",
+      "subject": "Reach out to Huidzorg Westland",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "451906211058",
+      "subject": "Reach out to AAM Management Information Consulting",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "451908064499",
+      "subject": "Reach out to Ministry of Finance of the Czech Republic",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "451934253266",
+      "subject": "Reach out to Target Global",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "452030306507",
+      "subject": "Reach out to Bird & Bird",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-14",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "452883777742",
+      "subject": "Reach out to Effem Germany",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-15",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "453012581589",
+      "subject": "Reach out to Macquarie Group",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-15",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "453027064047",
+      "subject": "Reach out to S&P Global",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-15",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "453127256301",
+      "subject": "Reach out to OMV PETROM",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-15",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "454405929202",
+      "subject": "Reach out to Ally Coffee",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-16",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "454425786608",
+      "subject": "Reach out to CoreWeave",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-16",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "455047022810",
+      "subject": "Reach out to Cosmopolis Centre for Urban Research, Vrije Universiteit Brussel",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-17",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456317136115",
+      "subject": "Reach out to TANZANIA REVENUE AUTHORITY",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456320736501",
+      "subject": "Reach out to Carrefour Global Sourcing",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456324326604",
+      "subject": "Reach out to Elzaburu",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456365504707",
+      "subject": "Reach out to NIXVAL",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456385305831",
+      "subject": "Reach out to WIBU-SYSTEMS",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456390711545",
+      "subject": "Reach out to Loewe",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456401492161",
+      "subject": "Reach out to ACTUM Digital",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456530415853",
+      "subject": "Reach out to BDO",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-19",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "457161873651",
+      "subject": "Reach out to Bol",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-20",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "458154537199",
+      "subject": "Reach out to Securitas Group",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-21",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "458699402486",
+      "subject": "Reach out to Kse",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-22",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459063418058",
+      "subject": "Reach out to Lbc.Ch",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-22",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459065296091",
+      "subject": "Reach out to Compass Offices",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-22",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459094389962",
+      "subject": "Reach out to Modern Aviation",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-22",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459676568770",
+      "subject": "Reach out to Chagrin Falls Exempted Village Schools",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-23",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459783990491",
+      "subject": "Reach out to Aceventurefunds.Com",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-24",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459795973313",
+      "subject": "Reach out to CDS",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-24",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "459755942087",
+      "subject": "Reach out to Btl Precision-Uk",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-25",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "461303796982",
+      "subject": "Reach out to De Dorpsgarage",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-25",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "462067148994",
+      "subject": "Reach out to Risbo, Erasmus Universiteit Rotterdam",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-26",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "462068943090",
+      "subject": "Reach out to FORMAAT Nederland",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-26",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "462118281425",
+      "subject": "Reach out to B.G.M.",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-26",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "462757950692",
+      "subject": "Reach out to Co Knowledge",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-27",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "463105428716",
+      "subject": "Reach out to 1komma5°",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-27",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "463149163743",
+      "subject": "Reach out to Lamatic.ai",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-27",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "463802305741",
+      "subject": "Reach out to Cusp Capital",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-28",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "463959053525",
+      "subject": "Reach out to Fimnet (Finnish Medical Network)",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-02-28",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "464775238903",
+      "subject": "Reach out to Mr. Services",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-01",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "464777065676",
+      "subject": "Reach out to University of Amsterdam",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-01",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "464780648663",
+      "subject": "Reach out to Academische Werkplaats Ouderen | Tranzo | Tilburg University",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-01",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "464807513317",
+      "subject": "Reach out to Ahc",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-01",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "465115695350",
+      "subject": "Reach out to BNP Paribas",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-01",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "466210029794",
+      "subject": "Reach out to Duke University",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-02",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "467879498957",
+      "subject": "Reach out to NABA Feinkost",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-04",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "456955074799",
+      "subject": "Follow up with Chesta Hooda",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-04",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">Regarding note logged on Tuesday, February 17, 2026 3:08 PM</p></div>"
+    },
+    {
+      "id": "456956439767",
+      "subject": "Follow up with Vym",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-04",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\"><br class=\"hs-trailingbreak\"></p></div>"
+    },
+    {
+      "id": "468805970112",
+      "subject": "Reach out to 13books Capital",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "468816771299",
+      "subject": "Reach out to VH ict",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "468870542577",
+      "subject": "Reach out to Swag42.Com",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "469105646780",
+      "subject": "Reach out to (Cambridge Innovation Center)",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "469320290506",
+      "subject": "Reach out to 24-7 Intouch",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "469327481022",
+      "subject": "Reach out to KineticSkunk™",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "469331077334",
+      "subject": "Reach out to Flexport",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    },
+    {
+      "id": "469411577026",
+      "subject": "Reach out to Sendmode Mobile Marketing Solutions",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-05",
+      "ownerId": "29853062",
+      "body": null
+    }
+  ],
+  "deals": [
+    {
+      "id": "379993066694",
+      "name": "Bookmatch",
+      "stage": "3190524122",
+      "pipeline": "2336720120",
+      "amount": 1788,
+      "closeDate": "2025-12-03",
+      "ownerId": "687091984",
+      "probability": 0.6,
+      "stageLabel": "Proposal Shared"
+    },
+    {
+      "id": "379729648851",
+      "name": "Friend Finder Networks - New Deal",
+      "stage": "3190524125",
+      "pipeline": "2336720120",
+      "amount": 4500,
+      "closeDate": "2026-01-07",
+      "ownerId": "901168591",
+      "probability": 1,
+      "stageLabel": "Closed Won"
+    },
+    {
+      "id": "399567336674",
+      "name": "Klusup BV",
+      "stage": "3190524125",
+      "pipeline": "2336720120",
+      "amount": 1788,
+      "closeDate": "2026-01-07",
+      "ownerId": "687091984",
+      "probability": 1,
+      "stageLabel": "Closed Won"
+    },
+    {
+      "id": "371120648436",
+      "name": "FranceVilla – DAC7 Renewal 2025/2026",
+      "stage": "3190524125",
+      "pipeline": "2336720120",
+      "amount": 1788,
+      "closeDate": "2026-01-08",
+      "ownerId": "687091984",
+      "probability": 1,
+      "stageLabel": "Closed Won"
+    },
+    {
+      "id": "421686686930",
+      "name": "Multi Media - Lenos",
+      "stage": "qualifiedtobuy",
+      "pipeline": "default",
+      "amount": 19588,
+      "closeDate": "2026-01-31",
+      "ownerId": "687091984",
+      "probability": 0.4,
+      "stageLabel": "Negotiation & Evaluation"
+    },
+    {
+      "id": "425898542327",
+      "name": "Secure live media - Lenos",
+      "stage": "qualifiedtobuy",
+      "pipeline": "default",
+      "amount": 9588,
+      "closeDate": "2026-01-31",
+      "ownerId": "687091984",
+      "probability": 0.4,
+      "stageLabel": "Negotiation & Evaluation"
+    },
+    {
+      "id": "397390371051",
+      "name": "Hypeboost",
+      "stage": "3190524126",
+      "pipeline": "2336720120",
+      "amount": 1788,
+      "closeDate": "2026-02-06",
+      "ownerId": "687091984",
+      "probability": 0,
+      "stageLabel": "Closed Lost"
+    },
+    {
+      "id": "475464711375",
+      "name": "Mellow",
+      "stage": "qualifiedtobuy",
+      "pipeline": "default",
+      "amount": 10000,
+      "closeDate": "2026-03-10",
+      "ownerId": "687091984",
+      "probability": 0.4,
+      "stageLabel": "Negotiation & Evaluation"
+    },
+    {
+      "id": "472770817237",
+      "name": "Loewe (3 Year Contract)",
+      "stage": "4874399933",
+      "pipeline": "3557407943",
+      "amount": 125000,
+      "closeDate": "2026-03-14",
+      "ownerId": "29853062",
+      "probability": 0.2,
+      "stageLabel": "Discovery call scheduled"
+    },
+    {
+      "id": "472984691899",
+      "name": "BEX (3 Year Contract) ",
+      "stage": "4874399934",
+      "pipeline": "3557407943",
+      "amount": 140000,
+      "closeDate": "2026-04-01",
+      "ownerId": "29853062",
+      "probability": 0.3,
+      "stageLabel": "Needs assessment "
+    },
+    {
+      "id": "473517296836",
+      "name": "Dutch Cleantech (3 Year Contract)",
+      "stage": "4874399934",
+      "pipeline": "3557407943",
+      "amount": 175000,
+      "closeDate": "2026-04-01",
+      "ownerId": "29853062",
+      "probability": 0.3,
+      "stageLabel": "Needs assessment "
+    },
+    {
+      "id": "461225992421",
+      "name": "Altify",
+      "stage": "appointmentscheduled",
+      "pipeline": "default",
+      "amount": 25000,
+      "closeDate": "2026-04-30",
+      "ownerId": "29853062",
+      "probability": 0.2,
+      "stageLabel": "Solution Proposal Sent"
+    },
+    {
+      "id": "473243074769",
+      "name": "Guesty (3Year Contract)",
+      "stage": "4874399934",
+      "pipeline": "3557407943",
+      "amount": 745000,
+      "closeDate": "2026-05-01",
+      "ownerId": "29853062",
+      "probability": 0.3,
+      "stageLabel": "Needs assessment "
+    },
+    {
+      "id": "473517297852",
+      "name": "Stripe (3 year Contract)",
+      "stage": "4874399933",
+      "pipeline": "3557407943",
+      "amount": 1300000,
+      "closeDate": "2026-05-01",
+      "ownerId": "901168591",
+      "probability": 0.2,
+      "stageLabel": "Discovery call scheduled"
+    },
+    {
+      "id": "472986119412",
+      "name": "Landal (3 Year Contract)",
+      "stage": "4874399932",
+      "pipeline": "3557407943",
+      "amount": 165000,
+      "closeDate": "2026-06-01",
+      "ownerId": "29853062",
+      "probability": 0.1,
+      "stageLabel": "Initial Contact"
+    },
+    {
+      "id": "473516903612",
+      "name": "Avalara (3 Year Contract)",
+      "stage": "4874399933",
+      "pipeline": "3557407943",
+      "amount": 2200000,
+      "closeDate": "2026-06-02",
+      "ownerId": "901168591",
+      "probability": 0.2,
+      "stageLabel": "Discovery call scheduled"
+    },
+    {
+      "id": "473452053736",
+      "name": "FareHarbor (3 Year Contract)",
+      "stage": "4874399935",
+      "pipeline": "3557407943",
+      "amount": 135000,
+      "closeDate": "2026-07-01",
+      "ownerId": "901168591",
+      "probability": 0.5,
+      "stageLabel": "Solution Scoping"
+    }
+  ]
 }

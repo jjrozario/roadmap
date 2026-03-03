@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-03T11:33:30.380Z",
+  "refreshedAt": "2026-03-03T12:47:53.981Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -418,8 +418,8 @@
               "id": "a93bc1c9-0e51-4ccd-9f69-924b0ad3f667",
               "identifier": "SUP-1174",
               "title": "Infra preparation phase",
-              "status": "Backlog",
-              "start": null,
+              "status": "In Progress",
+              "start": "2026-03-03",
               "end": null,
               "assignee": null,
               "priority": "No priority",
@@ -1484,7 +1484,7 @@
               "id": "98e9bb34-0000-463f-9ee5-5c7296b3ef3c",
               "identifier": "SUP-1130",
               "title": "Sync Properties to Operations Hub - 2 - Unified change log schema",
-              "status": "In Review",
+              "status": "In Test",
               "start": "2026-02-26",
               "end": "2026-03-02",
               "assignee": "Ivan Tiniakov",
