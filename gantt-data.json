@@ -1,4 +1,454 @@
 {
-  "refreshedAt": "2026-03-02T00:00:00Z",
-  "initiatives": []
+  "refreshedAt": "2026-03-03T08:17:29.698Z",
+  "initiatives": [
+    {
+      "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
+      "name": "Technical Performance",
+      "status": "Active",
+      "color": "#26b5ce",
+      "url": "https://linear.app/supplied/initiative/technical-performance-76069470e7db",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "ace48213-b30b-43e7-be90-c9a1ede44e4d",
+          "name": "Admin & Operations Tooling",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/admin-and-operations-tooling-28dab75486bf",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "37ad503b-30ca-4400-ae8c-1d880f61fb0a",
+          "name": "Platform Stability & Performance",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/platform-stability-and-performance-fcb2963e44a4",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "0e286cd7-8eb7-44ee-884b-7447e082f0a4",
+          "name": "PostgreSQL addition",
+          "status": "Planned",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/postgresql-addition-3a6381219d11",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "62d8b1b8-c07f-4084-b49e-f57fcc54224d",
+          "name": "End2End Testing",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/end2end-testing-bcb1d6666a2d",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "2f234467-5de1-4ec1-bf40-d4441824458c",
+          "name": "Certification ISO27001",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/certification-iso27001-a4d56d5d3864",
+          "startDate": "2025-11-26",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "d68dbab8-4585-426f-97a7-2755fd5750a5",
+          "name": "Technical Improvements",
+          "status": "Backlog",
+          "color": "#f2994a",
+          "url": "https://linear.app/supplied/project/technical-improvements-f27befcf45cb",
+          "startDate": null,
+          "targetDate": "2025-09-30",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "id": "13a3ff6b-2295-4f7d-8dec-268622743c24",
+      "name": "Supplied Operations Agent",
+      "status": "Active",
+      "color": "#f2994a",
+      "url": "https://linear.app/supplied/initiative/supplied-operations-agent-a8c6c9d730ad",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "3d40a2a5-9847-4d88-a60e-aa3982d63472",
+          "name": "ComplianceGPT Agent",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/compliancegpt-agent-f8eb0f7b3f2e",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "036cccfd-0b25-41e4-a8ca-f9f8cc54bb60",
+          "name": "Operations Hub - Properties Sync",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/operations-hub-properties-sync-ae908b9d50c7",
+          "startDate": "2026-02-27",
+          "targetDate": null,
+          "issues": []
+        }
+      ]
+    },
+    {
+      "id": "c622500b-6da1-4494-9f97-10453fd65412",
+      "name": "Global Billing",
+      "status": "Active",
+      "color": "#f2994a",
+      "url": "https://linear.app/supplied/initiative/global-billing-72460b5c6fda",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "40ad5fc6-b35f-497a-9c90-6eb146e3b8d6",
+          "name": "Metered Billing",
+          "status": "Planned",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/metered-billing-dc47d5956e50",
+          "startDate": "2026-03-09",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "2928d562-617d-4bd9-966b-00af79476d63",
+          "name": "White Label & Communications",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/white-label-and-communications-7cf0c955535b",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "2c83c7a8-570e-4646-a2dc-2d2c5cfd0170",
+          "name": "Superadmin interface",
+          "status": "Planned",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/superadmin-interface-e95910fce140",
+          "startDate": "2026-01-29",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "60c37d8c-fb0b-4f5e-9a23-1381c09105b0",
+          "name": "Billing & Pricing",
+          "status": "In Progress",
+          "color": "#4cb782",
+          "url": "https://linear.app/supplied/project/billing-and-pricing-a390f974dc05",
+          "startDate": "2025-07-01",
+          "targetDate": null,
+          "issues": []
+        }
+      ]
+    },
+    {
+      "id": "410fcbbb-6f7f-4b3a-83c2-cecc92e2bd3d",
+      "name": "Data Orchestration",
+      "status": "Active",
+      "color": "#26b5ce",
+      "url": "https://linear.app/supplied/initiative/data-orchestration-345d0e6c8802",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "3fac485d-6db1-4245-9fc2-a8136a74be92",
+          "name": "Preparation for daily digest about Supplier Statuses",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/preparation-for-daily-digest-about-supplier-statuses-d9d43441b98e",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "dabd7ad3-9827-40ca-9c8c-9f5ca5444ae4",
+          "name": "AFAS Data Source",
+          "status": "Completed",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/afas-data-source-f7c5a4c9831d",
+          "startDate": "2025-11-17",
+          "targetDate": "2025-11-28",
+          "issues": []
+        },
+        {
+          "id": "03bb396a-a69f-4ccb-9597-d0cb93840b3f",
+          "name": "Data orchestration rework",
+          "status": "Completed",
+          "color": "#f2c94c",
+          "url": "https://linear.app/supplied/project/data-orchestration-rework-adcf03652c82",
+          "startDate": "2025-09-22",
+          "targetDate": "2025-10-31",
+          "issues": []
+        },
+        {
+          "id": "a0d3ce2b-f76d-407f-aa7f-dd86b875be52",
+          "name": "Suppliers Onboarding",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/suppliers-onboarding-49629655e986",
+          "startDate": "2025-12-23",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "5146a5e6-84b3-43c9-ab57-040b0c9649e3",
+          "name": "Merge multiple data source",
+          "status": "Completed",
+          "color": "#26b5ce",
+          "url": "https://linear.app/supplied/project/merge-multiple-data-source-dc96feea187c",
+          "startDate": "2025-09-12",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "78ca224e-fd83-44f9-a1d4-b4af2805f8e8",
+          "name": "New Data Sources",
+          "status": "Completed",
+          "color": "#4cb782",
+          "url": "https://linear.app/supplied/project/new-data-sources-cb9b04052987",
+          "startDate": "2025-07-09",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "05ea46e1-fb26-4800-a322-fb45f6bda3f3",
+          "name": "External API",
+          "status": "Backlog",
+          "color": "#f7c8c1",
+          "url": "https://linear.app/supplied/project/external-api-db3a25b8ecf0",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        }
+      ]
+    },
+    {
+      "id": "7d0879af-dc5a-4440-8b19-631d1cb1ef9d",
+      "name": "Customer and Partner Go Live",
+      "status": "Active",
+      "color": "#4cb782",
+      "url": "https://linear.app/supplied/initiative/customer-and-partner-go-live-7475e9c12bb3",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "5a6a20e8-8be5-44a7-865e-e0ead6a5b51e",
+          "name": "Chaletplus",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/chaletplus-625739768eed",
+          "startDate": "2026-01-19",
+          "targetDate": "2026-01-30",
+          "issues": []
+        },
+        {
+          "id": "67a127a3-e53a-446a-906e-89f4f7f4964d",
+          "name": "VillaSud",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/villasud-00702939399a",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "0398d70a-6897-407b-a8ec-e2d4e0a62bcf",
+          "name": "Jason & Phillips Short Stay Accommodations",
+          "status": "Planned",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/jason-and-phillips-short-stay-accommodations-686a60785a0f",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "6a81adee-cbc4-4616-8931-c7145d6bcc5b",
+          "name": "Klusup BV",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/klusup-bv-8a42e8eff740",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "db1d221e-3118-450e-bbcc-6094b27bafc8",
+          "name": "Dormio",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/dormio-b224e993f474",
+          "startDate": "2025-10-31",
+          "targetDate": "2026-03-31",
+          "issues": []
+        },
+        {
+          "id": "10579814-159d-4337-88bc-d19a1b79d41e",
+          "name": "Trustap",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/trustap-87f7f870316a",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "c8193ea2-8422-4cb1-b6fa-47b70986b4a6",
+          "name": "Tarisio",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/tarisio-5ca19cbb6b36",
+          "startDate": "2025-11-05",
+          "targetDate": "2026-01-30",
+          "issues": []
+        },
+        {
+          "id": "439fccb4-f4f3-4707-8ab0-91894db53be9",
+          "name": "Mellow IO - onboarding",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/mellow-io-onboarding-7510889f7c65",
+          "startDate": "2025-10-28",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "1e4ae643-5316-4ee7-b8ac-bf1f6f407c27",
+          "name": "Shuttel - from 84k to 1.7m contract",
+          "status": "In Progress",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/shuttel-from-84k-to-17m-contract-3ca29a74e59a",
+          "startDate": "2025-09-25",
+          "targetDate": null,
+          "issues": []
+        }
+      ]
+    },
+    {
+      "id": "afeab55e-40ac-4765-b437-0bfd55cb8f18",
+      "name": "Data Collection and Verifications",
+      "status": "Active",
+      "color": "#eb5757",
+      "url": "https://linear.app/supplied/initiative/data-collection-and-verifications-82b302cbda07",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "0336feaf-3e53-43d5-955e-7a5f86ce7809",
+          "name": "Seller Verification & TIN Compliance",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/seller-verification-and-tin-compliance-e5e6d4cf79b1",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "09d00526-b65a-4d17-b08a-b3017cb8cebb",
+          "name": "External Identification for Suppliers",
+          "status": "Completed",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/external-identification-for-suppliers-b41eea1f75d0",
+          "startDate": "2025-12-23",
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "162e4ace-4b6c-4565-9463-d5e1c2599f76",
+          "name": "Liveness Check",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/liveness-check-8aa1deb05b4f",
+          "startDate": null,
+          "targetDate": "2026-03-31",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "id": "53402730-44e8-4b77-9c4f-2a4b6be1c1cf",
+      "name": "Data management",
+      "status": "Completed",
+      "color": "#26b5ce",
+      "url": "https://linear.app/supplied/initiative/data-management-a9eec009f1c5",
+      "targetDate": "2025-09-01",
+      "projects": []
+    },
+    {
+      "id": "52f0b133-0470-4135-b5c3-8de57ca3a130",
+      "name": "Global Reporting",
+      "status": "Active",
+      "color": "#f2994a",
+      "url": "https://linear.app/supplied/initiative/global-reporting-f56492de2185",
+      "targetDate": "2026-12-31",
+      "projects": [
+        {
+          "id": "95973f05-9108-46d9-a76c-02f506878381",
+          "name": "Stripe",
+          "status": "Planned",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/stripe-52fef206ae5d",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "ae502b8b-fda8-486b-bb55-f881d91c93da",
+          "name": "DAC-8 NL",
+          "status": "Backlog",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/dac-8-nl-9e125cf68ea2",
+          "startDate": null,
+          "targetDate": null,
+          "issues": []
+        },
+        {
+          "id": "13182343-fdc9-4cdf-9594-c09b1bda0599",
+          "name": "Initial 1099-K support",
+          "status": "Completed",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/initial-1099-k-support-c3be40c65da0",
+          "startDate": "2025-11-18",
+          "targetDate": "2025-12-12",
+          "issues": []
+        },
+        {
+          "id": "2f94b3bb-bb30-4d06-8739-144c6022e1da",
+          "name": "DAC7 Seller Statements",
+          "status": "Planned",
+          "color": "#bec2c8",
+          "url": "https://linear.app/supplied/project/dac7-seller-statements-a2375b781e6a",
+          "startDate": "2026-01-01",
+          "targetDate": "2026-02-27",
+          "issues": []
+        },
+        {
+          "id": "a5c9b13a-0e9f-4106-8d9a-02f6c619f671",
+          "name": "DAC7 Reporting",
+          "status": "In Progress",
+          "color": "#eb5757",
+          "url": "https://linear.app/supplied/project/dac7-reporting-dbec8112c305",
+          "startDate": "2025-07-08",
+          "targetDate": "2025-08-29",
+          "issues": []
+        },
+        {
+          "id": "07c2c5ff-c09d-42b8-9460-cf981090afab",
+          "name": "Global Reporting Project",
+          "status": "In Progress",
+          "color": "#26b5ce",
+          "url": "https://linear.app/supplied/project/global-reporting-project-83bbedc92a45",
+          "startDate": "2025-06-02",
+          "targetDate": "2025-09-30",
+          "issues": []
+        }
+      ]
+    }
+  ]
 }
