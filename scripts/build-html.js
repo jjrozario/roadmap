@@ -252,6 +252,17 @@ body {
 .tooltip-assignee { font-size: 9px; color: var(--text-muted); }
 .tooltip-link { font-size: 9px; color: var(--accent); margin-top: 3px; }
 
+/* ── ASSIGNEE TAG ───────────────────────────────────────────────────────── */
+.row-assignee {
+  font-size: 7px; color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px; flex-shrink: 0;
+  white-space: nowrap; max-width: 72px;
+  overflow: hidden; text-overflow: ellipsis;
+}
+
 /* ── SECTION DIVIDER ────────────────────────────────────────────────────── */
 .section-gap { height: 6px; background: var(--bg); border-bottom: 1px solid var(--border); }
 </style>
@@ -378,7 +389,7 @@ function makeBar(start, end, color, label, url, isIni, isClickable){
 }
 
 // ── ROW ───────────────────────────────────────────────────────────────────────
-function makeRow({indent, label, status, color, start, end, url, hasChildren, isExpanded, isIni, onClick, barData, barClickable}){
+function makeRow({indent, label, status, color, start, end, url, hasChildren, isExpanded, isIni, onClick, barData, barClickable, assignee}){
   const row = document.createElement("div");
   row.className = "row" + (isIni?" initiative":"") + (hasChildren||onClick?" clickable":"");
   if(onClick) row.addEventListener("click", onClick);
@@ -410,6 +421,13 @@ function makeRow({indent, label, status, color, start, end, url, hasChildren, is
     badge.style.color=sc(status);
     badge.textContent=status;
     lc.appendChild(badge);
+  }
+  if(assignee){
+    const asn = document.createElement("span");
+    asn.className="row-assignee";
+    asn.textContent=assignee.split(" ")[0]; // first name only to save space
+    asn.title=assignee;
+    lc.appendChild(asn);
   }
   row.appendChild(lc);
 
@@ -478,6 +496,7 @@ function render(){
               start:iss.start, end:iss.end, url:iss.url,
               hasChildren:false, isExpanded:false, isIni:false, onClick:null,
               barClickable:true,
+              assignee:iss.assignee||null,
               barData:{label:iss.title,status:iss.status,start:iss.start,end:iss.end,assignee:iss.assignee,priority:iss.priority,url:iss.url,clickable:true}
             }));
           }

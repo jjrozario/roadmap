@@ -74,15 +74,14 @@ const PROJECTS_QUERY = `
   }
 `;
 
-// Uses top-level issues query filtered by project ID — more reliable than nested project.issues
+// Top-level issues query filtered by project ID — includes all statuses (Todo, In Progress, Done, etc.)
 const ISSUES_QUERY = `
   query Issues($projectId: String!, $after: String) {
     issues(
       first: 100,
       after: $after,
       filter: {
-        project: { id: { eq: $projectId } },
-        archivedAt: { null: true }
+        project: { id: { eq: $projectId } }
       }
     ) {
       pageInfo { hasNextPage endCursor }
@@ -91,7 +90,7 @@ const ISSUES_QUERY = `
         state { name }
         priority
         dueDate
-        createdAt
+        startedAt
         completedAt
         assignee { name }
       }
@@ -141,14 +140,11 @@ async function main() {
     }
   }
 
-  // Decide which projects to fetch issues for:
-  // Only In Progress / Planned projects (avoid flooding on Backlog)
-  const ACTIVE_STATUSES = new Set(["In Progress", "Planned", "In Review", "In Test"]);
-  const activeProjects = projectNodes.filter(p => ACTIVE_STATUSES.has(p.status?.name));
-  console.log(`Fetching issues for ${activeProjects.length} active projects...`);
+  // Fetch issues for ALL projects (all statuses: Todo, In Progress, Done, Backlog, Blocked, etc.)
+  console.log(`Fetching issues for ${projectNodes.length} projects...`);
 
   const issuesByProject = {};
-  for (const proj of activeProjects) {
+  for (const proj of projectNodes) {
     try {
       const issues = await fetchAll(async (after) => {
         const d = await gql(ISSUES_QUERY, { projectId: proj.id, after });
@@ -159,7 +155,7 @@ async function main() {
         identifier: iss.identifier,
         title: iss.title,
         status: iss.state?.name || "",
-        start: iss.createdAt?.split("T")[0] || null,
+        start: (iss.startedAt || iss.completedAt)?.split("T")[0] || null,
         end: iss.dueDate || (iss.completedAt ? iss.completedAt.split("T")[0] : null),
         assignee: iss.assignee?.name || null,
         priority: priorityName(iss.priority),
