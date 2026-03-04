@@ -1181,16 +1181,25 @@ function renderOpsEmpty(){
 let MYDAY_PERSON  = localStorage.getItem("myday_person")  || "me";
 let MYDAY_SECTION = localStorage.getItem("myday_section") || "all";
 
+// Flatten nested initiatives→projects→issues into a single array
+function getLinearIssues(){
+  if(!GANTT_DATA||!GANTT_DATA.initiatives) return [];
+  const out=[];
+  for(const ini of GANTT_DATA.initiatives)
+    for(const proj of (ini.projects||[]))
+      for(const iss of (proj.issues||[]))
+        out.push({...iss, _project:proj.name, _initiative:ini.name});
+  return out;
+}
+
 // Detect the "current user" first name from loaded data (heuristic: email contains first name)
 function detectMyName(){
   if(HS_DATA&&HS_DATA.owners){
     const me = HS_DATA.owners.find(o=>o.email&&o.email.toLowerCase().includes("johann"));
     if(me) return me.name.split(" ")[0];
   }
-  if(GANTT_DATA&&GANTT_DATA.issues){
-    const all = GANTT_DATA.issues.filter(i=>i.assignee).map(i=>i.assignee.split(" ")[0]);
-    if(all.includes("Johann")) return "Johann";
-  }
+  const all = getLinearIssues().filter(i=>i.assignee).map(i=>i.assignee.split(" ")[0]);
+  if(all.includes("Johann")) return "Johann";
   return null;
 }
 
@@ -1236,16 +1245,15 @@ function renderMyDay(){
   const items = [];
   const today = TODAY_STR;
 
-  // Linear issues
-  if(GANTT_DATA && GANTT_DATA.issues){
-    for(const iss of GANTT_DATA.issues){
-      if(DONE_STATES.has(iss.status||"")) continue;
-      items.push({
-        source:"linear", id:iss.identifier||iss.id, title:iss.title,
-        owner:iss.assignee||null, end:iss.end||null, status:iss.status||"",
-        priority:iss.priority||"", url:iss.url||null,
-      });
-    }
+  // Linear issues (flatten from initiatives→projects→issues)
+  for(const iss of getLinearIssues()){
+    if(DONE_STATES.has(iss.status||"")) continue;
+    items.push({
+      source:"linear", id:iss.identifier||iss.id, title:iss.title,
+      owner:iss.assignee||null, end:iss.end||null, status:iss.status||"",
+      priority:iss.priority||"", url:iss.url||null,
+      project:iss._project||null,
+    });
   }
 
   // HubSpot tasks
