@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-04T15:51:34.711Z",
+  "refreshedAt": "2026-03-04T16:09:35.387Z",
   "currency": "€",
   "portalId": "27215736",
   "owners": [
@@ -79,28 +79,6 @@
       "ownerName": "Bas Bogerd"
     },
     {
-      "id": "375030088948",
-      "subject": "Follow up with CoinJar on plans for CARF repporting",
-      "status": "NOT_STARTED",
-      "type": "TODO",
-      "priority": "NONE",
-      "dueDate": "2025-12-04",
-      "ownerId": "901168591",
-      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">\"@⁨Johann⁩ pls ping me on Thursday so I can find out where we are at with it.\"</p><p style=\"margin:0;\">\"I know USA tax is the focus and we decided to do everything ourselves including tax cost base engine because of high costs. Except for submissions to IRS because of large fines if something goes wrong. I’d imagine our approach will be the same with dac8 - our team always wants to do everything in house but u never know. I think it’s a good time to ask.\"</p></div>",
-      "ownerName": "Johann Rozario"
-    },
-    {
-      "id": "361003004127",
-      "subject": "Try to meet them at next techleap event",
-      "status": "NOT_STARTED",
-      "type": "TODO",
-      "priority": "NONE",
-      "dueDate": "2025-12-04",
-      "ownerId": "901168591",
-      "body": null,
-      "ownerName": "Johann Rozario"
-    },
-    {
       "id": "379993648314",
       "subject": "follow uo",
       "status": "NOT_STARTED",
@@ -129,17 +107,6 @@
       "type": "TODO",
       "priority": "NONE",
       "dueDate": "2025-12-22",
-      "ownerId": "901168591",
-      "body": null,
-      "ownerName": "Johann Rozario"
-    },
-    {
-      "id": "361247638727",
-      "subject": "Touch base in a couple of months",
-      "status": "NOT_STARTED",
-      "type": "TODO",
-      "priority": "NONE",
-      "dueDate": "2026-01-06",
       "ownerId": "901168591",
       "body": null,
       "ownerName": "Johann Rozario"
@@ -761,17 +728,6 @@
       "ownerName": "Bas Bogerd"
     },
     {
-      "id": "456955074799",
-      "subject": "Follow up with Chesta Hooda",
-      "status": "NOT_STARTED",
-      "type": "TODO",
-      "priority": "NONE",
-      "dueDate": "2026-03-04",
-      "ownerId": "901168591",
-      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">Regarding note logged on Tuesday, February 17, 2026 3:08 PM</p></div>",
-      "ownerName": "Johann Rozario"
-    },
-    {
       "id": "456956439767",
       "subject": "Follow up with Vym",
       "status": "NOT_STARTED",
@@ -880,6 +836,39 @@
       "ownerId": "29853062",
       "body": null,
       "ownerName": "Bas Bogerd"
+    },
+    {
+      "id": "456955074799",
+      "subject": "Follow up with Chesta Hooda",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-03-11",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">Regarding note logged on Tuesday, February 17, 2026 3:08 PM</p></div>",
+      "ownerName": "Johann Rozario"
+    },
+    {
+      "id": "361003004127",
+      "subject": "Try to meet them at next techleap event",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-04-15",
+      "ownerId": "901168591",
+      "body": null,
+      "ownerName": "Johann Rozario"
+    },
+    {
+      "id": "375030088948",
+      "subject": "Follow up with CoinJar on plans for CARF repporting",
+      "status": "NOT_STARTED",
+      "type": "TODO",
+      "priority": "NONE",
+      "dueDate": "2026-04-22",
+      "ownerId": "901168591",
+      "body": "<div style=\"\" dir=\"auto\" data-top-level=\"true\"><p style=\"margin:0;\">\"@⁨Johann⁩ pls ping me on Thursday so I can find out where we are at with it.\"</p><p style=\"margin:0;\">\"I know USA tax is the focus and we decided to do everything ourselves including tax cost base engine because of high costs. Except for submissions to IRS because of large fines if something goes wrong. I’d imagine our approach will be the same with dac8 - our team always wants to do everything in house but u never know. I think it’s a good time to ask.\"</p></div>",
+      "ownerName": "Johann Rozario"
     }
   ],
   "deals": [
