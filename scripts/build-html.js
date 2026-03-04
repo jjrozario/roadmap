@@ -319,6 +319,112 @@ body {
 .tooltip-priority { font-size: 9px; font-weight: 600; }
 .tooltip-overdue  { font-size: 9px; color: #f59e0b; font-weight: 600; }
 
+/* ── MY DAY TAB ─────────────────────────────────────────────────────────── */
+.myday-layout {
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+}
+.myday-main { padding: 0 0 60px 0; border-right: 1px solid var(--border); overflow-y: auto; height: 100%; }
+.myday-sidebar { overflow-y: auto; height: 100%; background: var(--surface); }
+.myday-greeting {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: baseline; gap: 12px;
+}
+.myday-greeting-title { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+.myday-greeting-date { font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
+.myday-section { border-bottom: 1px solid var(--border); }
+.myday-section-hdr {
+  padding: 6px 24px;
+  font-size: 8px; letter-spacing: 1.2px; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 5;
+}
+.myday-section-count {
+  opacity: .5; font-weight: 400;
+}
+.myday-section-empty {
+  padding: 12px 24px; font-size: 10px; color: var(--text-dim);
+}
+.myday-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 24px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background .12s;
+  font-size: 11px;
+}
+.myday-item:hover { background: var(--surface2); }
+.myday-item:last-child { border-bottom: none; }
+.myday-source {
+  font-size: 7.5px; letter-spacing: .8px; font-weight: 600;
+  padding: 2px 5px; border-radius: 3px; flex-shrink: 0;
+  border: 1px solid currentColor; opacity: .7;
+}
+.src-linear  { color: #6366f1; }
+.src-hubspot { color: #f97316; }
+.src-gcal    { color: #3b82f6; }
+.src-gmail   { color: #ef4444; }
+.src-drive   { color: #10b981; }
+.myday-item-title { flex: 1; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.myday-item-owner { font-size: 9px; color: var(--text-dim); flex-shrink: 0; }
+.myday-item-date  { font-size: 9px; flex-shrink: 0; color: var(--text-dim); }
+.myday-item-date.overdue { color: #f59e0b; font-weight: 600; }
+.myday-item-date.today   { color: #3b82f6; font-weight: 600; }
+.myday-item-status { font-size: 8px; color: var(--text-dim); flex-shrink: 0; }
+.myday-coming-card {
+  margin: 16px 16px 0;
+  border: 1px dashed var(--border);
+  border-radius: 6px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.myday-coming-icon { font-size: 16px; flex-shrink: 0; opacity: .4; }
+.myday-coming-text { font-size: 10px; }
+.myday-coming-title { color: var(--text-dim); font-weight: 600; font-size: 9px; letter-spacing: .5px; margin-bottom: 2px; }
+.myday-coming-desc  { color: var(--text-dim); opacity: .6; font-size: 9px; }
+.myday-sidebar-hdr {
+  padding: 6px 16px;
+  font-size: 8px; letter-spacing: 1.2px; font-weight: 600;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 6px;
+  position: sticky; top: 0; z-index: 5;
+}
+.myday-deal-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; font-size: 10px; transition: background .12s;
+}
+.myday-deal-row:hover { background: var(--surface2); }
+.myday-deal-name { flex: 1; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.myday-deal-amt  { font-size: 9px; color: #10b981; font-weight: 600; flex-shrink: 0; }
+.myday-deal-date { font-size: 9px; color: var(--text-dim); flex-shrink: 0; }
+.myday-deal-date.overdue { color: #ef4444; }
+.myday-deal-date.soon    { color: #f59e0b; }
+.myday-person-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 20px;
+  display: flex; gap: 6px; align-items: center;
+  overflow-x: auto; position: sticky; top: 0; z-index: 10;
+}
+.myday-stats-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 7px 24px;
+  display: flex; gap: 16px; align-items: center; font-size: 9px;
+}
+.myday-stat { display: flex; gap: 5px; align-items: center; color: var(--text-dim); }
+.myday-stat-num { font-weight: 700; color: var(--text); font-size: 11px; }
+.myday-stat-num.red { color: #ef4444; }
+.myday-stat-num.amber { color: #f59e0b; }
+.myday-stat-num.blue { color: #3b82f6; }
+
 /* ── SALES & OPS TAB ────────────────────────────────────────────────────── */
 .ops-layout {
   display: grid;
@@ -477,6 +583,9 @@ body {
     <button class="tab-btn" id="tab-sales-btn" onclick="switchTab('sales')">
       <span class="tab-icon">📊</span> SALES &amp; OPERATIONS
     </button>
+    <button class="tab-btn" id="tab-myday-btn" onclick="switchTab('myday')">
+      <span class="tab-icon">☀️</span> MY DAY
+    </button>
   </div>
 
   <div class="header-right">
@@ -525,6 +634,18 @@ body {
   <div class="ops-layout" id="ops-layout">
     <div class="ops-col ops-col-tasks" id="ops-tasks-col"></div>
     <div class="ops-col ops-col-pipeline" id="ops-pipeline-col"></div>
+  </div>
+</div>
+
+<!-- ══ MY DAY TAB ══════════════════════════════════════════════════════════ -->
+<div id="panel-myday" class="tab-panel">
+  <div class="myday-person-bar" id="myday-person-bar">
+    <span class="owner-strip-label">SHOWING FOR</span>
+  </div>
+  <div class="myday-stats-bar" id="myday-stats-bar"></div>
+  <div class="myday-layout">
+    <div class="myday-main" id="myday-main"></div>
+    <div class="myday-sidebar" id="myday-sidebar"></div>
   </div>
 </div>
 
@@ -1000,6 +1121,255 @@ function renderOpsEmpty(){
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// MY DAY TAB
+// ═══════════════════════════════════════════════════════════════════════════
+let MYDAY_PERSON = localStorage.getItem("myday_person") || "me";
+
+function renderMyDay(){
+  const main    = document.getElementById("myday-main");
+  const sidebar = document.getElementById("myday-sidebar");
+  const pbar    = document.getElementById("myday-person-bar");
+  const sbar    = document.getElementById("myday-stats-bar");
+  if(!main||!sidebar||!pbar||!sbar) return;
+
+  // ── Build combined item list ─────────────────────────────────────────────
+  const items = [];
+  const today = TODAY_STR;
+
+  // Linear issues
+  if(GANTT_DATA && GANTT_DATA.issues){
+    for(const iss of GANTT_DATA.issues){
+      if(DONE_STATES.has(iss.status||"")) continue;
+      items.push({
+        source:"linear", id:iss.identifier||iss.id, title:iss.title,
+        owner:iss.assignee||null, end:iss.end||null, status:iss.status||"",
+        priority:iss.priority||"", url:iss.url||null,
+      });
+    }
+  }
+
+  // HubSpot tasks
+  if(HS_DATA && HS_DATA.tasks){
+    for(const t of HS_DATA.tasks){
+      if(t.status==="COMPLETED") continue;
+      const dueStr = t.dueDate ? t.dueDate.split("T")[0] : null;
+      items.push({
+        source:"hubspot", id:t.id, title:t.subject||t.title||"(untitled)",
+        owner:t.ownerName||null, end:dueStr, status:t.status||"",
+        priority:"", url: HS_DATA.portalId
+          ? \`https://app.hubspot.com/tasks/\${HS_DATA.portalId}?taskId=\${t.id}\`
+          : null,
+      });
+    }
+  }
+
+  // ── Determine person list for filter bar ──────────────────────────────────
+  const people = new Set();
+  people.add("me");
+  for(const it of items) if(it.owner) people.add(it.owner.split(" ")[0]);
+  // Try to detect current user from owners list
+  let myName = null;
+  if(HS_DATA&&HS_DATA.owners){
+    const emailFragment = "johann"; // heuristic — first name lowercase
+    const me = HS_DATA.owners.find(o=>o.email&&o.email.toLowerCase().includes(emailFragment));
+    if(me) myName = me.name.split(" ")[0];
+  }
+  if(!myName && GANTT_DATA&&GANTT_DATA.issues){
+    const all = GANTT_DATA.issues.filter(i=>i.assignee).map(i=>i.assignee.split(" ")[0]);
+    // pick "Johann" if present
+    if(all.includes("Johann")) myName = "Johann";
+  }
+
+  // ── Person filter pill bar ──────────────────────────────────────────────
+  pbar.innerHTML = '<span class="owner-strip-label">SHOWING FOR</span>';
+  const allPill = document.createElement("button");
+  allPill.className = "owner-pill"+(MYDAY_PERSON==="all"?" active":"");
+  allPill.textContent = "All";
+  allPill.addEventListener("click",()=>{ MYDAY_PERSON="all"; localStorage.setItem("myday_person","all"); renderMyDay(); });
+  pbar.appendChild(allPill);
+  for(const p of Array.from(people).filter(x=>x!=="me")){
+    const pill = document.createElement("button");
+    pill.className = "owner-pill"+(MYDAY_PERSON===p?" active":"");
+    pill.textContent = p==="me"? (myName||"Me") : p;
+    pill.addEventListener("click",()=>{ MYDAY_PERSON=p; localStorage.setItem("myday_person",p); renderMyDay(); });
+    pbar.appendChild(pill);
+  }
+
+  // ── Filter items by person ────────────────────────────────────────────────
+  function ownerFirst(name){ return (name||"").split(" ")[0]; }
+  const filtered = MYDAY_PERSON==="all" ? items
+    : MYDAY_PERSON==="me" && myName ? items.filter(it=>ownerFirst(it.owner)===myName)
+    : items.filter(it=>ownerFirst(it.owner)===MYDAY_PERSON);
+
+  // ── Group by urgency ──────────────────────────────────────────────────────
+  const buckets = { overdue:[], today:[], week:[], later:[] };
+  for(const it of filtered){
+    const dd = it.end ? daysDiff(it.end) : null;
+    const od = it.end && isActive(it.status) && it.end < today;
+    if(od)                          buckets.overdue.push(it);
+    else if(dd===0)                 buckets.today.push(it);
+    else if(dd!==null && dd<=7)     buckets.week.push(it);
+    else                            buckets.later.push(it);
+  }
+
+  // ── Stats bar ─────────────────────────────────────────────────────────────
+  const totalOpen = filtered.length;
+  const odCount   = buckets.overdue.length;
+  const todayCount= buckets.today.length;
+  const weekCount = buckets.week.length;
+  sbar.innerHTML = \`
+    <div class="myday-stat"><span class="myday-stat-num">\${totalOpen}</span> open</div>
+    <div class="myday-stat"><span class="myday-stat-num\${odCount>0?" red":""}">\${odCount}</span> overdue</div>
+    <div class="myday-stat"><span class="myday-stat-num\${todayCount>0?" blue":""}">\${todayCount}</span> due today</div>
+    <div class="myday-stat"><span class="myday-stat-num\${weekCount>0?" amber":""}">\${weekCount}</span> due this week</div>
+  \`;
+
+  // ── Render main column ────────────────────────────────────────────────────
+  main.innerHTML = "";
+  const sections = [
+    { key:"overdue", icon:"🔴", label:"OVERDUE",       items:buckets.overdue },
+    { key:"today",   icon:"🔵", label:"DUE TODAY",     items:buckets.today   },
+    { key:"week",    icon:"🟡", label:"DUE THIS WEEK", items:buckets.week    },
+    { key:"later",   icon:"⚪", label:"LATER",         items:buckets.later   },
+  ];
+
+  function srcLabel(s){
+    if(s==="linear")  return {cls:"src-linear",  txt:"LIN"};
+    if(s==="hubspot") return {cls:"src-hubspot",  txt:"HS"};
+    if(s==="gcal")    return {cls:"src-gcal",     txt:"CAL"};
+    if(s==="gmail")   return {cls:"src-gmail",    txt:"ML"};
+    return {cls:"",txt:s};
+  }
+
+  const greeting = document.createElement("div");
+  greeting.className = "myday-greeting";
+  const hour = new Date().getHours();
+  const greetStr = hour<12?"Good morning":hour<17?"Good afternoon":"Good evening";
+  greeting.innerHTML = \`
+    <div class="myday-greeting-title">\${hour<12?"Good morning":hour<17?"Good afternoon":"Good evening"}\${myName?" "+myName:""} ☀️</div>
+    <div class="myday-greeting-date">\${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).toUpperCase()}</div>
+  \`;
+  main.appendChild(greeting);
+
+  for(const sec of sections){
+    const secEl = document.createElement("div");
+    secEl.className = "myday-section";
+    const hdr = document.createElement("div");
+    hdr.className = "myday-section-hdr";
+    hdr.innerHTML = \`<span>\${sec.icon} \${sec.label}</span><span class="myday-section-count">\${sec.items.length}</span>\`;
+    secEl.appendChild(hdr);
+    if(!sec.items.length){
+      const emp = document.createElement("div");
+      emp.className = "myday-section-empty";
+      emp.textContent = sec.key==="overdue"?"Nothing overdue — great!":"Nothing here.";
+      secEl.appendChild(emp);
+    } else {
+      for(const it of sec.items){
+        const row = document.createElement("div");
+        row.className = "myday-item";
+        if(it.url){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(it.url,"_blank")); }
+        const {cls,txt} = srcLabel(it.source);
+        const dd = it.end ? daysDiff(it.end) : null;
+        const dateLabel = it.end ? (dd===0?"Today":dd<0?Math.abs(dd)+"d ago":fmtDate(it.end)) : "";
+        const dateCls   = dd!==null && dd<0 ? "overdue" : dd===0 ? "today" : "";
+        row.innerHTML = \`
+          <span class="myday-source \${cls}">\${txt}</span>
+          <span class="myday-item-title">\${it.title}</span>
+          \${it.owner?'<span class="myday-item-owner">'+ownerFirst(it.owner)+'</span>':""}
+          \${it.status?'<span class="myday-item-status">'+it.status.toUpperCase()+'</span>':""}
+          \${dateLabel?'<span class="myday-item-date '+dateCls+'">'+dateLabel+'</span>':""}
+        \`;
+        secEl.appendChild(row);
+      }
+    }
+    main.appendChild(secEl);
+  }
+
+  // Coming soon cards
+  const comingSoon = document.createElement("div");
+  comingSoon.style.cssText="padding:16px 12px;";
+  comingSoon.innerHTML = \`
+    <div class="myday-section-hdr" style="border-bottom:none;padding-bottom:4px;"><span>🔌 COMING SOON</span></div>
+    <div class="myday-coming-card">
+      <span class="myday-coming-icon">📧</span>
+      <div class="myday-coming-text">
+        <div class="myday-coming-title">GMAIL</div>
+        <div class="myday-coming-desc">Unread threads + action items in your inbox</div>
+      </div>
+    </div>
+    <div class="myday-coming-card">
+      <span class="myday-coming-icon">📅</span>
+      <div class="myday-coming-text">
+        <div class="myday-coming-title">GOOGLE CALENDAR</div>
+        <div class="myday-coming-desc">Today's meetings and upcoming events</div>
+      </div>
+    </div>
+    <div class="myday-coming-card">
+      <span class="myday-coming-icon">📄</span>
+      <div class="myday-coming-text">
+        <div class="myday-coming-title">GOOGLE DRIVE</div>
+        <div class="myday-coming-desc">Documents shared with you this week</div>
+      </div>
+    </div>
+  \`;
+  main.appendChild(comingSoon);
+
+  // ── Sidebar ───────────────────────────────────────────────────────────────
+  sidebar.innerHTML = "";
+  if(HS_DATA && HS_DATA.deals && HS_DATA.deals.length){
+    const now = new Date();
+    const in30 = new Date(); in30.setDate(in30.getDate()+30);
+    const soonDeals = HS_DATA.deals
+      .filter(d=>!DONE_STATES.has(d.stage||"") && d.closeDate)
+      .sort((a,b)=>new Date(a.closeDate)-new Date(b.closeDate))
+      .slice(0,10);
+    if(soonDeals.length){
+      const sideHdr = document.createElement("div");
+      sideHdr.className = "myday-sidebar-hdr";
+      sideHdr.textContent = "🏆 PIPELINE CLOSING SOON";
+      sidebar.appendChild(sideHdr);
+      for(const d of soonDeals){
+        const dr = document.createElement("div");
+        dr.className = "myday-deal-row";
+        const dd2 = daysDiff(d.closeDate);
+        const dCls = dd2<0?"overdue":dd2<=14?"soon":"";
+        const amt = d.amount ? (HS_DATA.currency||"€")+Number(d.amount).toLocaleString("en") : "";
+        if(HS_DATA.portalId){ dr.style.cursor="pointer"; dr.addEventListener("click",()=>window.open(\`https://app.hubspot.com/contacts/\${HS_DATA.portalId}/deal/\${d.id}\`,"_blank")); }
+        dr.innerHTML = \`
+          <span class="myday-deal-name">\${d.name||"(untitled)"}</span>
+          \${amt?'<span class="myday-deal-amt">'+amt+'</span>':""}
+          <span class="myday-deal-date \${dCls}">\${dd2===0?"Today":dd2<0?Math.abs(dd2)+"d ago":fmtDate(d.closeDate)}</span>
+        \`;
+        sidebar.appendChild(dr);
+      }
+    }
+  }
+
+  // Sidebar coming soon
+  const sideComingSoon = document.createElement("div");
+  sideComingSoon.style.cssText="padding:12px;";
+  sideComingSoon.innerHTML = \`
+    <div class="myday-sidebar-hdr" style="margin-top:12px">📬 INBOX SUMMARY</div>
+    <div class="myday-coming-card">
+      <span class="myday-coming-icon">📧</span>
+      <div class="myday-coming-text">
+        <div class="myday-coming-title">GMAIL</div>
+        <div class="myday-coming-desc">Connect Google Workspace to see your inbox here</div>
+      </div>
+    </div>
+    <div class="myday-sidebar-hdr" style="margin-top:12px">📆 TODAY'S SCHEDULE</div>
+    <div class="myday-coming-card">
+      <span class="myday-coming-icon">📅</span>
+      <div class="myday-coming-text">
+        <div class="myday-coming-title">GOOGLE CALENDAR</div>
+        <div class="myday-coming-desc">Connect to see today's meetings</div>
+      </div>
+    </div>
+  \`;
+  sidebar.appendChild(sideComingSoon);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // INIT / REFRESH
 // ═══════════════════════════════════════════════════════════════════════════
 async function init(){
@@ -1033,6 +1403,9 @@ async function init(){
       } else { renderOpsEmpty(); }
     } else { renderOpsEmpty(); }
   } catch(e){ renderOpsEmpty(); }
+
+  // Always render My Day (works with whatever data has loaded)
+  renderMyDay();
 
   if(btn) btn.classList.remove("loading");
 }
