@@ -1163,6 +1163,42 @@ function renderOpsEmpty(){
 // ═══════════════════════════════════════════════════════════════════════════
 let MYDAY_PERSON = localStorage.getItem("myday_person") || "me";
 
+// Detect the "current user" first name from loaded data (heuristic: email contains first name)
+function detectMyName(){
+  if(HS_DATA&&HS_DATA.owners){
+    const me = HS_DATA.owners.find(o=>o.email&&o.email.toLowerCase().includes("johann"));
+    if(me) return me.name.split(" ")[0];
+  }
+  if(GANTT_DATA&&GANTT_DATA.issues){
+    const all = GANTT_DATA.issues.filter(i=>i.assignee).map(i=>i.assignee.split(" ")[0]);
+    if(all.includes("Johann")) return "Johann";
+  }
+  return null;
+}
+
+// Load google-data-{name}.json if it exists, otherwise fall back to google-data.json
+async function loadGoogleDataFor(personName){
+  if(personName){
+    try{
+      const r=await fetch(`./google-data-${personName.toLowerCase()}.json?t=${Date.now()}`);
+      if(r.ok){ GOOGLE_DATA=await r.json(); return; }
+    }catch(e){}
+  }
+  try{
+    const r=await fetch('./google-data.json?t='+Date.now());
+    if(r.ok){ GOOGLE_DATA=await r.json(); }
+  }catch(e){}
+}
+
+// Switch person filter, reload their Google data, and re-render
+async function switchToPersonAndRender(personKey){
+  MYDAY_PERSON=personKey;
+  localStorage.setItem("myday_person",personKey);
+  const name = personKey==="all" ? null : personKey==="me" ? detectMyName() : personKey;
+  await loadGoogleDataFor(name);
+  renderMyDay();
+}
+
 function renderMyDay(){
   const main    = document.getElementById("myday-main");
   const sidebar = document.getElementById("myday-sidebar");
@@ -1205,31 +1241,21 @@ function renderMyDay(){
   const people = new Set();
   people.add("me");
   for(const it of items) if(it.owner) people.add(it.owner.split(" ")[0]);
-  // Try to detect current user from owners list
-  let myName = null;
-  if(HS_DATA&&HS_DATA.owners){
-    const emailFragment = "johann"; // heuristic — first name lowercase
-    const me = HS_DATA.owners.find(o=>o.email&&o.email.toLowerCase().includes(emailFragment));
-    if(me) myName = me.name.split(" ")[0];
-  }
-  if(!myName && GANTT_DATA&&GANTT_DATA.issues){
-    const all = GANTT_DATA.issues.filter(i=>i.assignee).map(i=>i.assignee.split(" ")[0]);
-    // pick "Johann" if present
-    if(all.includes("Johann")) myName = "Johann";
-  }
+  // Detect current user via shared helper
+  const myName = detectMyName();
 
   // ── Person filter pill bar ──────────────────────────────────────────────
   pbar.innerHTML = '<span class="owner-strip-label">SHOWING FOR</span>';
   const allPill = document.createElement("button");
   allPill.className = "owner-pill"+(MYDAY_PERSON==="all"?" active":"");
   allPill.textContent = "All";
-  allPill.addEventListener("click",()=>{ MYDAY_PERSON="all"; localStorage.setItem("myday_person","all"); renderMyDay(); });
+  allPill.addEventListener("click",()=>switchToPersonAndRender("all"));
   pbar.appendChild(allPill);
   for(const p of Array.from(people).filter(x=>x!=="me")){
     const pill = document.createElement("button");
     pill.className = "owner-pill"+(MYDAY_PERSON===p?" active":"");
     pill.textContent = p==="me"? (myName||"Me") : p;
-    pill.addEventListener("click",()=>{ MYDAY_PERSON=p; localStorage.setItem("myday_person",p); renderMyDay(); });
+    pill.addEventListener("click",()=>switchToPersonAndRender(p));
     pbar.appendChild(pill);
   }
 
@@ -1504,11 +1530,12 @@ async function init(){
     } else { renderOpsEmpty(); }
   } catch(e){ renderOpsEmpty(); }
 
-  // Load Google data (Gmail, Calendar, Drive) — written by morning-brief scheduled task
-  try {
-    const gr2=await fetch('./google-data.json?t='+Date.now());
-    if(gr2.ok){ GOOGLE_DATA=await gr2.json(); }
-  } catch(e){ /* google-data.json not yet generated — silently skip */ }
+  // Load Google data for current person (google-data-{name}.json → fallback google-data.json)
+  // detectMyName() may return null if data not loaded yet — loadGoogleDataFor handles that
+  const myPersonKey = MYDAY_PERSON==="all" ? null
+    : MYDAY_PERSON==="me" ? detectMyName()
+    : MYDAY_PERSON;
+  await loadGoogleDataFor(myPersonKey);
 
   // Always render My Day (works with whatever data has loaded)
   renderMyDay();
