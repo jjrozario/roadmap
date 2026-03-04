@@ -608,7 +608,7 @@ body {
       <span class="tab-icon">📊</span> SALES &amp; OPERATIONS
     </button>
     <button class="tab-btn" id="tab-myday-btn" onclick="switchTab('myday')">
-      <span class="tab-icon">☀️</span> MY DAY
+      <span class="tab-icon">✅</span> TO DOs
     </button>
   </div>
 
@@ -1377,8 +1377,8 @@ function renderMyDay(){
   const hour = new Date().getHours();
   const greetStr = hour<12?"Good morning":hour<17?"Good afternoon":"Good evening";
   const greetLine = viewName
-    ? `${greetStr} — ${viewName}'s Day ☀️`
-    : `${greetStr} ☀️`;
+    ? `${greetStr} — ${viewName}'s To Dos ✅`
+    : `${greetStr} ✅`;
   greeting.innerHTML = `
     <div class="myday-greeting-title">${greetLine}</div>
     <div class="myday-greeting-date">${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).toUpperCase()}</div>
