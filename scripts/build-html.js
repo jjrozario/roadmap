@@ -831,18 +831,18 @@ function renderGantt(){
     const dated=ini.projects.filter(p=>p.startDate||p.targetDate);
     const iniStart=dated.reduce((a,p)=>(!a||(p.startDate&&p.startDate<a))?p.startDate:a,null);
     const iniEnd=dated.reduce((a,p)=>(!a||(p.targetDate&&p.targetDate>a))?p.targetDate:a,null)||ini.targetDate;
-    ganttBody.appendChild(makeGanttRow({indent:0,label:ini.name,status:ini.status,color:ini.color,start:iniStart,end:iniEnd,url:ini.url,hasChildren:ini.projects.length>0,isExpanded:iniExp,isIni:true,onClick:()=>{ expanded[iniKey]=!expanded[iniKey]; renderGantt(); },barClickable:false,barData:{label:ini.name,status:ini.status,start:iniStart,end:iniEnd,url:ini.url,clickable:false}}));
+    ganttBody.appendChild(makeGanttRow({indent:0,label:ini.name,status:ini.status,color:ini.color,start:iniStart,end:iniEnd,url:ini.url,hasChildren:ini.projects.length>0,isExpanded:iniExp,isIni:true,onClick:()=>{ expanded[iniKey]=!expanded[iniKey]; renderGantt(); },barClickable:!!ini.url,barData:{label:ini.name,status:ini.status,start:iniStart,end:iniEnd,url:ini.url,clickable:!!ini.url}}));
     if(iniExp){
       for(const proj of ini.projects){
         const projKey=iniKey+"_"+proj.id;
         if(GANTT_FILTER){ const hm=(proj.issues||[]).some(i=>ganttIssueMatchesFilter(i)); if(!hm) continue; }
         const projExp=GANTT_FILTER?true:!!expanded[projKey];
         const hasIssues=proj.issues&&proj.issues.length>0;
-        ganttBody.appendChild(makeGanttRow({indent:1,label:proj.name,status:proj.status||"",color:proj.color,start:proj.startDate,end:proj.targetDate,url:proj.url,hasChildren:hasIssues,isExpanded:projExp,isIni:false,onClick:hasIssues?()=>{ expanded[projKey]=!expanded[projKey]; renderGantt(); }:null,barClickable:false,barData:{label:proj.name,status:proj.status,start:proj.startDate,end:proj.targetDate,url:proj.url,clickable:false}}));
+        ganttBody.appendChild(makeGanttRow({indent:1,label:proj.name,status:proj.status||"",color:proj.color,start:proj.startDate,end:proj.targetDate,url:proj.url,hasChildren:hasIssues,isExpanded:projExp,isIni:false,onClick:hasIssues?()=>{ expanded[projKey]=!expanded[projKey]; renderGantt(); }:proj.url?()=>window.open(proj.url,"_blank"):null,barClickable:!!proj.url,barData:{label:proj.name,status:proj.status,start:proj.startDate,end:proj.targetDate,url:proj.url,clickable:!!proj.url}}));
         if(projExp&&hasIssues) for(const iss of proj.issues){
           if(GANTT_FILTER&&!ganttIssueMatchesFilter(iss)) continue;
           const od=isOverdue(iss.end,iss.status);
-          ganttBody.appendChild(makeGanttRow({indent:2,label:(iss.identifier+" "+iss.title).trim(),status:iss.status,color:sc(iss.status),start:iss.start,end:iss.end,url:iss.url,hasChildren:false,isExpanded:false,isIni:false,onClick:null,barClickable:true,assignee:iss.assignee||null,priority:iss.priority||null,overdueFlag:od,barData:{label:iss.title,status:iss.status,start:iss.start,end:iss.end,assignee:iss.assignee,priority:iss.priority,url:iss.url,clickable:true}}));
+          ganttBody.appendChild(makeGanttRow({indent:2,label:(iss.identifier+" "+iss.title).trim(),status:iss.status,color:sc(iss.status),start:iss.start,end:iss.end,url:iss.url,hasChildren:false,isExpanded:false,isIni:false,onClick:iss.url?()=>window.open(iss.url,"_blank"):null,barClickable:true,assignee:iss.assignee||null,priority:iss.priority||null,overdueFlag:od,barData:{label:iss.title,status:iss.status,start:iss.start,end:iss.end,assignee:iss.assignee,priority:iss.priority,url:iss.url,clickable:true}}));
         }
       }
       const gap=document.createElement("div"); gap.className="section-gap"; ganttBody.appendChild(gap);
