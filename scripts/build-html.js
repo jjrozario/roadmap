@@ -321,9 +321,20 @@ body {
 
 /* ── SALES & OPS TAB ────────────────────────────────────────────────────── */
 .ops-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
   height: calc(100vh - 120px);
+  overflow: hidden;
+}
+.ops-col {
   overflow-y: auto;
-  padding: 0 0 40px 0;
+  height: 100%;
+}
+.ops-col-tasks {
+  border-right: 1px solid var(--border);
+}
+.ops-col-pipeline {
+  background: var(--surface);
 }
 
 /* Owner filter strip */
@@ -512,7 +523,8 @@ body {
   </div>
 
   <div class="ops-layout" id="ops-layout">
-    <div id="ops-body"></div>
+    <div class="ops-col ops-col-tasks" id="ops-tasks-col"></div>
+    <div class="ops-col ops-col-pipeline" id="ops-pipeline-col"></div>
   </div>
 </div>
 
@@ -532,7 +544,7 @@ const sc = s => SC[s]||"#475569";
 const TODAY_STR  = new Date().toISOString().split("T")[0];
 const DONE_STATES = new Set(["Done","Completed","Cancelled","Won","Closed"]);
 function isActive(status){ return !DONE_STATES.has(status); }
-function priorityLevel(p){ if(p==="Urgent") return "urgent"; if(p==="High") return "high"; return null; }
+function priorityLevel(p){ const u=(p||"").toUpperCase(); if(u==="URGENT"||u==="1") return "urgent"; if(u==="HIGH"||u==="2") return "high"; return null; }
 function isOverdue(end, status){ return !!end && isActive(status||"") && end < TODAY_STR; }
 function daysDiff(dateStr){ return Math.ceil((new Date(dateStr)-new Date(TODAY_STR))/(1000*86400)); }
 function fmtDate(d){ if(!d) return ""; const [y,m,day]=d.split("-"); return \`\${day} \${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m-1]} \${y.slice(2)}\`; }
@@ -803,16 +815,39 @@ function dealMatchesFilters(deal){
   return true;
 }
 
+// Stage color palette — cycles through these for pipeline stages
+const STAGE_COLORS=["#6366f1","#8b5cf6","#ec4899","#f59e0b","#10b981","#3b82f6","#ef4444","#14b8a6","#f97316","#a855f7"];
+const _stageColorMap={};
+function stageColor(label){
+  if(!_stageColorMap[label]){
+    const keys=Object.keys(_stageColorMap);
+    _stageColorMap[label]=STAGE_COLORS[keys.length % STAGE_COLORS.length];
+  }
+  return _stageColorMap[label];
+}
+
 function renderOps(){
-  const body=document.getElementById("ops-body"); body.innerHTML="";
-  if(!HS_DATA){ renderOpsEmpty(); return; }
+  const tasksCol=document.getElementById("ops-tasks-col");
+  const pipeCol=document.getElementById("ops-pipeline-col");
+  if(!tasksCol||!pipeCol) return;
+  tasksCol.innerHTML=""; pipeCol.innerHTML="";
+
+  if(!HS_DATA||(!HS_DATA.tasks?.length&&!HS_DATA.deals?.length)){ renderOpsEmpty(); return; }
 
   const tasks=(HS_DATA.tasks||[]).filter(taskMatchesFilters);
   const deals=(HS_DATA.deals||[]).filter(dealMatchesFilters);
 
-  // ── TASKS ──────────────────────────────────────────────────────────────
-  if(tasks.length>0){
-    // Group into overdue / today / this week / upcoming
+  // ── LEFT: TASKS COLUMN ────────────────────────────────────────────────
+  const taskHeader=document.createElement("div"); taskHeader.className="ops-section-header";
+  taskHeader.style.top="0";
+  taskHeader.innerHTML=\`<span>☑ TASKS</span> <span class="ops-section-count">\${tasks.length}</span>\`;
+  tasksCol.appendChild(taskHeader);
+
+  if(tasks.length===0){
+    const em=document.createElement("div"); em.style.cssText="padding:32px 20px;font-size:11px;color:var(--text-dim);text-align:center";
+    em.textContent=OPS_OWNER!=="all"?"No tasks assigned to this person.":"All tasks complete — nothing outstanding!";
+    tasksCol.appendChild(em);
+  } else {
     const groups = [
       { key:"overdue", label:"OVERDUE",    color:"#f59e0b", items:[] },
       { key:"today",   label:"DUE TODAY",  color:"#3b82f6", items:[] },
@@ -820,108 +855,134 @@ function renderOps(){
       { key:"later",   label:"UPCOMING",   color:"#64748b", items:[] },
     ];
     for(const t of tasks){
-      if(isOverdue(t.dueDate,"OPEN"))                groups[0].items.push(t);
-      else if(t.dueDate===TODAY_STR)                 groups[1].items.push(t);
-      else if(t.dueDate && daysDiff(t.dueDate)<=7)   groups[2].items.push(t);
-      else                                            groups[3].items.push(t);
+      if(isOverdue(t.dueDate,"OPEN"))               groups[0].items.push(t);
+      else if(t.dueDate===TODAY_STR)                groups[1].items.push(t);
+      else if(t.dueDate && daysDiff(t.dueDate)<=7)  groups[2].items.push(t);
+      else                                           groups[3].items.push(t);
     }
-
-    const tasksSection=document.createElement("div"); tasksSection.className="ops-section";
-    const taskHeader=document.createElement("div"); taskHeader.className="ops-section-header";
-    taskHeader.innerHTML=\`☑️ &nbsp;TASKS <span class="ops-section-count">\${tasks.length}</span>\`;
-    tasksSection.appendChild(taskHeader);
 
     for(const g of groups){
       if(g.items.length===0) continue;
       const grpH=document.createElement("div");
-      grpH.style.cssText=\`padding:6px 20px;font-size:8px;color:\${g.color};letter-spacing:1.2px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px\`;
-      grpH.innerHTML=\`<span style="width:6px;height:6px;border-radius:50%;background:\${g.color};flex-shrink:0;display:inline-block"></span>\${g.label} <span style="opacity:.6">(\${g.items.length})</span>\`;
-      tasksSection.appendChild(grpH);
+      grpH.style.cssText=\`padding:5px 16px;font-size:8px;color:\${g.color};letter-spacing:1.2px;border-bottom:1px solid var(--border);border-top:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:6px\`;
+      grpH.innerHTML=\`<span style="width:5px;height:5px;border-radius:50%;background:\${g.color};flex-shrink:0;display:inline-block"></span>\${g.label} <span style="opacity:.5">(\${g.items.length})</span>\`;
+      tasksCol.appendChild(grpH);
 
       for(const t of g.items){
-        const row=document.createElement("div");
         const od=isOverdue(t.dueDate,"OPEN"); const td=t.dueDate===TODAY_STR;
-        row.className="task-row"+(od?" row-overdue":"")+(priorityLevel(t.priority)==="urgent"?" row-urgent":"");
-        row.title="Click to open in HubSpot";
+        const pri=priorityLevel(t.priority);
+        const row=document.createElement("div");
+        row.className="task-row"+(od?" row-overdue":"")+(pri==="urgent"?" row-urgent":"");
+        row.title=t.subject||(t.body?"Has notes":"");
         if(t.url) row.addEventListener("click",()=>window.open(t.url,"_blank"));
 
-        const icon=document.createElement("span"); icon.className="task-type-icon"; icon.textContent=TASK_ICONS[t.type]||"☑️"; row.appendChild(icon);
-        const nm=document.createElement("span"); nm.className="task-name"; nm.textContent=t.title; row.appendChild(nm);
+        // Type icon
+        const icon=document.createElement("span"); icon.className="task-type-icon"; icon.textContent=TASK_ICONS[t.type]||"☑"; row.appendChild(icon);
 
-        if(od){ const ot=document.createElement("span"); ot.className="overdue-tag"; ot.textContent="OVERDUE"; row.appendChild(ot); }
-        if(td&&!od){ const tt=document.createElement("span"); tt.className="today-tag"; tt.textContent="TODAY"; row.appendChild(tt); }
-        if(priorityLevel(t.priority)==="urgent"){ const pt=document.createElement("span"); pt.className="pri-tag pri-urgent"; pt.textContent="URGENT"; row.appendChild(pt); }
-        else if(priorityLevel(t.priority)==="high"){ const pt=document.createElement("span"); pt.className="pri-tag pri-high"; pt.textContent="HIGH"; row.appendChild(pt); }
+        // Name — main content
+        const nm=document.createElement("span"); nm.className="task-name"; nm.textContent=t.subject||"(no subject)"; row.appendChild(nm);
 
-        const co=document.createElement("span"); co.className="task-company"; co.textContent=t.company||t.contact||""; row.appendChild(co);
-        const du=document.createElement("span"); du.className="task-due"+(od?" overdue":td?" today":""); du.textContent=t.dueDate?fmtDate(t.dueDate):"No due date"; row.appendChild(du);
-        const op=document.createElement("span"); op.className="task-owner-pill"; op.textContent=t.ownerName?t.ownerName.split(" ")[0]:"—"; row.appendChild(op);
-        tasksSection.appendChild(row);
+        // Priority badge
+        if(pri==="urgent"){ const pt=document.createElement("span"); pt.className="pri-tag pri-urgent"; pt.textContent="URGENT"; row.appendChild(pt); }
+        else if(pri==="high"){ const pt=document.createElement("span"); pt.className="pri-tag pri-high"; pt.textContent="HIGH"; row.appendChild(pt); }
+
+        // Owner pill (show when "All" filter active)
+        if(OPS_OWNER==="all"){
+          const op=document.createElement("span"); op.className="task-owner-pill"; op.textContent=t.ownerName?t.ownerName.split(" ")[0]:"—"; row.appendChild(op);
+        }
+
+        // Due date
+        const du=document.createElement("span"); du.className="task-due"+(od?" overdue":td?" today":""); du.textContent=t.dueDate?fmtDate(t.dueDate):"No date"; row.appendChild(du);
+
+        tasksCol.appendChild(row);
       }
     }
-    body.appendChild(tasksSection);
   }
 
-  // ── PIPELINE ───────────────────────────────────────────────────────────
-  if(deals.length>0||!OPS_FILTER){
-    const dealsToShow = deals;
-    const pipeSection=document.createElement("div"); pipeSection.className="ops-section";
-    pipeSection.style.marginTop="0";
+  // ── RIGHT: PIPELINE COLUMN ─────────────────────────────────────────────
+  const allDeals=(HS_DATA.deals||[]).filter(dealMatchesFilters);
+  const pipeHeader=document.createElement("div"); pipeHeader.className="ops-section-header";
+  pipeHeader.style.top="0";
+  const totalVal=allDeals.reduce((s,d)=>s+(d.amount||0),0);
+  const wgtVal=allDeals.reduce((s,d)=>s+(d.amount||0)*(d.probability||0),0);
+  pipeHeader.innerHTML=\`<span>💼 PIPELINE</span> <span class="ops-section-count">\${allDeals.length}</span>
+    \${totalVal>0?\`<span style="margin-left:auto;font-size:9px;color:#10b981;font-weight:600">\${(HS_DATA.currency||"€")}\${totalVal.toLocaleString()}</span>\`:""}
+  \`;
+  pipeCol.appendChild(pipeHeader);
 
-    const pipeHeader=document.createElement("div"); pipeHeader.className="ops-section-header";
-    const totalVal=dealsToShow.reduce((s,d)=>s+(d.amount||0),0);
-    const valStr=totalVal>0?\` · <span style="color:#10b981;font-weight:600">\${HS_DATA.currency||"€"}\${totalVal.toLocaleString()}</span>\`:"";
-    pipeHeader.innerHTML=\`💼 &nbsp;PIPELINE <span class="ops-section-count">\${dealsToShow.length}</span>\${valStr}\`;
-    pipeSection.appendChild(pipeHeader);
+  if(allDeals.length===0){
+    const em=document.createElement("div"); em.style.cssText="padding:32px 16px;font-size:11px;color:var(--text-dim);text-align:center";
+    em.textContent="No open deals match current filters.";
+    pipeCol.appendChild(em);
+  } else {
+    // Group deals by stage
+    const byStage={};
+    const sorted=[...allDeals].sort((a,b)=>(a.closeDate||"9999")>(b.closeDate||"9999")?1:-1);
+    for(const d of sorted){
+      const sl=d.stageLabel||d.stage||"Unknown";
+      if(!byStage[sl]) byStage[sl]=[];
+      byStage[sl].push(d);
+    }
 
-    if(dealsToShow.length===0){
-      const em=document.createElement("div"); em.style.cssText="padding:20px;font-size:10px;color:var(--text-dim);text-align:center"; em.textContent="No open deals match current filters"; pipeSection.appendChild(em);
-    } else {
-      // Group by stage
-      const byStage={};
-      for(const d of dealsToShow){ if(!byStage[d.stageLabel]) byStage[d.stageLabel]=[]; byStage[d.stageLabel].push(d); }
+    for(const [stageName, stagDeals] of Object.entries(byStage)){
+      const sc=stageColor(stageName);
+      const stageVal=stagDeals.reduce((s,d)=>s+(d.amount||0),0);
 
-      const table=document.createElement("table"); table.className="pipeline-table";
-      table.innerHTML=\`<thead><tr>
-        <th style="width:30%">DEAL</th><th>STAGE</th><th>VALUE</th><th>CLOSE DATE</th><th>OWNER</th>
-      </tr></thead>\`;
-      const tbody=document.createElement("tbody");
+      // Stage group header
+      const sh=document.createElement("div");
+      sh.style.cssText=\`padding:5px 16px;font-size:8px;letter-spacing:1px;border-bottom:1px solid var(--border);border-top:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:6px;color:\${sc}\`;
+      sh.innerHTML=\`<span style="width:5px;height:5px;border-radius:50%;background:\${sc};flex-shrink:0;display:inline-block"></span>
+        \${stageName.toUpperCase()} <span style="opacity:.5">(\${stagDeals.length})</span>
+        <span style="margin-left:auto;font-size:9px;font-weight:600;color:#10b981">\${(HS_DATA.currency||"€")}\${stageVal.toLocaleString()}</span>\`;
+      pipeCol.appendChild(sh);
 
-      // Sort by close date ascending
-      const sorted=[...dealsToShow].sort((a,b)=>(a.closeDate||"9999")>(b.closeDate||"9999")?1:-1);
-      for(const d of sorted){
-        const tr=document.createElement("tr");
-        if(d.url) tr.addEventListener("click",()=>window.open(d.url,"_blank"));
+      for(const d of stagDeals){
         const dd=d.closeDate?daysDiff(d.closeDate):null;
-        const dateClass=dd!==null?(dd<0?"urgent":dd<=3?"urgent":dd<=7?"soon":""):"";
-        const stageColor=d.stageColor||"#475569";
-        tr.innerHTML=\`
-          <td><span class="deal-name">\${d.name}</span></td>
-          <td><span class="deal-stage-badge" style="background:\${stageColor}22;color:\${stageColor}">\${d.stageLabel||d.stage||"—"}</span></td>
-          <td><span class="deal-amount">\${d.amount?(HS_DATA.currency||"€")+(d.amount).toLocaleString():"—"}</span></td>
-          <td><span class="deal-close-date \${dateClass}">\${d.closeDate?fmtDate(d.closeDate):"—"}</span></td>
-          <td><span class="deal-owner-pill">\${d.ownerName?d.ownerName.split(" ")[0]:"—"}</span></td>
-        \`;
-        tbody.appendChild(tr);
+        const isUrgent=dd!==null&&dd<0;
+        const isSoon=dd!==null&&dd>=0&&dd<=7;
+        const row=document.createElement("div");
+        row.className="task-row"+(isUrgent?" row-overdue":"");
+        row.title="Click to open in HubSpot";
+        if(d.url) row.addEventListener("click",()=>window.open(d.url,"_blank"));
+
+        // Color dot for stage
+        const dot=document.createElement("span");
+        dot.style.cssText=\`width:7px;height:7px;border-radius:50%;background:\${sc};flex-shrink:0;display:inline-block\`;
+        row.appendChild(dot);
+
+        // Deal name
+        const nm=document.createElement("span"); nm.className="task-name"; nm.textContent=d.name; row.appendChild(nm);
+
+        // Amount
+        if(d.amount){
+          const am=document.createElement("span"); am.className="deal-amount"; am.textContent=(HS_DATA.currency||"€")+d.amount.toLocaleString(); row.appendChild(am);
+        }
+
+        // Owner
+        if(OPS_OWNER==="all"&&d.ownerName){
+          const op=document.createElement("span"); op.className="task-owner-pill"; op.textContent=d.ownerName.split(" ")[0]; row.appendChild(op);
+        }
+
+        // Close date
+        const du=document.createElement("span");
+        du.className="task-due"+(isUrgent?" overdue":isSoon?" today":"");
+        du.textContent=d.closeDate?fmtDate(d.closeDate):"—";
+        row.appendChild(du);
+
+        pipeCol.appendChild(row);
       }
-      // Total row
-      if(totalVal>0){
-        const tr=document.createElement("tr"); tr.className="pipeline-total-row";
-        tr.innerHTML=\`<td colspan="2">TOTAL PIPELINE VALUE</td><td>\${HS_DATA.currency||"€"}\${totalVal.toLocaleString()}</td><td colspan="2"></td>\`;
-        tbody.appendChild(tr);
-      }
-      table.appendChild(tbody);
-      pipeSection.appendChild(table);
     }
-    body.appendChild(pipeSection);
+
+    // Weighted total footer
+    if(wgtVal>0){
+      const footer=document.createElement("div");
+      footer.style.cssText="padding:10px 16px;border-top:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--text-muted)";
+      footer.innerHTML=\`<span>WEIGHTED PIPELINE (prob.)</span><span style="color:#10b981;font-weight:700;font-size:11px">\${(HS_DATA.currency||"€")}\${Math.round(wgtVal).toLocaleString()}</span>\`;
+      pipeCol.appendChild(footer);
+    }
   }
 
-  if(tasks.length===0&&deals.length===0&&(OPS_FILTER||OPS_OWNER!=="all")){
-    const em=document.createElement("div"); em.style.cssText="padding:40px;text-align:center;font-size:11px;color:var(--text-muted)"; em.textContent="No items match the current filters."; body.appendChild(em);
-  }
-  if(tasks.length===0&&deals.length===0&&!OPS_FILTER&&OPS_OWNER==="all"){
-    renderOpsEmpty();
-  }
+  if(!tasks.length&&!deals.length&&!OPS_FILTER&&OPS_OWNER==="all") renderOpsEmpty();
 }
 
 function renderOpsEmpty(){
