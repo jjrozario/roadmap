@@ -324,7 +324,7 @@ body {
   height: calc(100vh - 120px);
   overflow-y: auto;
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 3fr 2fr;
   gap: 0;
 }
 .myday-main { padding: 0 0 60px 0; border-right: 1px solid var(--border); overflow-y: auto; height: 100%; }
@@ -853,8 +853,9 @@ function renderGantt(){
 // ═══════════════════════════════════════════════════════════════════════════
 // SALES & OPS (HUBSPOT)
 // ═══════════════════════════════════════════════════════════════════════════
-let HS_DATA    = null;
-let OPS_OWNER  = "all"; // "all" or ownerId string
+let HS_DATA     = null;
+let GOOGLE_DATA = null;
+let OPS_OWNER   = "all"; // "all" or ownerId string
 
 function opsComputeStats(data){
   const tasks = data.tasks||[];
@@ -1285,34 +1286,70 @@ function renderMyDay(){
     main.appendChild(secEl);
   }
 
-  // Coming soon cards
-  const comingSoon = document.createElement("div");
-  comingSoon.style.cssText="padding:16px 12px;";
-  comingSoon.innerHTML = \`
-    <div class="myday-section-hdr" style="border-bottom:none;padding-bottom:4px;"><span>🔌 COMING SOON</span></div>
-    <div class="myday-coming-card">
-      <span class="myday-coming-icon">📧</span>
-      <div class="myday-coming-text">
-        <div class="myday-coming-title">GMAIL</div>
-        <div class="myday-coming-desc">Unread threads + action items in your inbox</div>
-      </div>
-    </div>
-    <div class="myday-coming-card">
-      <span class="myday-coming-icon">📅</span>
-      <div class="myday-coming-text">
-        <div class="myday-coming-title">GOOGLE CALENDAR</div>
-        <div class="myday-coming-desc">Today's meetings and upcoming events</div>
-      </div>
-    </div>
-    <div class="myday-coming-card">
-      <span class="myday-coming-icon">📄</span>
-      <div class="myday-coming-text">
-        <div class="myday-coming-title">GOOGLE DRIVE</div>
-        <div class="myday-coming-desc">Documents shared with you this week</div>
-      </div>
-    </div>
-  \`;
-  main.appendChild(comingSoon);
+  // ── Gmail section ────────────────────────────────────────────────────────
+  const gmailSec = document.createElement("div");
+  gmailSec.className = "myday-section";
+  if(GOOGLE_DATA && GOOGLE_DATA.gmail && GOOGLE_DATA.gmail.threads && GOOGLE_DATA.gmail.threads.length){
+    const threads = GOOGLE_DATA.gmail.threads.slice(0,8);
+    gmailSec.innerHTML = \`<div class="myday-section-hdr"><span>📧 INBOX</span><span class="myday-section-count">\${GOOGLE_DATA.gmail.unreadCount||threads.length} unread</span></div>\`;
+    for(const t of threads){
+      const row = document.createElement("div");
+      row.className = "myday-item";
+      const d = t.date ? new Date(t.date) : null;
+      const dateStr = d ? d.toLocaleDateString("en-GB",{day:"2-digit",month:"short"}) : "";
+      row.innerHTML = \`
+        <span class="myday-source src-gmail">ML</span>
+        <span class="myday-item-title">\${t.subject||"(no subject)"}</span>
+        <span class="myday-item-owner">\${(t.from||"").replace(/<.*>/,"").trim().split(" ")[0]}</span>
+        \${dateStr?'<span class="myday-item-date">'+dateStr+'</span>':""}
+      \`;
+      gmailSec.appendChild(row);
+    }
+  } else {
+    gmailSec.innerHTML = \`
+      <div class="myday-section-hdr"><span>📧 INBOX</span></div>
+      <div class="myday-coming-card">
+        <span class="myday-coming-icon">📧</span>
+        <div class="myday-coming-text">
+          <div class="myday-coming-title">GMAIL</div>
+          <div class="myday-coming-desc">Runs at 8am Mon–Fri via morning brief</div>
+        </div>
+      </div>\`;
+  }
+  main.appendChild(gmailSec);
+
+  // ── Google Drive section ──────────────────────────────────────────────────
+  const driveSec = document.createElement("div");
+  driveSec.className = "myday-section";
+  if(GOOGLE_DATA && GOOGLE_DATA.drive && GOOGLE_DATA.drive.recent && GOOGLE_DATA.drive.recent.length){
+    const files = GOOGLE_DATA.drive.recent.slice(0,6);
+    driveSec.innerHTML = \`<div class="myday-section-hdr"><span>📄 DRIVE — RECENT</span><span class="myday-section-count">\${files.length}</span></div>\`;
+    for(const f of files){
+      const row = document.createElement("div");
+      row.className = "myday-item";
+      if(f.url){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(f.url,"_blank")); }
+      const icon = f.mimeType&&f.mimeType.includes("spreadsheet")?"📊":f.mimeType&&f.mimeType.includes("presentation")?"📑":"📄";
+      const d = f.modifiedAt ? new Date(f.modifiedAt) : null;
+      const dateStr = d ? d.toLocaleDateString("en-GB",{day:"2-digit",month:"short"}) : "";
+      row.innerHTML = \`
+        <span class="myday-source src-drive">DR</span>
+        <span class="myday-item-title">\${icon} \${f.name||"(untitled)"}</span>
+        \${dateStr?'<span class="myday-item-date">'+dateStr+'</span>':""}
+      \`;
+      driveSec.appendChild(row);
+    }
+  } else {
+    driveSec.innerHTML = \`
+      <div class="myday-section-hdr"><span>📄 DRIVE — RECENT</span></div>
+      <div class="myday-coming-card">
+        <span class="myday-coming-icon">📄</span>
+        <div class="myday-coming-text">
+          <div class="myday-coming-title">GOOGLE DRIVE</div>
+          <div class="myday-coming-desc">Runs at 8am Mon–Fri via morning brief</div>
+        </div>
+      </div>\`;
+  }
+  main.appendChild(driveSec);
 
   // ── Sidebar ───────────────────────────────────────────────────────────────
   sidebar.innerHTML = "";
@@ -1345,28 +1382,54 @@ function renderMyDay(){
     }
   }
 
-  // Sidebar coming soon
-  const sideComingSoon = document.createElement("div");
-  sideComingSoon.style.cssText="padding:12px;";
-  sideComingSoon.innerHTML = \`
-    <div class="myday-sidebar-hdr" style="margin-top:12px">📬 INBOX SUMMARY</div>
-    <div class="myday-coming-card">
-      <span class="myday-coming-icon">📧</span>
-      <div class="myday-coming-text">
-        <div class="myday-coming-title">GMAIL</div>
-        <div class="myday-coming-desc">Connect Google Workspace to see your inbox here</div>
-      </div>
-    </div>
-    <div class="myday-sidebar-hdr" style="margin-top:12px">📆 TODAY'S SCHEDULE</div>
-    <div class="myday-coming-card">
-      <span class="myday-coming-icon">📅</span>
-      <div class="myday-coming-text">
-        <div class="myday-coming-title">GOOGLE CALENDAR</div>
-        <div class="myday-coming-desc">Connect to see today's meetings</div>
-      </div>
-    </div>
-  \`;
-  sidebar.appendChild(sideComingSoon);
+  // ── Calendar sidebar ──────────────────────────────────────────────────────
+  const calHdr = document.createElement("div");
+  calHdr.className = "myday-sidebar-hdr";
+  calHdr.style.marginTop = "12px";
+  calHdr.textContent = "📅 TODAY'S SCHEDULE";
+  sidebar.appendChild(calHdr);
+
+  if(GOOGLE_DATA && GOOGLE_DATA.calendar && GOOGLE_DATA.calendar.today && GOOGLE_DATA.calendar.today.length){
+    for(const ev of GOOGLE_DATA.calendar.today){
+      const er = document.createElement("div");
+      er.className = "myday-deal-row";
+      const st = ev.start ? new Date(ev.start).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}) : "";
+      const en = ev.end   ? new Date(ev.end).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}) : "";
+      const ppl = ev.numAttendees>1 ? \`\${ev.numAttendees} people\` : "";
+      er.innerHTML = \`
+        <span class="myday-deal-name">\${ev.title||"(untitled)"}</span>
+        \${ppl?'<span class="myday-deal-date">'+ppl+'</span>':""}
+        <span class="myday-deal-date">\${st}\${en?" – "+en:""}</span>
+      \`;
+      sidebar.appendChild(er);
+    }
+  } else {
+    const noCal = document.createElement("div");
+    noCal.className = "myday-coming-card";
+    noCal.innerHTML = \`<span class="myday-coming-icon">📅</span><div class="myday-coming-text"><div class="myday-coming-title">GOOGLE CALENDAR</div><div class="myday-coming-desc">Populated at 8am by morning brief</div></div>\`;
+    sidebar.appendChild(noCal);
+  }
+
+  // ── Upcoming events ───────────────────────────────────────────────────────
+  if(GOOGLE_DATA && GOOGLE_DATA.calendar && GOOGLE_DATA.calendar.upcoming && GOOGLE_DATA.calendar.upcoming.length){
+    const upHdr = document.createElement("div");
+    upHdr.className = "myday-sidebar-hdr";
+    upHdr.style.marginTop = "12px";
+    upHdr.textContent = "📆 COMING UP";
+    sidebar.appendChild(upHdr);
+    for(const ev of GOOGLE_DATA.calendar.upcoming.slice(0,5)){
+      const er = document.createElement("div");
+      er.className = "myday-deal-row";
+      const d = ev.start ? new Date(ev.start) : null;
+      const dateStr = d ? d.toLocaleDateString("en-GB",{weekday:"short",day:"2-digit",month:"short"}) : "";
+      const st = d ? d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}) : "";
+      er.innerHTML = \`
+        <span class="myday-deal-name">\${ev.title||"(untitled)"}</span>
+        <span class="myday-deal-date">\${dateStr} \${st}</span>
+      \`;
+      sidebar.appendChild(er);
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1403,6 +1466,12 @@ async function init(){
       } else { renderOpsEmpty(); }
     } else { renderOpsEmpty(); }
   } catch(e){ renderOpsEmpty(); }
+
+  // Load Google data (Gmail, Calendar, Drive) — written by morning-brief scheduled task
+  try {
+    const gr2=await fetch('./google-data.json?t='+Date.now());
+    if(gr2.ok){ GOOGLE_DATA=await gr2.json(); }
+  } catch(e){ /* google-data.json not yet generated — silently skip */ }
 
   // Always render My Day (works with whatever data has loaded)
   renderMyDay();
