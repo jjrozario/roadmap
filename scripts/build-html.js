@@ -1194,6 +1194,7 @@ function renderOpsEmpty(){
 // ═══════════════════════════════════════════════════════════════════════════
 let MYDAY_PERSON  = localStorage.getItem("myday_person")  || "me";
 let MYDAY_SECTION = localStorage.getItem("myday_section") || "all";
+let MYDAY_URGENCY = localStorage.getItem("myday_urgency") || "";
 
 // Flatten nested initiatives→projects→issues into a single array
 function getLinearIssues(){
@@ -1244,6 +1245,7 @@ async function switchToPersonAndRender(personKey){
 function switchSection(key){
   MYDAY_SECTION=key;
   localStorage.setItem("myday_section",key);
+  MYDAY_URGENCY=""; localStorage.removeItem("myday_urgency");
   renderMyDay();
 }
 
@@ -1355,14 +1357,84 @@ function renderMyDay(){
   const weekCount = buckets.week.length;
   const linearCount = filtered.filter(i=>i.source==="linear").length;
   const hubspotCount= filtered.filter(i=>i.source==="hubspot").length;
-  sbar.innerHTML = \`
-    <div class="myday-stat"><span class="myday-stat-num">\${totalOpen}</span> tasks</div>
-    <div class="myday-stat"><span class="myday-stat-num\${odCount>0?" red":""}">\${odCount}</span> overdue</div>
-    <div class="myday-stat"><span class="myday-stat-num\${todayCount>0?" blue":""}">\${todayCount}</span> due today</div>
-    <div class="myday-stat"><span class="myday-stat-num\${weekCount>0?" amber":""}">\${weekCount}</span> this week</div>
-    <div class="myday-stat" style="margin-left:auto;opacity:.6"><span class="myday-stat-num src-linear">\${linearCount}</span> linear</div>
-    <div class="myday-stat" style="opacity:.6"><span class="myday-stat-num src-hubspot">\${hubspotCount}</span> hubspot</div>
-  \`;
+  // ── Stats bar: section-aware + clickable chips ────────────────────────────
+  sbar.innerHTML = "";
+  (function buildStatsBar(){
+    function mkChip(num, label, numCls, opts){
+      const el = document.createElement("div");
+      el.className = "myday-stat";
+      if(opts&&opts.ml)  el.style.marginLeft = "auto";
+      if(opts&&opts.dim) el.style.opacity = ".7";
+      const sp = document.createElement("span");
+      sp.className = "myday-stat-num"+(numCls?" "+numCls:"");
+      sp.textContent = num;
+      el.appendChild(sp);
+      el.appendChild(document.createTextNode(" "+label));
+      if(opts&&opts.active){
+        el.style.background="rgba(255,255,255,.14)";
+        el.style.borderRadius="4px";
+        el.style.padding="0 4px";
+      }
+      if(opts&&opts.onClick){
+        el.style.cursor="pointer";
+        el.style.borderRadius="4px";
+        el.style.transition="background .15s";
+        el.style.padding="0 4px";
+        if(opts.title) el.title=opts.title;
+        el.addEventListener("click", opts.onClick);
+        if(!(opts&&opts.active)){
+          el.addEventListener("mouseenter",()=>el.style.background="rgba(255,255,255,.07)");
+          el.addEventListener("mouseleave",()=>el.style.background="");
+        }
+      }
+      return el;
+    }
+    function scrollTo(id){ const e=document.getElementById(id); if(e) e.scrollIntoView({behavior:"smooth",block:"start"}); }
+    const DP = new Set(JSON.parse(localStorage.getItem("supplied_done_priorities")||"[]"));
+
+    if(MYDAY_SECTION==="all"||MYDAY_SECTION==="tasks"){
+      // "X tasks" chip — click clears urgency filter if active
+      sbar.appendChild(mkChip(totalOpen,"tasks","",
+        MYDAY_URGENCY ? {onClick:()=>{MYDAY_URGENCY="";localStorage.removeItem("myday_urgency");renderMyDay();},title:"Clear filter — show all"} : null));
+      // Urgency filter chips
+      const uchips=[
+        {key:"overdue", label:"overdue",   cls:odCount>0?"red":"",   num:odCount},
+        {key:"today",   label:"due today", cls:todayCount>0?"blue":"",num:todayCount},
+        {key:"week",    label:"this week", cls:weekCount>0?"amber":"",num:weekCount},
+        {key:"later",   label:"later",     cls:"",                    num:buckets.later.length},
+      ];
+      for(const c of uchips){
+        if(!c.num) continue;
+        const isAct = MYDAY_URGENCY===c.key;
+        sbar.appendChild(mkChip(c.num, c.label, c.cls, {
+          active: isAct,
+          onClick:()=>{MYDAY_URGENCY=isAct?"":c.key; localStorage.setItem("myday_urgency",MYDAY_URGENCY); renderMyDay();},
+          title: isAct ? "Click to show all" : "Filter to "+c.label,
+        }));
+      }
+      if(linearCount)  sbar.appendChild(mkChip(linearCount,  "linear",  "src-linear",  {ml:true,dim:true, onClick:()=>scrollTo("section-linear"),  title:"Jump to Linear issues"}));
+      if(hubspotCount) sbar.appendChild(mkChip(hubspotCount, "hubspot", "src-hubspot", {       dim:true, onClick:()=>scrollTo("section-hubspot"), title:"Jump to HubSpot tasks"}));
+
+    } else if(MYDAY_SECTION==="inbox"){
+      const epN = (GOOGLE_DATA&&GOOGLE_DATA.email_priorities||[]).filter(p=>!DP.has(p.id)).length;
+      const unrN = (GOOGLE_DATA&&GOOGLE_DATA.gmail&&GOOGLE_DATA.gmail.unreadCount)||0;
+      sbar.appendChild(mkChip(epN, "priorities", epN>0?"red":"",
+        epN>0 ? {onClick:()=>scrollTo("section-email-prios"), title:"Jump to email priorities"} : null));
+      sbar.appendChild(mkChip(unrN, "unread", unrN>0?"blue":"",
+        {onClick:()=>scrollTo("myday-inbox-section"), title:"Jump to inbox"}));
+
+    } else if(MYDAY_SECTION==="drive"){
+      const dpN = (GOOGLE_DATA&&GOOGLE_DATA.drive_priorities||[]).filter(p=>!DP.has(p.id)).length;
+      const recN = (GOOGLE_DATA&&GOOGLE_DATA.drive&&GOOGLE_DATA.drive.recent||[]).slice(0,6).length;
+      sbar.appendChild(mkChip(dpN, "priorities", dpN>0?"blue":"",
+        dpN>0 ? {onClick:()=>scrollTo("section-drive-prios"), title:"Jump to drive priorities"} : null));
+      sbar.appendChild(mkChip(recN, "recent files", "",
+        {onClick:()=>scrollTo("section-drive-files"), title:"Jump to recent files"}));
+
+    } else {
+      sbar.appendChild(mkChip(totalOpen,"tasks","",null));
+    }
+  })();
 
   // ── Render main column ────────────────────────────────────────────────────
   main.innerHTML = "";
@@ -1494,6 +1566,7 @@ function renderMyDay(){
     if(linFiltered.length>0){
       const linHdr = document.createElement("div");
       linHdr.className = "myday-section";
+      linHdr.id = "section-linear";
       linHdr.innerHTML = \`<div class="myday-section-hdr" style="background:rgba(99,102,241,.06)"><span>🔷 LINEAR ISSUES</span><span class="myday-section-count src-linear">\${linFiltered.length}</span></div>\`;
       const linBuckets = { overdue:[], today:[], week:[], later:[] };
       for(const it of linFiltered){
@@ -1506,6 +1579,7 @@ function renderMyDay(){
       }
       for(const sec of [{key:"overdue",icon:"🔴",label:"OVERDUE",items:linBuckets.overdue},{key:"today",icon:"🔵",label:"DUE TODAY",items:linBuckets.today},{key:"week",icon:"🟡",label:"DUE THIS WEEK",items:linBuckets.week},{key:"later",icon:"⚪",label:"LATER",items:linBuckets.later}]){
         if(!sec.items.length) continue;
+        if(MYDAY_URGENCY && sec.key !== MYDAY_URGENCY) continue;
         const sg = document.createElement("div");
         sg.className = "myday-section";
         sg.innerHTML = \`<div class="myday-section-hdr" style="padding-left:28px;font-size:8px;opacity:.7"><span>\${sec.icon} \${sec.label}</span><span class="myday-section-count">\${sec.items.length}</span></div>\`;
@@ -1527,6 +1601,7 @@ function renderMyDay(){
     if(hsFiltered.length>0||true){
       const hsHdr = document.createElement("div");
       hsHdr.className = "myday-section";
+      hsHdr.id = "section-hubspot";
       hsHdr.innerHTML = \`<div class="myday-section-hdr" style="background:rgba(255,122,0,.06)"><span>🟠 HUBSPOT TASKS</span><span class="myday-section-count src-hubspot">\${hsFiltered.length}</span></div>\`;
       const hsBuckets = { overdue:[], today:[], week:[], later:[] };
       for(const it of hsFiltered){
@@ -1539,6 +1614,7 @@ function renderMyDay(){
       }
       for(const sec of [{key:"overdue",icon:"🔴",label:"OVERDUE",items:hsBuckets.overdue},{key:"today",icon:"🔵",label:"DUE TODAY",items:hsBuckets.today},{key:"week",icon:"🟡",label:"DUE THIS WEEK",items:hsBuckets.week},{key:"later",icon:"⚪",label:"LATER",items:hsBuckets.later}]){
         if(!sec.items.length) continue;
+        if(MYDAY_URGENCY && sec.key !== MYDAY_URGENCY) continue;
         const sg = document.createElement("div");
         sg.className = "myday-section";
         sg.innerHTML = \`<div class="myday-section-hdr" style="padding-left:28px;font-size:8px;opacity:.7"><span>\${sec.icon} \${sec.label}</span><span class="myday-section-count">\${sec.items.length}</span></div>\`;
@@ -1560,11 +1636,12 @@ function renderMyDay(){
   // ── Email priorities section ──────────────────────────────────────────────
   const showInbox = MYDAY_SECTION===”all”||MYDAY_SECTION===”inbox”;
   { const s = renderPrioritySection(“\uD83D\uDEA8 EMAIL PRIORITIES”, GOOGLE_DATA&&GOOGLE_DATA.email_priorities);
-    if(s){ if(!showInbox) s.style.display=”none”; main.appendChild(s); } }
+    if(s){ s.id=”section-email-prios”; if(!showInbox) s.style.display=”none”; main.appendChild(s); } }
 
   // ── Gmail inbox section ───────────────────────────────────────────────────
   const gmailSec = document.createElement(“div”);
   gmailSec.className = “myday-section”;
+  gmailSec.id = “myday-inbox-section”;
   if(!showInbox){ gmailSec.style.display=”none”; }
   if(GOOGLE_DATA && GOOGLE_DATA.gmail && GOOGLE_DATA.gmail.threads && GOOGLE_DATA.gmail.threads.length){
     const threads = GOOGLE_DATA.gmail.threads.slice(0,8);
@@ -1602,11 +1679,12 @@ function renderMyDay(){
   // ── Drive priorities section ──────────────────────────────────────────────
   const showDrive = MYDAY_SECTION==="all"||MYDAY_SECTION==="drive";
   { const s = renderPrioritySection("\uD83D\uDEA8 DRIVE PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.drive_priorities);
-    if(s){ if(!showDrive) s.style.display="none"; main.appendChild(s); } }
+    if(s){ s.id="section-drive-prios"; if(!showDrive) s.style.display="none"; main.appendChild(s); } }
 
   // ── Google Drive section ──────────────────────────────────────────────────
   const driveSec = document.createElement("div");
   driveSec.className = "myday-section";
+  driveSec.id = "section-drive-files";
   if(!showDrive){ driveSec.style.display="none"; }
   if(GOOGLE_DATA && GOOGLE_DATA.drive && GOOGLE_DATA.drive.recent && GOOGLE_DATA.drive.recent.length){
     const files = GOOGLE_DATA.drive.recent.slice(0,6);
