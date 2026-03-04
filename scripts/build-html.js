@@ -874,7 +874,7 @@ function renderOps(){
         const row=document.createElement("div");
         row.className="task-row"+(od?" row-overdue":"")+(pri==="urgent"?" row-urgent":"");
         row.title=t.subject||(t.body?"Has notes":"");
-        const taskUrl=HS_DATA.portalId?\`https://app.hubspot.com/contacts/\${HS_DATA.portalId}/tasks/\${t.id}\`:null;
+        const taskUrl=HS_DATA.portalId?\`https://app.hubspot.com/tasks/\${HS_DATA.portalId}?taskId=\${t.id}\`:null;
         if(taskUrl){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(taskUrl,"_blank")); }
 
         // Type icon
