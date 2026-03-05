@@ -1616,6 +1616,85 @@ function renderMyDay(){
     }
   }
 
+  // ── Deals to Action checklist (sales — deals closing ≤7 days) ─────────────
+  if(showTasks && HS_DATA && HS_DATA.deals && !MYDAY_URGENCY){
+    const todayMs = new Date().setHours(0,0,0,0);
+    const dealActions = (HS_DATA.deals||[])
+      .filter(d=>{
+        if(!d.closeDate || DONE_STATES.has(d.stageLabel||"")) return false;
+        const diff = Math.ceil((new Date(d.closeDate)-todayMs)/(1000*60*60*24));
+        return diff <= 7;
+      })
+      .filter(d=>!AUTO_DONE.has("deal:"+d.id))
+      .sort((a,b)=>new Date(a.closeDate)-new Date(b.closeDate))
+      .slice(0,6);
+    if(dealActions.length){
+      const dealSec = document.createElement("div");
+      dealSec.className = "myday-section";
+      dealSec.style.borderLeft = "3px solid #f97316";
+      const dealCntSpan = document.createElement("span");
+      dealCntSpan.className = "myday-section-count";
+      dealCntSpan.style.background = "#f97316";
+      dealCntSpan.textContent = dealActions.length;
+      const dealHdr = document.createElement("div");
+      dealHdr.className = "myday-section-hdr";
+      dealHdr.innerHTML = "<span>\uD83C\uDFC6 DEALS TO CLOSE</span>";
+      dealHdr.appendChild(dealCntSpan);
+      dealSec.appendChild(dealHdr);
+      const totalVal = dealActions.reduce((s,d)=>s+(Number(d.amount)||0),0);
+      const dealSumEl = document.createElement("div");
+      dealSumEl.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
+      dealSumEl.textContent = (HS_DATA.currency||"\u20AC")+totalVal.toLocaleString()+" pipeline \u2014 closing within 7 days";
+      dealSec.appendChild(dealSumEl);
+      for(const d of dealActions){
+        const row = document.createElement("div");
+        row.className = "myday-item";
+        const dealUrl = HS_DATA.portalId ? \`https://app.hubspot.com/contacts/\${HS_DATA.portalId}/deal/\${d.id}\` : null;
+        if(dealUrl){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(dealUrl,"_blank")); }
+        const diffDays = Math.ceil((new Date(d.closeDate)-todayMs)/(1000*60*60*24));
+        const isOverdue = diffDays < 0;
+        const badge = document.createElement("span");
+        badge.className = "myday-source";
+        badge.style.cssText = "background:"+(isOverdue?"#ef4444":diffDays<=2?"#f97316":"#f59e0b")+";color:#fff;min-width:52px;text-align:center;font-size:9px;flex-shrink:0;";
+        badge.textContent = isOverdue ? "OVERDUE" : diffDays===0 ? "TODAY" : "IN "+diffDays+"d";
+        const stageEl = document.createElement("span");
+        stageEl.className = "myday-source src-hubspot";
+        stageEl.style.cssText = "font-size:8px;flex-shrink:0;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
+        stageEl.textContent = d.stageLabel||"";
+        const titleEl = document.createElement("span");
+        titleEl.className = "myday-item-title";
+        titleEl.textContent = d.name||"(untitled)";
+        const amtEl = document.createElement("span");
+        amtEl.className = "myday-item-date";
+        amtEl.style.cssText = "color:#10b981;font-weight:600;flex-shrink:0;";
+        amtEl.textContent = d.amount ? (HS_DATA.currency||"\u20AC")+Number(d.amount).toLocaleString("en") : "";
+        const doneBtn = document.createElement("button");
+        doneBtn.title = "Done for today";
+        doneBtn.style.cssText = "flex-shrink:0;width:20px;height:20px;border-radius:50%;border:1.5px solid #22c55e;background:transparent;color:#22c55e;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;margin-left:auto;";
+        doneBtn.textContent = "\u2713";
+        doneBtn.addEventListener("click", e=>{
+          e.stopPropagation();
+          AUTO_DONE.add("deal:"+d.id);
+          saveAutoDone();
+          row.style.transition="opacity .25s"; row.style.opacity="0";
+          setTimeout(()=>{
+            row.remove();
+            const rem = dealSec.querySelectorAll(".myday-item").length;
+            dealCntSpan.textContent = rem;
+            if(!rem) dealSec.remove();
+          }, 260);
+        });
+        row.appendChild(badge);
+        row.appendChild(stageEl);
+        row.appendChild(titleEl);
+        row.appendChild(amtEl);
+        row.appendChild(doneBtn);
+        dealSec.appendChild(row);
+      }
+      main.appendChild(dealSec);
+    }
+  }
+
   // ── TASKS section (Linear + HubSpot, split by source) ────────────────────
   if(showTasks){
     // Group by urgency buckets as before
@@ -1642,6 +1721,19 @@ function renderMyDay(){
         else if(dd===0) linBuckets.today.push(it);
         else if(dd!==null && dd<=7) linBuckets.week.push(it);
         else linBuckets.later.push(it);
+      }
+      // Linear summary line
+      {
+        const linSumParts = [];
+        if(linBuckets.overdue.length) linSumParts.push(linBuckets.overdue.length+" overdue");
+        if(linBuckets.today.length)   linSumParts.push(linBuckets.today.length+" due today");
+        if(linBuckets.week.length)    linSumParts.push(linBuckets.week.length+" this week");
+        if(linSumParts.length){
+          const linSum = document.createElement("div");
+          linSum.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
+          linSum.textContent = "\uD83D\uDD37 Linear: "+linSumParts.join(" \xB7")+" \u2014 prioritise these";
+          linHdr.appendChild(linSum);
+        }
       }
       for(const sec of [{key:"overdue",icon:"🔴",label:"OVERDUE",items:linBuckets.overdue},{key:"today",icon:"🔵",label:"DUE TODAY",items:linBuckets.today},{key:"week",icon:"🟡",label:"DUE THIS WEEK",items:linBuckets.week},{key:"later",icon:"⚪",label:"LATER",items:linBuckets.later}]){
         if(!sec.items.length) continue;
@@ -1677,6 +1769,19 @@ function renderMyDay(){
         else if(dd===0) hsBuckets.today.push(it);
         else if(dd!==null && dd<=7) hsBuckets.week.push(it);
         else hsBuckets.later.push(it);
+      }
+      // HubSpot tasks summary line
+      {
+        const hsSumParts = [];
+        if(hsBuckets.overdue.length) hsSumParts.push(hsBuckets.overdue.length+" overdue");
+        if(hsBuckets.today.length)   hsSumParts.push(hsBuckets.today.length+" due today");
+        if(hsBuckets.week.length)    hsSumParts.push(hsBuckets.week.length+" this week");
+        if(hsSumParts.length){
+          const hsSum = document.createElement("div");
+          hsSum.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
+          hsSum.textContent = "\uD83D\uDFE0 HubSpot: "+hsSumParts.join(" \xB7")+" \u2014 action needed";
+          hsHdr.appendChild(hsSum);
+        }
       }
       for(const sec of [{key:"overdue",icon:"🔴",label:"OVERDUE",items:hsBuckets.overdue},{key:"today",icon:"🔵",label:"DUE TODAY",items:hsBuckets.today},{key:"week",icon:"🟡",label:"DUE THIS WEEK",items:hsBuckets.week},{key:"later",icon:"⚪",label:"LATER",items:hsBuckets.later}]){
         if(!sec.items.length) continue;
