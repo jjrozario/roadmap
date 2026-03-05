@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-05T08:34:05.911Z",
+  "refreshedAt": "2026-03-05T10:16:20.111Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -4514,6 +4514,17 @@
           "startDate": null,
           "targetDate": null,
           "issues": [
+            {
+              "id": "dc5e08d8-e714-45a4-9fce-0dd06ce35323",
+              "identifier": "SUP-1195",
+              "title": "500 when admin user tries to get API key",
+              "status": "Todo",
+              "start": null,
+              "end": null,
+              "assignee": "Vladimir Ivanov",
+              "priority": "No priority",
+              "url": "https://linear.app/supplied/issue/SUP-1195/500-when-admin-user-tries-to-get-api-key"
+            },
             {
               "id": "92c2406a-63d5-4926-b8da-ef886ee1f992",
               "identifier": "SUP-1142",
