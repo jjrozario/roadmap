@@ -1948,7 +1948,7 @@ function renderMyDay(){
       // Expand panel with full snippet + from
       if(t.snippet||t.from){
         const gmailExpPanel = makeExpandPanel(
-          (t.from ? t.from+"\n" : "") + (t.snippet||""),
+          (t.from ? t.from+" | " : "") + (t.snippet||""),
           null,
           gmailUrl
         );
