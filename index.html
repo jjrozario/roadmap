@@ -6,6 +6,7 @@
 <title>Supplied · Product & Operations Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMSIgcj0iNiIgZmlsbD0iIzZjNjNmNyIvPjxjaXJjbGUgY3g9IjI1IiBjeT0iOSIgcj0iOCIgZmlsbD0iIzZjNjNmNyIvPjxjaXJjbGUgY3g9IjE0IiBjeT0iMjciIHI9IjgiIGZpbGw9IiM2YzYzZjciLz48Y2lyY2xlIGN4PSIyOSIgY3k9IjI5IiByPSI1IiBmaWxsPSIjNmM2M2Y3Ii8+PC9zdmc+"/>
 <style>
 :root {
   --bg: #f8fafc;
@@ -48,12 +49,11 @@ body {
   font-size: 16px; font-weight: 800;
   color: var(--text);
   letter-spacing: -0.5px;
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 7px;
   padding: 0 20px 0 0;
   border-right: 1px solid var(--border);
   flex-shrink: 0;
 }
-.header-logo span { color: var(--accent); }
 .header-tabs {
   display: flex; align-items: stretch; gap: 0;
   flex: 1;
@@ -625,7 +625,7 @@ body {
 <body>
 
 <div class="header">
-  <div class="header-logo">⬡ <span>Supplied</span></div>
+  <div class="header-logo"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="10" cy="11" r="6" fill="#6c63f7"/><circle cx="25" cy="9" r="8" fill="#6c63f7"/><circle cx="14" cy="27" r="8" fill="#6c63f7"/><circle cx="29" cy="29" r="5" fill="#6c63f7"/></svg> Supplied</div>
 
   <div class="header-tabs">
     <button class="tab-btn active" id="tab-roadmap-btn" onclick="switchTab('roadmap')">
