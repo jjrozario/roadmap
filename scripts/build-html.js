@@ -1806,26 +1806,28 @@ function renderMyDay(){
 
   // ── Email priorities section ──────────────────────────────────────────────
   const showInbox = MYDAY_SECTION==="all"||MYDAY_SECTION==="inbox";
-  // Brief summary sentence above email priorities
-  if(showInbox && GOOGLE_DATA&&GOOGLE_DATA.email_priorities){
-    const eps = GOOGLE_DATA.email_priorities.filter(p=>!DONE_PRIOS.has(p.id));
-    if(eps.length){
-      const counts = {};
-      for(const p of eps) counts[p.action]=(counts[p.action]||0)+1;
-      const parts=[];
-      if(counts.reply)    parts.push(counts.reply+" repl"+(counts.reply>1?"ies":"y"));
-      if(counts.followup) parts.push(counts.followup+" follow-up"+(counts.followup>1?"s":""));
-      if(counts.alert)    parts.push(counts.alert+" alert"+(counts.alert>1?"s":""));
-      if(counts.review)   parts.push(counts.review+" review"+(counts.review>1?"s":""));
-      const brief = document.createElement("div");
-      brief.style.cssText = "padding:6px 12px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
-      if(!showInbox) brief.style.display="none";
-      brief.textContent = "\uD83D\uDCEC Inbox summary: "+parts.join(", ")+" need"+(eps.length===1?"s":"")+" attention";
-      main.appendChild(brief);
-    }
-  }
   { const s = renderPrioritySection("\uD83D\uDEA8 EMAIL PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.email_priorities);
-    if(s){ s.id="section-email-prios"; if(!showInbox) s.style.display="none"; main.appendChild(s); } }
+    if(s){
+      s.id="section-email-prios"; if(!showInbox) s.style.display="none";
+      // Summary line inside section, right below header
+      if(GOOGLE_DATA&&GOOGLE_DATA.email_priorities){
+        const eps = GOOGLE_DATA.email_priorities.filter(p=>!DONE_PRIOS.has(p.id));
+        if(eps.length){
+          const counts = {};
+          for(const p of eps) counts[p.action]=(counts[p.action]||0)+1;
+          const parts=[];
+          if(counts.reply)    parts.push(counts.reply+" repl"+(counts.reply>1?"ies":"y"));
+          if(counts.followup) parts.push(counts.followup+" follow-up"+(counts.followup>1?"s":""));
+          if(counts.alert)    parts.push(counts.alert+" alert"+(counts.alert>1?"s":""));
+          if(counts.review)   parts.push(counts.review+" review"+(counts.review>1?"s":""));
+          const brief = document.createElement("div");
+          brief.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
+          brief.textContent = "\uD83D\uDCEC Inbox: "+parts.join(" \xB7")+" \u2014 needs attention";
+          s.insertBefore(brief, s.children[1]);
+        }
+      }
+      main.appendChild(s);
+    } }
 
   // ── Gmail inbox section ───────────────────────────────────────────────────
   const gmailSec = document.createElement("div");
@@ -1867,25 +1869,27 @@ function renderMyDay(){
 
   // ── Drive priorities section ──────────────────────────────────────────────
   const showDrive = MYDAY_SECTION==="all"||MYDAY_SECTION==="drive";
-  // Brief summary sentence above drive priorities
-  if(showDrive && GOOGLE_DATA&&GOOGLE_DATA.drive_priorities){
-    const dps = GOOGLE_DATA.drive_priorities.filter(p=>!DONE_PRIOS.has(p.id));
-    if(dps.length){
-      const dcounts = {};
-      for(const p of dps) dcounts[p.action]=(dcounts[p.action]||0)+1;
-      const dparts=[];
-      if(dcounts.review) dparts.push(dcounts.review+" doc"+(dcounts.review>1?"s":"")+" to review");
-      if(dcounts.read)   dparts.push(dcounts.read+" doc"+(dcounts.read>1?"s":"")+" to read");
-      if(dcounts.task)   dparts.push(dcounts.task+" task"+(dcounts.task>1?"s":""));
-      const dbrief = document.createElement("div");
-      dbrief.style.cssText = "padding:6px 12px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
-      if(!showDrive) dbrief.style.display="none";
-      dbrief.textContent = "\uD83D\uDCC2 Drive summary: "+dparts.join(", ");
-      main.appendChild(dbrief);
-    }
-  }
   { const s = renderPrioritySection("\uD83D\uDEA8 DRIVE PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.drive_priorities);
-    if(s){ s.id="section-drive-prios"; if(!showDrive) s.style.display="none"; main.appendChild(s); } }
+    if(s){
+      s.id="section-drive-prios"; if(!showDrive) s.style.display="none";
+      // Summary line inside section, right below header
+      if(GOOGLE_DATA&&GOOGLE_DATA.drive_priorities){
+        const dps = GOOGLE_DATA.drive_priorities.filter(p=>!DONE_PRIOS.has(p.id));
+        if(dps.length){
+          const dcounts = {};
+          for(const p of dps) dcounts[p.action]=(dcounts[p.action]||0)+1;
+          const dparts=[];
+          if(dcounts.review) dparts.push(dcounts.review+" doc"+(dcounts.review>1?"s":"")+" to review");
+          if(dcounts.read)   dparts.push(dcounts.read+" doc"+(dcounts.read>1?"s":"")+" to read");
+          if(dcounts.task)   dparts.push(dcounts.task+" task"+(dcounts.task>1?"s":""));
+          const dbrief = document.createElement("div");
+          dbrief.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
+          dbrief.textContent = "\uD83D\uDCC2 Drive: "+dparts.join(" \xB7");
+          s.insertBefore(dbrief, s.children[1]);
+        }
+      }
+      main.appendChild(s);
+    } }
 
   // ── Google Drive section ──────────────────────────────────────────────────
   const driveSec = document.createElement("div");
