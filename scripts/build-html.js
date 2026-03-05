@@ -1805,7 +1805,7 @@ function renderMyDay(){
     if(s){ if(!showTasks) s.style.display="none"; main.appendChild(s); } }
 
   // ── Email priorities section ──────────────────────────────────────────────
-  const showInbox = MYDAY_SECTION===”all”||MYDAY_SECTION===”inbox”;
+  const showInbox = MYDAY_SECTION==="all"||MYDAY_SECTION==="inbox";
   // Brief summary sentence above email priorities
   if(showInbox && GOOGLE_DATA&&GOOGLE_DATA.email_priorities){
     const eps = GOOGLE_DATA.email_priorities.filter(p=>!DONE_PRIOS.has(p.id));
@@ -1813,53 +1813,53 @@ function renderMyDay(){
       const counts = {};
       for(const p of eps) counts[p.action]=(counts[p.action]||0)+1;
       const parts=[];
-      if(counts.reply)    parts.push(counts.reply+” repl”+(counts.reply>1?”ies”:”y”));
-      if(counts.followup) parts.push(counts.followup+” follow-up”+(counts.followup>1?”s”:””));
-      if(counts.alert)    parts.push(counts.alert+” alert”+(counts.alert>1?”s”:””));
-      if(counts.review)   parts.push(counts.review+” review”+(counts.review>1?”s”:””));
-      const brief = document.createElement(“div”);
-      brief.style.cssText = “padding:6px 12px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;”;
-      if(!showInbox) brief.style.display=”none”;
-      brief.textContent = “\uD83D\uDCEC Inbox summary: “+parts.join(“, “)+” need”+(eps.length===1?”s”:””)+” attention”;
+      if(counts.reply)    parts.push(counts.reply+" repl"+(counts.reply>1?"ies":"y"));
+      if(counts.followup) parts.push(counts.followup+" follow-up"+(counts.followup>1?"s":""));
+      if(counts.alert)    parts.push(counts.alert+" alert"+(counts.alert>1?"s":""));
+      if(counts.review)   parts.push(counts.review+" review"+(counts.review>1?"s":""));
+      const brief = document.createElement("div");
+      brief.style.cssText = "padding:6px 12px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
+      if(!showInbox) brief.style.display="none";
+      brief.textContent = "\uD83D\uDCEC Inbox summary: "+parts.join(", ")+" need"+(eps.length===1?"s":"")+" attention";
       main.appendChild(brief);
     }
   }
-  { const s = renderPrioritySection(“\uD83D\uDEA8 EMAIL PRIORITIES”, GOOGLE_DATA&&GOOGLE_DATA.email_priorities);
-    if(s){ s.id=”section-email-prios”; if(!showInbox) s.style.display=”none”; main.appendChild(s); } }
+  { const s = renderPrioritySection("\uD83D\uDEA8 EMAIL PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.email_priorities);
+    if(s){ s.id="section-email-prios"; if(!showInbox) s.style.display="none"; main.appendChild(s); } }
 
   // ── Gmail inbox section ───────────────────────────────────────────────────
-  const gmailSec = document.createElement(“div”);
-  gmailSec.className = “myday-section”;
-  gmailSec.id = “myday-inbox-section”;
-  if(!showInbox){ gmailSec.style.display=”none”; }
+  const gmailSec = document.createElement("div");
+  gmailSec.className = "myday-section";
+  gmailSec.id = "myday-inbox-section";
+  if(!showInbox){ gmailSec.style.display="none"; }
   if(GOOGLE_DATA && GOOGLE_DATA.gmail && GOOGLE_DATA.gmail.threads && GOOGLE_DATA.gmail.threads.length){
     const threads = GOOGLE_DATA.gmail.threads.slice(0,8);
-    gmailSec.innerHTML = \`<div class=”myday-section-hdr”><span>📧 INBOX</span><span class=”myday-section-count”>\${GOOGLE_DATA.gmail.unreadCount||threads.length} unread</span></div>\`;
+    gmailSec.innerHTML = \`<div class="myday-section-hdr"><span>📧 INBOX</span><span class="myday-section-count">\${GOOGLE_DATA.gmail.unreadCount||threads.length} unread</span></div>\`;
     for(const t of threads){
-      const row = document.createElement(“div”);
-      row.className = “myday-item”;
+      const row = document.createElement("div");
+      row.className = "myday-item";
       const gmailUrl = t.url || (t.id?\`https://mail.google.com/mail/u/0/#inbox/\${t.id}\`:null);
-      if(gmailUrl){ row.style.cursor=”pointer”; row.addEventListener(“click”,()=>window.open(gmailUrl,”_blank”)); }
+      if(gmailUrl){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(gmailUrl,"_blank")); }
       const d = t.date ? new Date(t.date) : null;
-      const dateStr = d ? d.toLocaleDateString(“en-GB”,{day:”2-digit”,month:”short”}) : “”;
-      const senderName = (t.from||””).replace(/<.*>/,””).trim().split(“ “)[0];
+      const dateStr = d ? d.toLocaleDateString("en-GB",{day:"2-digit",month:"short"}) : "";
+      const senderName = (t.from||"").replace(/<.*>/,"").trim().split(" ")[0];
       row.innerHTML = \`
-        <span class=”myday-source src-gmail”>ML</span>
-        <span class=”myday-item-title”>\${t.subject||”(no subject)”}</span>
-        <span class=”myday-item-owner”>\${senderName}</span>
-        \${t.snippet?'<span class=”myday-item-status” style=”max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic”>'+t.snippet.slice(0,60)+'</span>':””}
-        \${dateStr?'<span class=”myday-item-date”>'+dateStr+'</span>':””}
+        <span class="myday-source src-gmail">ML</span>
+        <span class="myday-item-title">\${t.subject||"(no subject)"}</span>
+        <span class="myday-item-owner">\${senderName}</span>
+        \${t.snippet?'<span class="myday-item-status" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic">'+t.snippet.slice(0,60)+'</span>':""}
+        \${dateStr?'<span class="myday-item-date">'+dateStr+'</span>':""}
       \`;
       gmailSec.appendChild(row);
     }
   } else {
     gmailSec.innerHTML = \`
-      <div class=”myday-section-hdr”><span>📧 INBOX</span></div>
-      <div class=”myday-coming-card”>
-        <span class=”myday-coming-icon”>📧</span>
-        <div class=”myday-coming-text”>
-          <div class=”myday-coming-title”>GMAIL</div>
-          <div class=”myday-coming-desc”>Run “Morning Brief” task to populate</div>
+      <div class="myday-section-hdr"><span>📧 INBOX</span></div>
+      <div class="myday-coming-card">
+        <span class="myday-coming-icon">📧</span>
+        <div class="myday-coming-text">
+          <div class="myday-coming-title">GMAIL</div>
+          <div class="myday-coming-desc">Run "Morning Brief" task to populate</div>
         </div>
       </div>\`;
   }
@@ -1916,7 +1916,7 @@ function renderMyDay(){
         <span class="myday-coming-icon">📄</span>
         <div class="myday-coming-text">
           <div class="myday-coming-title">GOOGLE DRIVE</div>
-          <div class="myday-coming-desc">Run “Morning Brief” task to populate</div>
+          <div class="myday-coming-desc">Run "Morning Brief" task to populate</div>
         </div>
       </div>\`;
   }
@@ -1982,7 +1982,7 @@ function renderMyDay(){
     } else {
       const noCal = document.createElement("div");
       noCal.className = "myday-coming-card";
-      noCal.innerHTML = \`<span class="myday-coming-icon">📅</span><div class="myday-coming-text"><div class="myday-coming-title">GOOGLE CALENDAR</div><div class="myday-coming-desc">Run “Morning Brief” task to populate</div></div>\`;
+      noCal.innerHTML = \`<span class="myday-coming-icon">📅</span><div class="myday-coming-text"><div class="myday-coming-title">GOOGLE CALENDAR</div><div class="myday-coming-desc">Run "Morning Brief" task to populate</div></div>\`;
       sidebar.appendChild(noCal);
     }
 
