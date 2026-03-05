@@ -1800,7 +1800,7 @@ function renderMyDay(){
   }
 
   // ── Task priorities section ───────────────────────────────────────────────
-  const showTasks = MYDAY_SECTION==="all"||MYDAY_SECTION==="linear"||MYDAY_SECTION==="hubspot";
+  // (showTasks already declared above)
   { const s = renderPrioritySection("\uD83D\uDEA8 TASK PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.task_priorities);
     if(s){ if(!showTasks) s.style.display="none"; main.appendChild(s); } }
 
