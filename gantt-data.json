@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-05T10:16:20.111Z",
+  "refreshedAt": "2026-03-05T11:17:24.878Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -418,7 +418,7 @@
               "id": "a93bc1c9-0e51-4ccd-9f69-924b0ad3f667",
               "identifier": "SUP-1174",
               "title": "Infra preparation phase",
-              "status": "In Progress",
+              "status": "In Review",
               "start": "2026-03-03",
               "end": null,
               "assignee": null,
@@ -1848,7 +1848,7 @@
               "title": "Dialog and Pricing for Custom Onboarding plan",
               "status": "Todo",
               "start": null,
-              "end": "2026-05-29",
+              "end": "2026-03-12",
               "assignee": "Vladimir Ivanov",
               "priority": "High",
               "url": "https://linear.app/supplied/issue/SUP-1138/dialog-and-pricing-for-custom-onboarding-plan"
