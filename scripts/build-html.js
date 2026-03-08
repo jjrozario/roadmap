@@ -803,7 +803,7 @@ const SC = {
 };
 const sc = s => SC[s]||"#475569";
 const TODAY_STR  = new Date().toISOString().split("T")[0];
-const DONE_STATES = new Set(["Done","Completed","Cancelled","Won","Closed"]);
+const DONE_STATES = new Set(["Done","Completed","Cancelled","Canceled","Duplicate","Won","Closed"]);
 function isActive(status){ return !DONE_STATES.has(status); }
 function priorityLevel(p){ const u=(p||"").toUpperCase(); if(u==="URGENT"||u==="1") return "urgent"; if(u==="HIGH"||u==="2") return "high"; return null; }
 function isOverdue(end, status){ return !!end && isActive(status||"") && end < TODAY_STR; }
@@ -876,11 +876,17 @@ let GANTT_FILTER = null;
 
 function ganttComputeStats(data){
   let urgent=0,high=0,overdue=0,total=0;
-  for(const ini of data.initiatives) for(const proj of ini.projects) for(const iss of (proj.issues||[])){
-    if(!isActive(iss.status)) continue; total++;
-    const p=priorityLevel(iss.priority);
-    if(p==="urgent") urgent++; else if(p==="high") high++;
-    if(isOverdue(iss.end,iss.status)) overdue++;
+  for(const ini of data.initiatives){
+    if(DONE_STATES.has(ini.status||"")) continue;
+    for(const proj of ini.projects){
+      if(DONE_STATES.has(proj.status||"")) continue;
+      for(const iss of (proj.issues||[])){
+        if(!isActive(iss.status)) continue; total++;
+        const p=priorityLevel(iss.priority);
+        if(p==="urgent") urgent++; else if(p==="high") high++;
+        if(isOverdue(iss.end,iss.status)) overdue++;
+      }
+    }
   }
   return {urgent,high,overdue,total};
 }
@@ -966,6 +972,7 @@ function renderGantt(){
   ganttBody.innerHTML="";
   for(const ini of GANTT_DATA.initiatives){
     const iniKey=ini.id;
+    if(DONE_STATES.has(ini.status||"")) continue; // hide completed/cancelled initiatives
     if(GANTT_FILTER){ const hm=ini.projects.some(p=>(p.issues||[]).some(i=>ganttIssueMatchesFilter(i))); if(!hm) continue; }
     const iniExp=GANTT_FILTER?true:!!expanded[iniKey];
     const dated=ini.projects.filter(p=>p.startDate||p.targetDate);
@@ -975,6 +982,7 @@ function renderGantt(){
     if(iniExp){
       for(const proj of ini.projects){
         const projKey=iniKey+"_"+proj.id;
+        if(DONE_STATES.has(proj.status||"")) continue; // hide completed/cancelled projects
         if(GANTT_FILTER){ const hm=(proj.issues||[]).some(i=>ganttIssueMatchesFilter(i)); if(!hm) continue; }
         const projExp=GANTT_FILTER?true:!!expanded[projKey];
         const hasIssues=proj.issues&&proj.issues.length>0;
