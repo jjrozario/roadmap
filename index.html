@@ -366,6 +366,30 @@ body {
 .tooltip-priority { font-size: 9px; font-weight: 600; }
 .tooltip-overdue  { font-size: 9px; color: #f59e0b; font-weight: 600; }
 
+/* ── CLAUDE BRIEF PANEL ─────────────────────────────────────────────────── */
+.claude-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+.claude-panel-hdr{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(99,102,241,.07) 0%,transparent 60%);font-size:10px;font-weight:700;letter-spacing:1px;color:var(--text-muted);}
+.cpanel-key-btn{margin-left:auto;background:none;border:1px solid var(--border);border-radius:4px;color:var(--text-dim);font-size:9px;padding:2px 7px;cursor:pointer;letter-spacing:.5px;}.cpanel-key-btn:hover{border-color:var(--accent);color:var(--accent);}
+.claude-msgs{padding:12px 16px;min-height:56px;max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.claude-msg-text{font-size:12.5px;line-height:1.65;color:var(--text);white-space:pre-wrap;word-break:break-word;}
+.claude-msg-user{align-self:flex-end;}.claude-msg-user .claude-msg-text{background:rgba(99,102,241,.1);border-radius:8px;padding:7px 11px;font-size:12px;color:var(--text-muted);display:inline-block;}
+.claude-msg-thinking{color:var(--text-dim);font-size:11px;font-style:italic;}
+.claude-input-row{display:flex;gap:7px;padding:8px 12px;border-top:1px solid var(--border);}
+.claude-input-row input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 11px;font-size:11.5px;color:var(--text);outline:none;font-family:inherit;}
+.claude-input-row input:focus{border-color:var(--accent);}.claude-input-row input::placeholder{color:var(--text-dim);}
+.claude-send-btn{background:var(--accent);border:none;border-radius:6px;color:#fff;font-size:10px;font-weight:700;letter-spacing:.8px;padding:6px 14px;cursor:pointer;}.claude-send-btn:disabled{opacity:.4;cursor:not-allowed;}
+/* ── SIMPLE CHECKLIST ────────────────────────────────────────────────────── */
+.checklist-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px;}
+.checklist-hdr{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:1px;color:var(--text-muted);}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;user-select:none;}
+.cl-item:last-child{border-bottom:none;}.cl-item:hover{background:var(--surface2);}
+.cl-item.cl-done{opacity:.32;}.cl-item.cl-done .cl-title{text-decoration:line-through;}
+.cl-cb{flex-shrink:0;width:15px;height:15px;margin-top:2px;border:1.5px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .15s;}
+.cl-item.cl-done .cl-cb{background:#22c55e;border-color:#22c55e;color:#fff;}
+.cl-src{flex-shrink:0;font-size:8px;font-weight:700;letter-spacing:.5px;padding:2px 5px;border-radius:3px;margin-top:2px;white-space:nowrap;}
+.cl-title{flex:1;font-size:12px;color:var(--text);line-height:1.45;}
+.cl-meta{flex-shrink:0;font-size:10px;color:var(--text-muted);margin-top:2px;white-space:nowrap;}
+.cl-more-btn{width:100%;background:none;border:none;border-top:1px solid var(--border);padding:9px;font-size:10px;color:var(--text-dim);cursor:pointer;letter-spacing:.5px;}.cl-more-btn:hover{color:var(--accent);}
 /* ── MY DAY TAB ─────────────────────────────────────────────────────────── */
 .myday-layout {
   height: calc(100vh - 120px);
@@ -750,6 +774,24 @@ body {
   <div class="ops-layout" id="ops-layout">
     <div class="ops-col ops-col-tasks" id="ops-tasks-col"></div>
     <div class="ops-col ops-col-pipeline" id="ops-pipeline-col"></div>
+  </div>
+</div>
+
+<!-- Anthropic API key modal -->
+<div class="pat-overlay" id="claude-key-overlay">
+  <div class="pat-modal">
+    <div class="pat-modal-title">&#x1F916; CONNECT CLAUDE AI</div>
+    <div class="pat-modal-desc">
+      Enter your Anthropic API key to enable the AI daily brief.<br>
+      Stored only in your browser. Get a free key at
+      <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a>
+    </div>
+    <input type="password" id="claude-key-input" class="pat-input" placeholder="sk-ant-..." />
+    <div id="claude-key-status" class="pat-status"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="pat-save-btn" onclick="saveClaudeKey()">Connect</button>
+      <button class="pat-save-btn" style="background:var(--surface2);color:var(--text-muted);" onclick="closeClaudeKeyModal()">Cancel</button>
+    </div>
   </div>
 </div>
 
@@ -1736,275 +1778,140 @@ function renderMyDay(){
     return row;
   }
 
-  // Greeting
-  const greeting = document.createElement("div");
-  greeting.className = "myday-greeting";
-  const hour = new Date().getHours();
-  const greetStr = hour<12?"Good morning":hour<17?"Good afternoon":"Good evening";
-  const greetLine = viewName
-    ? `${greetStr} — ${viewName}'s To Dos ✅`
-    : `${greetStr} ✅`;
-  greeting.innerHTML = `
-    <div class="myday-greeting-title">${greetLine}</div>
-    <div class="myday-greeting-date">${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).toUpperCase()}</div>
-  `;
-  main.appendChild(greeting);
-
-  const showTasks = MYDAY_SECTION==="all"||MYDAY_SECTION==="tasks";
-
-  // ── TASKS section (Linear + HubSpot, split by source) ────────────────────
-  if(showTasks){
-    // Group by urgency buckets as before
-    const urgencyGroups = [
-      { key:"overdue", icon:"🔴", label:"OVERDUE",       items:buckets.overdue },
-      { key:"today",   icon:"🔵", label:"DUE TODAY",     items:buckets.today   },
-      { key:"week",    icon:"🟡", label:"DUE THIS WEEK", items:buckets.week    },
-      { key:"later",   icon:"⚪", label:"LATER",         items:buckets.later   },
-    ];
-    const linFiltered = filtered.filter(i=>i.source==="linear");
-    const hsFiltered  = filtered.filter(i=>i.source==="hubspot");
-
-    // If both sources present, show a Linear sub-section first
-    if(linFiltered.length>0){
-      const linHdr = document.createElement("div");
-      linHdr.className = "myday-section";
-      linHdr.id = "section-linear";
-      linHdr.innerHTML = `<div class="myday-section-hdr" style="background:rgba(99,102,241,.06)"><span>🔷 LINEAR ISSUES</span><span class="myday-section-count src-linear">${linFiltered.length}</span></div>`;
-      const linBuckets = { overdue:[], today:[], week:[], later:[] };
-      for(const it of linFiltered){
-        const dd = it.end ? daysDiff(it.end) : null;
-        const od = it.end && isActive(it.status) && it.end < today;
-        if(od) linBuckets.overdue.push(it);
-        else if(dd===0) linBuckets.today.push(it);
-        else if(dd!==null && dd<=7) linBuckets.week.push(it);
-        else linBuckets.later.push(it);
+  // ── Checklist builder (inner fn — accesses AUTO_DONE, viewName) ────────────
+  function buildChecklistItems(){
+    const todayStr=TODAY_STR;
+    const todayMs=new Date().setHours(0,0,0,0);
+    const items=[];
+    // 1. Email replies first
+    if(GOOGLE_DATA){
+      for(const e of (GOOGLE_DATA.email_priorities||[])){
+        if(DONE_PRIOS.has(e.id)) continue;
+        items.push({id:"ep-"+e.id,title:e.subject,source:"gmail",src:"ML",srcCls:"src-gmail",meta:e.action.toUpperCase(),url:e.url,prio:e.action==="reply"?1:e.action==="followup"?4:5});
       }
-      // Linear summary line
-      {
-        const linSumParts = [];
-        if(linBuckets.overdue.length) linSumParts.push(linBuckets.overdue.length+" overdue");
-        if(linBuckets.today.length)   linSumParts.push(linBuckets.today.length+" due today");
-        if(linBuckets.week.length)    linSumParts.push(linBuckets.week.length+" this week");
-        if(linSumParts.length){
-          const linSum = document.createElement("div");
-          linSum.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
-          linSum.textContent = "🔷 Linear: "+linSumParts.join(" ·")+" — prioritise these";
-          linHdr.appendChild(linSum);
+    }
+    // 2. Linear issues (blocked → overdue → due today → this week → high/urgent)
+    if(GANTT_DATA){
+      const myKey=(MYDAY_PERSON==="me"?(viewName||""):MYDAY_PERSON||"").toLowerCase();
+      for(const ini of (GANTT_DATA.initiatives||[])){
+        if(DONE_STATES.has(ini.status||"")) continue;
+        for(const proj of (ini.projects||[])){
+          if(DONE_STATES.has(proj.status||"")) continue;
+          for(const iss of (proj.issues||[])){
+            if(!isActive(iss.status)) continue;
+            const mine=!myKey||MYDAY_PERSON==="all"||(iss.assignee||"").toLowerCase().includes(myKey);
+            let prio=99;
+            if(iss.status==="Blocked") prio=2;
+            else if(iss.end&&iss.end<todayStr) prio=mine?3:6;
+            else if(iss.end===todayStr) prio=mine?4:7;
+            else if(iss.end&&iss.end<=new Date(Date.now()+7*864e5).toISOString().slice(0,10)) prio=mine?8:14;
+            else if(mine&&iss.priority==="urgent") prio=9;
+            else if(mine&&iss.priority==="high") prio=10;
+            else continue;
+            const meta=iss.end?(iss.end<todayStr?Math.ceil((new Date(todayStr)-new Date(iss.end))/864e5)+"d ago":iss.end===todayStr?"Today":fmtDate(iss.end)):(iss.status||"");
+            items.push({id:"lin-"+iss.id,title:(iss.identifier?iss.identifier+" ":"")+iss.title,source:"linear",src:"LIN",srcCls:"src-linear",meta,url:iss.url,prio});
+          }
         }
       }
-      for(const sec of [{key:"overdue",icon:"🔴",label:"OVERDUE",items:linBuckets.overdue},{key:"today",icon:"🔵",label:"DUE TODAY",items:linBuckets.today},{key:"week",icon:"🟡",label:"DUE THIS WEEK",items:linBuckets.week},{key:"later",icon:"⚪",label:"LATER",items:linBuckets.later}]){
-        if(!sec.items.length) continue;
-        if(MYDAY_URGENCY && sec.key !== MYDAY_URGENCY) continue;
-        const sg = document.createElement("div");
-        sg.className = "myday-section";
-        sg.innerHTML = `<div class="myday-section-hdr" style="padding-left:28px;font-size:8px;opacity:.7"><span>${sec.icon} ${sec.label}</span><span class="myday-section-count">${sec.items.length}</span></div>`;
-        for(const it of sec.items) sg.appendChild(makeItemRow(it));
-        linHdr.appendChild(sg);
-      }
-      if(linFiltered.every(i=>!i.end)||!linFiltered.length){
-        for(const it of linFiltered) linHdr.appendChild(makeItemRow(it));
-      }
-      main.appendChild(linHdr);
-    } else {
-      const noLin = document.createElement("div");
-      noLin.className = "myday-section";
-      noLin.innerHTML = `<div class="myday-section-hdr" style="background:rgba(99,102,241,.06)"><span>🔷 LINEAR ISSUES</span></div><div class="myday-section-empty">No open Linear issues assigned.</div>`;
-      main.appendChild(noLin);
     }
-
-    // HubSpot tasks by urgency bucket
-    if(hsFiltered.length>0||true){
-      const hsHdr = document.createElement("div");
-      hsHdr.className = "myday-section";
-      hsHdr.id = "section-hubspot";
-      hsHdr.innerHTML = `<div class="myday-section-hdr" style="background:rgba(255,122,0,.06)"><span>🟠 HUBSPOT TASKS</span><span class="myday-section-count src-hubspot">${hsFiltered.length}</span></div>`;
-      const hsBuckets = { overdue:[], today:[], week:[], later:[] };
-      for(const it of hsFiltered){
-        const dd = it.end ? daysDiff(it.end) : null;
-        const od = it.end && isActive(it.status) && it.end < today;
-        if(od) hsBuckets.overdue.push(it);
-        else if(dd===0) hsBuckets.today.push(it);
-        else if(dd!==null && dd<=7) hsBuckets.week.push(it);
-        else hsBuckets.later.push(it);
+    // 3. Deals closing soon
+    if(HS_DATA){
+      for(const d of (HS_DATA.deals||[])){
+        if(!d.closeDate||DONE_STATES.has(d.stageLabel||"")) continue;
+        const diff=Math.ceil((new Date(d.closeDate)-todayMs)/864e5);
+        if(diff>14) continue;
+        const prio=diff<=0?2:diff<=3?5:11;
+        const meta=diff<0?Math.abs(diff)+"d ago":diff===0?"Today":"in "+diff+"d";
+        const url=HS_DATA.portalId?"https://app.hubspot.com/contacts/"+HS_DATA.portalId+"/deal/"+d.id:null;
+        items.push({id:"deal-"+d.id,title:d.name+(d.amount?" — €"+Number(d.amount).toLocaleString():""),source:"hubspot",src:"HS",srcCls:"src-hubspot",meta,url,prio});
       }
-      // HubSpot tasks summary line
-      {
-        const hsSumParts = [];
-        if(hsBuckets.overdue.length) hsSumParts.push(hsBuckets.overdue.length+" overdue");
-        if(hsBuckets.today.length)   hsSumParts.push(hsBuckets.today.length+" due today");
-        if(hsBuckets.week.length)    hsSumParts.push(hsBuckets.week.length+" this week");
-        if(hsSumParts.length){
-          const hsSum = document.createElement("div");
-          hsSum.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
-          hsSum.textContent = "🟠 HubSpot: "+hsSumParts.join(" ·")+" — action needed";
-          hsHdr.appendChild(hsSum);
-        }
+      for(const t of (HS_DATA.tasks||[])){
+        if(!isActive(t.status)) continue;
+        const prio=t.dueDate&&t.dueDate<todayStr?6:t.dueDate===todayStr?7:99;
+        if(prio===99) continue;
+        items.push({id:"hs-"+t.id,title:t.title,source:"hubspot",src:"HS",srcCls:"src-hubspot",meta:t.dueDate<todayStr?"Overdue":"Today",url:t.url,prio});
       }
-      for(const sec of [{key:"overdue",icon:"🔴",label:"OVERDUE",items:hsBuckets.overdue},{key:"today",icon:"🔵",label:"DUE TODAY",items:hsBuckets.today},{key:"week",icon:"🟡",label:"DUE THIS WEEK",items:hsBuckets.week},{key:"later",icon:"⚪",label:"LATER",items:hsBuckets.later}]){
-        if(!sec.items.length) continue;
-        if(MYDAY_URGENCY && sec.key !== MYDAY_URGENCY) continue;
-        const sg = document.createElement("div");
-        sg.className = "myday-section";
-        sg.innerHTML = `<div class="myday-section-hdr" style="padding-left:28px;font-size:8px;opacity:.7"><span>${sec.icon} ${sec.label}</span><span class="myday-section-count">${sec.items.length}</span></div>`;
-        for(const it of sec.items) sg.appendChild(makeItemRow(it));
-        hsHdr.appendChild(sg);
-      }
-      if(!hsFiltered.length){
-        const emp = document.createElement("div"); emp.className="myday-section-empty"; emp.textContent="No open HubSpot tasks."; hsHdr.appendChild(emp);
-      }
-      main.appendChild(hsHdr);
     }
+    // 4. Drive + task priorities
+    if(GOOGLE_DATA){
+      for(const d of (GOOGLE_DATA.drive_priorities||[])){
+        if(DONE_PRIOS.has(d.id)) continue;
+        items.push({id:"dp-"+d.id,title:d.subject,source:"drive",src:"DR",srcCls:"src-drive",meta:d.action.toUpperCase(),url:d.url,prio:8});
+      }
+      for(const t of (GOOGLE_DATA.task_priorities||[])){
+        if(DONE_PRIOS.has(t.id)) continue;
+        items.push({id:"tp-"+t.id,title:t.subject,source:"task",src:"TASK",srcCls:"src-linear",meta:t.action.toUpperCase(),url:t.url,prio:9});
+      }
+    }
+    items.sort((a,b)=>a.prio-b.prio);
+    const seen=new Set();
+    return items.filter(i=>{if(seen.has(i.id))return false;seen.add(i.id);return true;});
   }
 
-  // ── Auto-generated action checklist (overdue + due today, resets daily) ──
-  if(showTasks && !MYDAY_URGENCY){
-    const actionItems = [
-      ...buckets.overdue.slice(0,4).map(it=>({...it,_urgency:"overdue"})),
-      ...buckets.today.slice(0,3).map(it=>({...it,_urgency:"today"})),
-    ].filter(it=>!AUTO_DONE.has(it.id||it.title));
-    if(actionItems.length){
-      const actionSec = document.createElement("div");
-      actionSec.className = "myday-section";
-      actionSec.style.borderLeft = "3px solid #ef4444";
-      const cntSpan = document.createElement("span");
-      cntSpan.className = "myday-section-count";
-      cntSpan.style.background = "#ef4444";
-      cntSpan.textContent = actionItems.length;
-      const ahdr = document.createElement("div");
-      ahdr.className = "myday-section-hdr";
-      ahdr.innerHTML = "<span>⚡ ACTIONS FOR TODAY</span>";
-      ahdr.appendChild(cntSpan);
-      actionSec.appendChild(ahdr);
-      for(const it of actionItems){
-        const row = document.createElement("div");
-        row.className = "myday-item";
-        if(it.url){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(it.url,"_blank")); }
-        const badge = document.createElement("span");
-        badge.className = "myday-source";
-        badge.style.cssText = "background:"+(it._urgency==="overdue"?"#ef4444":"#3b82f6")+";color:#fff;min-width:52px;text-align:center;font-size:9px;flex-shrink:0;";
-        badge.textContent = it._urgency==="overdue" ? "OVERDUE" : "TODAY";
-        const src = document.createElement("span");
-        src.className = "myday-source "+(it.source==="linear"?"src-linear":"src-hubspot");
-        src.style.cssText = "font-size:8px;flex-shrink:0;";
-        src.textContent = it.source==="linear"?"LIN":"HS";
-        const titleEl = document.createElement("span");
-        titleEl.className = "myday-item-title";
-        titleEl.textContent = it.title;
-        const doneBtn = document.createElement("button");
-        doneBtn.title = "Done for today";
-        doneBtn.style.cssText = "flex-shrink:0;width:20px;height:20px;border-radius:50%;border:1.5px solid #22c55e;background:transparent;color:#22c55e;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;margin-left:auto;";
-        doneBtn.textContent = "✓";
-        doneBtn.addEventListener("click", e => {
-          e.stopPropagation();
-          AUTO_DONE.add(it.id||it.title);
-          saveAutoDone();
-          row.style.transition="opacity .25s"; row.style.opacity="0";
-          setTimeout(()=>{
-            row.remove();
-            const rem = actionSec.querySelectorAll(".myday-item").length;
-            cntSpan.textContent = rem;
-            if(!rem) actionSec.remove();
-          }, 260);
-        });
-        row.appendChild(badge);
-        row.appendChild(src);
-        row.appendChild(titleEl);
-        row.appendChild(doneBtn);
-        actionSec.appendChild(row);
-      }
-      main.appendChild(actionSec);
+  function renderSimpleChecklist(container){
+    const SHOW_INIT=12;
+    const items=buildChecklistItems();
+    const wrap=document.createElement("div"); wrap.className="checklist-wrap";
+    const hdr=document.createElement("div"); hdr.className="checklist-hdr";
+    const lbl=document.createElement("span"); lbl.textContent="☑️  TODAY’S ACTIONS";
+    const cnt=document.createElement("span"); cnt.style.cssText="margin-left:auto;background:var(--accent);color:#fff;border-radius:10px;padding:1px 7px;font-size:9px;";
+    cnt.textContent=items.filter(i=>!AUTO_DONE.has(i.id)).length;
+    hdr.appendChild(lbl); hdr.appendChild(cnt); wrap.appendChild(hdr);
+    const listEl=document.createElement("div"); listEl.id="cl-list"; wrap.appendChild(listEl);
+    if(!items.length){
+      const emp=document.createElement("div"); emp.style.cssText="padding:20px;text-align:center;color:var(--text-dim);font-size:11px;";
+      emp.textContent="All clear — nothing urgent right now."; listEl.appendChild(emp);
+      container.appendChild(wrap); return;
     }
+    function draw(showAll){
+      listEl.innerHTML="";
+      const visible=showAll?items:items.slice(0,SHOW_INIT);
+      for(const item of visible){
+        const done=AUTO_DONE.has(item.id);
+        const row=document.createElement("div"); row.className="cl-item"+(done?" cl-done":"");
+        const cb=document.createElement("div"); cb.className="cl-cb"; if(done) cb.textContent="✓";
+        row.onclick=function(e){
+          if(e.target===cb||cb.contains(e.target)){
+            if(AUTO_DONE.has(item.id)) AUTO_DONE.delete(item.id); else AUTO_DONE.add(item.id);
+            saveAutoDone(); draw(listEl.dataset.showAll==="1");
+            cnt.textContent=items.filter(i=>!AUTO_DONE.has(i.id)).length;
+          } else if(item.url){ window.open(item.url,"_blank"); }
+        };
+        const srcEl=document.createElement("span"); srcEl.className="cl-src "+item.srcCls; srcEl.textContent=item.src;
+        const titleEl=document.createElement("span"); titleEl.className="cl-title"; titleEl.textContent=item.title;
+        const metaEl=document.createElement("span"); metaEl.className="cl-meta"; metaEl.textContent=item.meta||"";
+        row.appendChild(cb); row.appendChild(srcEl); row.appendChild(titleEl); row.appendChild(metaEl);
+        listEl.appendChild(row);
+      }
+      if(items.length>SHOW_INIT){
+        const btn=document.createElement("button"); btn.className="cl-more-btn";
+        if(!showAll){ btn.textContent="Show "+(items.length-SHOW_INIT)+" more ▾"; btn.onclick=function(){ listEl.dataset.showAll="1"; draw(true); }; }
+        else { btn.textContent="Show less ▴"; btn.onclick=function(){ listEl.dataset.showAll="0"; draw(false); }; }
+        listEl.appendChild(btn);
+      }
+    }
+    draw(false);
+    container.appendChild(wrap);
   }
 
-  // ── Deals to Action checklist (sales — deals closing ≤7 days) ─────────────
-  if(showTasks && HS_DATA && HS_DATA.deals && !MYDAY_URGENCY){
-    const todayMs = new Date().setHours(0,0,0,0);
-    const dealActions = (HS_DATA.deals||[])
-      .filter(d=>{
-        if(!d.closeDate || DONE_STATES.has(d.stageLabel||"")) return false;
-        const diff = Math.ceil((new Date(d.closeDate)-todayMs)/(1000*60*60*24));
-        return diff <= 7;
-      })
-      .filter(d=>!AUTO_DONE.has("deal:"+d.id))
-      .sort((a,b)=>new Date(a.closeDate)-new Date(b.closeDate))
-      .slice(0,6);
-    if(dealActions.length){
-      const dealSec = document.createElement("div");
-      dealSec.className = "myday-section";
-      dealSec.style.borderLeft = "3px solid #f97316";
-      const dealCntSpan = document.createElement("span");
-      dealCntSpan.className = "myday-section-count";
-      dealCntSpan.style.background = "#f97316";
-      dealCntSpan.textContent = dealActions.length;
-      const dealHdr = document.createElement("div");
-      dealHdr.className = "myday-section-hdr";
-      dealHdr.innerHTML = "<span>🏆 DEALS TO CLOSE</span>";
-      dealHdr.appendChild(dealCntSpan);
-      dealSec.appendChild(dealHdr);
-      const totalVal = dealActions.reduce((s,d)=>s+(Number(d.amount)||0),0);
-      const dealSumEl = document.createElement("div");
-      dealSumEl.style.cssText = "padding:4px 12px 2px;font-size:10px;color:var(--text-muted);font-style:italic;letter-spacing:.3px;";
-      dealSumEl.textContent = (HS_DATA.currency||"€")+totalVal.toLocaleString()+" pipeline — closing within 7 days";
-      dealSec.appendChild(dealSumEl);
-      for(const d of dealActions){
-        const row = document.createElement("div");
-        row.className = "myday-item";
-        const dealUrl = HS_DATA.portalId ? `https://app.hubspot.com/contacts/${HS_DATA.portalId}/deal/${d.id}` : null;
-        if(dealUrl){ row.style.cursor="pointer"; row.addEventListener("click",()=>window.open(dealUrl,"_blank")); }
-        const diffDays = Math.ceil((new Date(d.closeDate)-todayMs)/(1000*60*60*24));
-        const isOverdue = diffDays < 0;
-        const badge = document.createElement("span");
-        badge.className = "myday-source";
-        badge.style.cssText = "background:"+(isOverdue?"#ef4444":diffDays<=2?"#f97316":"#f59e0b")+";color:#fff;min-width:52px;text-align:center;font-size:9px;flex-shrink:0;";
-        badge.textContent = isOverdue ? "OVERDUE" : diffDays===0 ? "TODAY" : "IN "+diffDays+"d";
-        const stageEl = document.createElement("span");
-        stageEl.className = "myday-source src-hubspot";
-        stageEl.style.cssText = "font-size:8px;flex-shrink:0;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
-        stageEl.textContent = d.stageLabel||"";
-        const titleEl = document.createElement("span");
-        titleEl.className = "myday-item-title";
-        titleEl.textContent = d.name||"(untitled)";
-        const amtEl = document.createElement("span");
-        amtEl.className = "myday-item-date";
-        amtEl.style.cssText = "color:#10b981;font-weight:600;flex-shrink:0;";
-        amtEl.textContent = d.amount ? (HS_DATA.currency||"€")+Number(d.amount).toLocaleString("en") : "";
-        const doneBtn = document.createElement("button");
-        doneBtn.title = "Done for today";
-        doneBtn.style.cssText = "flex-shrink:0;width:20px;height:20px;border-radius:50%;border:1.5px solid #22c55e;background:transparent;color:#22c55e;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;margin-left:auto;";
-        doneBtn.textContent = "✓";
-        doneBtn.addEventListener("click", e=>{
-          e.stopPropagation();
-          AUTO_DONE.add("deal:"+d.id);
-          saveAutoDone();
-          row.style.transition="opacity .25s"; row.style.opacity="0";
-          setTimeout(()=>{
-            row.remove();
-            const rem = dealSec.querySelectorAll(".myday-item").length;
-            dealCntSpan.textContent = rem;
-            if(!rem) dealSec.remove();
-          }, 260);
-        });
-        row.appendChild(badge);
-        row.appendChild(stageEl);
-        row.appendChild(titleEl);
-        row.appendChild(amtEl);
-        row.appendChild(doneBtn);
-        dealSec.appendChild(row);
-      }
-      main.appendChild(dealSec);
-    }
+  // ── Main content ─────────────────────────────────────────────────────────────
+  const showAll   = MYDAY_SECTION==="all"||MYDAY_SECTION==="tasks";
+  const showInbox = MYDAY_SECTION==="inbox";
+  const showDrive = MYDAY_SECTION==="drive";
+
+  if(MYDAY_SECTION==="all"){
+    renderClaudeBrief(main, viewName);
+  }
+  if(showAll){
+    renderSimpleChecklist(main);
   }
 
-  // ── Task priorities section ───────────────────────────────────────────────
-  // (showTasks already declared above)
-  { const s = renderPrioritySection("🚨 TASK PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.task_priorities);
-    if(s){ if(!showTasks) s.style.display="none"; main.appendChild(s); } }
-
+  // ── INBOX tab ───────────────────────────────────────────────────────
+  if(showInbox){
   // ── Email priorities section ──────────────────────────────────────────────
-  const showInbox = MYDAY_SECTION==="all"||MYDAY_SECTION==="inbox";
   { const s = renderPrioritySection("🚨 EMAIL PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.email_priorities);
     if(s){
-      s.id="section-email-prios"; if(!showInbox) s.style.display="none";
+      s.id="section-email-prios";
       // Summary line inside section, right below header
       if(GOOGLE_DATA&&GOOGLE_DATA.email_priorities){
         const eps = GOOGLE_DATA.email_priorities.filter(p=>!DONE_PRIOS.has(p.id));
@@ -2029,7 +1936,6 @@ function renderMyDay(){
   const gmailSec = document.createElement("div");
   gmailSec.className = "myday-section";
   gmailSec.id = "myday-inbox-section";
-  if(!showInbox){ gmailSec.style.display="none"; }
   if(GOOGLE_DATA && GOOGLE_DATA.gmail && GOOGLE_DATA.gmail.threads && GOOGLE_DATA.gmail.threads.length){
     const threads = GOOGLE_DATA.gmail.threads.slice(0,8);
     gmailSec.innerHTML = `<div class="myday-section-hdr"><span>📧 INBOX</span><span class="myday-section-count">${GOOGLE_DATA.gmail.unreadCount||threads.length} unread</span></div>`;
@@ -2075,11 +1981,16 @@ function renderMyDay(){
   }
   main.appendChild(gmailSec);
 
+  } // end showInbox
+
+  // ── DRIVE tab ───────────────────────────────────────────────────────
+  if(showDrive){
+
+
   // ── Drive priorities section ──────────────────────────────────────────────
-  const showDrive = MYDAY_SECTION==="all"||MYDAY_SECTION==="drive";
   { const s = renderPrioritySection("🚨 DRIVE PRIORITIES", GOOGLE_DATA&&GOOGLE_DATA.drive_priorities);
     if(s){
-      s.id="section-drive-prios"; if(!showDrive) s.style.display="none";
+      s.id="section-drive-prios";
       // Summary line inside section, right below header
       if(GOOGLE_DATA&&GOOGLE_DATA.drive_priorities){
         const dps = GOOGLE_DATA.drive_priorities.filter(p=>!DONE_PRIOS.has(p.id));
@@ -2103,7 +2014,6 @@ function renderMyDay(){
   const driveSec = document.createElement("div");
   driveSec.className = "myday-section";
   driveSec.id = "section-drive-files";
-  if(!showDrive){ driveSec.style.display="none"; }
   if(GOOGLE_DATA && GOOGLE_DATA.drive && GOOGLE_DATA.drive.recent && GOOGLE_DATA.drive.recent.length){
     const files = GOOGLE_DATA.drive.recent.slice(0,6);
     driveSec.innerHTML = `<div class="myday-section-hdr"><span>📄 DRIVE — RECENT</span><span class="myday-section-count">${files.length}</span></div>`;
@@ -2134,7 +2044,10 @@ function renderMyDay(){
   }
   main.appendChild(driveSec);
 
-  // ── Sidebar ───────────────────────────────────────────────────────────────
+
+  } // end showDrive
+
+    // ── Sidebar ───────────────────────────────────────────────────────────────
   sidebar.innerHTML = "";
   const showPipeline = MYDAY_SECTION==="all"||MYDAY_SECTION==="tasks"||MYDAY_SECTION==="inbox";
   const showCal      = MYDAY_SECTION==="all"||MYDAY_SECTION==="cal"||MYDAY_SECTION==="tasks";
@@ -2222,6 +2135,172 @@ function renderMyDay(){
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════
+// CLAUDE AI DAILY BRIEF
+// ═══════════════════════════════════════════════════════════════════════════
+const CLAUDE_KEY_STORAGE = "anthropic_api_key_supplied";
+let CLAUDE_HISTORY = [];
+let CLAUDE_VIEW_NAME = null;
+
+function getClaudeKey(){ return localStorage.getItem(CLAUDE_KEY_STORAGE)||""; }
+function setClaudeKey(k){ if(k) localStorage.setItem(CLAUDE_KEY_STORAGE,k); else localStorage.removeItem(CLAUDE_KEY_STORAGE); }
+function openClaudeKeyModal(){
+  const ov=document.getElementById("claude-key-overlay");
+  const inp=document.getElementById("claude-key-input");
+  if(ov) ov.classList.add("open"); if(inp){ inp.value=getClaudeKey(); inp.focus(); }
+}
+function closeClaudeKeyModal(){ const ov=document.getElementById("claude-key-overlay"); if(ov) ov.classList.remove("open"); }
+function saveClaudeKey(){
+  const inp=document.getElementById("claude-key-input");
+  const st=document.getElementById("claude-key-status");
+  const k=(inp&&inp.value||"").trim();
+  if(!k){ if(st) st.textContent="Please enter a key."; return; }
+  setClaudeKey(k); closeClaudeKeyModal(); CLAUDE_HISTORY=[];
+  if(currentTab==="myday") renderMyDay();
+}
+function buildDataContext(){
+  const lines=[];
+  lines.push("TODAY: "+new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"}));
+  if(GANTT_DATA){
+    const allIss=[];
+    for(const ini of (GANTT_DATA.initiatives||[])){
+      if(DONE_STATES.has(ini.status||"")) continue;
+      for(const proj of (ini.projects||[])){
+        if(DONE_STATES.has(proj.status||"")) continue;
+        for(const iss of (proj.issues||[])){ if(isActive(iss.status)) allIss.push(iss); }
+      }
+    }
+    const blocked=allIss.filter(i=>i.status==="Blocked");
+    const overdue=allIss.filter(i=>i.end&&i.end<TODAY_STR);
+    const dueToday=allIss.filter(i=>i.end===TODAY_STR);
+    lines.push("
+LINEAR: "+allIss.length+" open issues");
+    if(blocked.length) lines.push("BLOCKED ("+blocked.length+"): "+blocked.slice(0,3).map(i=>i.title).join("; "));
+    if(overdue.length) lines.push("OVERDUE ("+overdue.length+"): "+overdue.slice(0,5).map(i=>(i.assignee?i.assignee+": ":"")+i.title).join("; "));
+    if(dueToday.length) lines.push("DUE TODAY: "+dueToday.map(i=>i.title).join("; "));
+  }
+  if(HS_DATA){
+    const todayMs=new Date().setHours(0,0,0,0);
+    const closing=(HS_DATA.deals||[]).filter(d=>d.closeDate&&!DONE_STATES.has(d.stageLabel||"")).map(d=>({...d,diff:Math.ceil((new Date(d.closeDate)-todayMs)/864e5)})).filter(d=>d.diff<=14).sort((a,b)=>a.diff-b.diff).slice(0,5);
+    if(closing.length){
+      lines.push("
+DEALS CLOSING SOON:");
+      for(const d of closing) lines.push("  "+d.name+(d.amount?" (€"+Number(d.amount).toLocaleString()+")")+" - "+(d.diff<0?Math.abs(d.diff)+"d overdue":d.diff===0?"TODAY":"in "+d.diff+"d")+" ["+d.stageLabel+"]");
+    }
+  }
+  if(GOOGLE_DATA){
+    const ep=(GOOGLE_DATA.email_priorities||[]).slice(0,5);
+    if(ep.length){ lines.push("
+EMAILS TO ACTION:"); for(const e of ep) lines.push("  ["+e.action.toUpperCase()+"] "+e.subject+" - "+e.reason); }
+    const cal=GOOGLE_DATA.calendar;
+    if(cal&&(cal.today||[]).length){ lines.push("
+MEETINGS TODAY:"); for(const ev of cal.today) lines.push("  "+ev.title+(ev.start?" @ "+ev.start:"")); }
+    else lines.push("
+MEETINGS: None today");
+    const dp=(GOOGLE_DATA.drive_priorities||[]).slice(0,3);
+    if(dp.length){ lines.push("
+DRIVE PRIORITIES:"); for(const d of dp) lines.push("  ["+d.action.toUpperCase()+"] "+d.subject); }
+  }
+  return lines.join("
+");
+}
+function buildSystemPrompt(){
+  const name=CLAUDE_VIEW_NAME||"the user";
+  return "You are a direct, sharp personal productivity assistant for "+name+" at Supplied.eu (B2B SaaS company).
+
+Current work data:
+"+buildDataContext()+"
+
+Style rules: max 120 words unless asked for more. No flattery. Plain text only, no markdown, no bullet points unless specifically asked. Focus on the 3-4 most critical actions. Never repeat context already mentioned in the conversation.";
+}
+async function callClaudeStream(messages,onChunk,onDone,onError){
+  const key=getClaudeKey();
+  if(!key){ openClaudeKeyModal(); return; }
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"x-api-key":key,"anthropic-version":"2023-06-01","content-type":"application/json","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-opus-4-5-20251101",max_tokens:600,system:buildSystemPrompt(),messages,stream:true}),
+    });
+    if(res.status===401){ setClaudeKey(""); openClaudeKeyModal(); onError("Invalid API key — please re-enter."); return; }
+    if(!res.ok){ onError("API error "+res.status); return; }
+    const reader=res.body.getReader(); const dec=new TextDecoder(); let buf="";
+    while(true){
+      const {done,value}=await reader.read(); if(done) break;
+      buf+=dec.decode(value,{stream:true});
+      const lines=buf.split("
+"); buf=lines.pop();
+      for(const line of lines){
+        if(!line.startsWith("data: ")) continue;
+        const data=line.slice(6).trim(); if(data==="[DONE]") continue;
+        try{ const ev=JSON.parse(data); if(ev.type==="content_block_delta"&&ev.delta&&ev.delta.text) onChunk(ev.delta.text); }catch(_){}
+      }
+    }
+    onDone();
+  }catch(e){ onError("Connection error: "+e.message); }
+}
+function appendClaudeMsg(role,text){
+  const el=document.getElementById("claude-msgs"); if(!el) return;
+  const wrap=document.createElement("div"); if(role==="user") wrap.className="claude-msg-user";
+  const txt=document.createElement("div"); txt.className="claude-msg-text"; txt.textContent=text;
+  wrap.appendChild(txt); el.appendChild(wrap); el.scrollTop=el.scrollHeight;
+}
+function streamClaudeReply(userMsg,silent){
+  const msgsEl=document.getElementById("claude-msgs");
+  const sendBtn=document.getElementById("claude-send-btn");
+  if(sendBtn) sendBtn.disabled=true;
+  CLAUDE_HISTORY.push({role:"user",content:userMsg});
+  if(!silent) appendClaudeMsg("user",userMsg);
+  const think=document.createElement("div"); think.className="claude-msg-thinking"; think.textContent="Thinking…";
+  if(msgsEl){ msgsEl.appendChild(think); msgsEl.scrollTop=msgsEl.scrollHeight; }
+  let full=""; let textEl=null;
+  callClaudeStream(CLAUDE_HISTORY,
+    (chunk)=>{
+      if(!textEl){
+        if(think.parentNode) think.remove();
+        const wrap=document.createElement("div");
+        textEl=document.createElement("div"); textEl.className="claude-msg-text";
+        wrap.appendChild(textEl); if(msgsEl) msgsEl.appendChild(wrap);
+      }
+      full+=chunk; textEl.textContent=full; if(msgsEl) msgsEl.scrollTop=msgsEl.scrollHeight;
+    },
+    ()=>{ CLAUDE_HISTORY.push({role:"assistant",content:full}); if(sendBtn) sendBtn.disabled=false; },
+    (err)=>{ if(think.parentNode) think.remove(); appendClaudeMsg("assistant","⚠️ "+err); if(sendBtn) sendBtn.disabled=false; }
+  );
+}
+function sendClaudeMsg(){
+  const inp=document.getElementById("claude-inp");
+  const msg=(inp&&inp.value||"").trim(); if(!msg) return;
+  if(inp) inp.value="";
+  if(!getClaudeKey()){ openClaudeKeyModal(); return; }
+  streamClaudeReply(msg,false);
+}
+function renderClaudeBrief(container,personName){
+  CLAUDE_VIEW_NAME=personName;
+  const panel=document.createElement("div"); panel.className="claude-panel"; panel.id="claude-panel";
+  const hdr=document.createElement("div"); hdr.className="claude-panel-hdr";
+  const lbl=document.createElement("span"); lbl.textContent="🤖  CLAUDE · DAILY BRIEF";
+  const keyBtn=document.createElement("button"); keyBtn.className="cpanel-key-btn"; keyBtn.textContent="⚙ API KEY"; keyBtn.onclick=openClaudeKeyModal;
+  hdr.appendChild(lbl); hdr.appendChild(keyBtn); panel.appendChild(hdr);
+  const msgs=document.createElement("div"); msgs.className="claude-msgs"; msgs.id="claude-msgs"; panel.appendChild(msgs);
+  const inRow=document.createElement("div"); inRow.className="claude-input-row";
+  const inp=document.createElement("input"); inp.type="text"; inp.id="claude-inp"; inp.placeholder="Ask me anything about your day…";
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); sendClaudeMsg(); } });
+  const btn=document.createElement("button"); btn.className="claude-send-btn"; btn.id="claude-send-btn"; btn.textContent="SEND"; btn.onclick=sendClaudeMsg;
+  inRow.appendChild(inp); inRow.appendChild(btn); panel.appendChild(inRow);
+  container.appendChild(panel);
+  const key=getClaudeKey();
+  if(!key){
+    const noKey=document.createElement("div"); noKey.className="claude-msg-text"; noKey.style.cssText="color:var(--text-dim);font-size:11.5px;";
+    noKey.textContent="Connect your Anthropic API key (⚙ above) to get a personalised daily brief and ask follow-up questions about your day.";
+    msgs.appendChild(noKey);
+  } else if(CLAUDE_HISTORY.length===0){
+    streamClaudeReply("Give me a sharp daily brief — what are my top 3-4 most important actions right now? Be direct and specific.",true);
+  } else {
+    for(const m of CLAUDE_HISTORY){ if(m.role==="assistant") appendClaudeMsg("assistant",m.content); }
+  }
+}
+
 // INIT / REFRESH
 // ═══════════════════════════════════════════════════════════════════════════
 async function init(){
