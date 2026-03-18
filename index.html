@@ -2242,16 +2242,24 @@ function buildDataContext(){
       if(DONE_STATES.has(ini.status||"")) continue;
       for(const proj of (ini.projects||[])){
         if(DONE_STATES.has(proj.status||"")) continue;
-        for(const iss of (proj.issues||[])){ if(isActive(iss.status)) allIss.push(iss); }
+        for(const iss of (proj.issues||[])){
+          if(isActive(iss.status)) allIss.push({...iss, _ini:ini.name, _proj:proj.name});
+        }
       }
     }
+    const PRIO_RANK={Urgent:0,High:1,Medium:2,Low:3,"No priority":4};
     const blocked=allIss.filter(i=>i.status==="Blocked");
+    const inProgress=allIss.filter(i=>i.status==="In Progress"||i.status==="In Review"||i.status==="In Test");
+    const todoIss=allIss.filter(i=>i.status==="Todo").sort((a,b)=>(PRIO_RANK[a.priority]??4)-(PRIO_RANK[b.priority]??4));
+    const backlogUrgHigh=allIss.filter(i=>i.status==="Backlog"&&(i.priority==="Urgent"||i.priority==="High")).sort((a,b)=>(PRIO_RANK[a.priority]??4)-(PRIO_RANK[b.priority]??4));
     const overdue=allIss.filter(i=>i.end&&i.end<TODAY_STR);
-    const dueToday=allIss.filter(i=>i.end===TODAY_STR);
-    lines.push("\nLINEAR: "+allIss.length+" open issues");
-    if(blocked.length) lines.push("BLOCKED ("+blocked.length+"): "+blocked.slice(0,3).map(i=>i.title).join("; "));
-    if(overdue.length) lines.push("OVERDUE ("+overdue.length+"): "+overdue.slice(0,5).map(i=>(i.assignee?i.assignee+": ":"")+i.title).join("; "));
-    if(dueToday.length) lines.push("DUE TODAY: "+dueToday.map(i=>i.title).join("; "));
+    lines.push("\nLINEAR SUMMARY: "+allIss.length+" active | "+blocked.length+" blocked | "+overdue.length+" overdue | "+inProgress.length+" in progress | "+todoIss.length+" todo | "+backlogUrgHigh.length+" backlog urgent/high");
+    function fmtIss(i){ return "  ["+i.identifier+"] "+i.title+" | "+i.status+" | "+(i.priority||"No priority")+" | assignee:"+(i.assignee||"unassigned")+" | proj:"+i._proj+" | ini:"+i._ini+(i.end?" | due:"+i.end:""); }
+    if(blocked.length){ lines.push("\nBLOCKED:"); blocked.forEach(i=>lines.push(fmtIss(i))); }
+    if(inProgress.length){ lines.push("\nIN PROGRESS:"); inProgress.forEach(i=>lines.push(fmtIss(i))); }
+    if(todoIss.length){ lines.push("\nTODO (ready to pick up):"); todoIss.forEach(i=>lines.push(fmtIss(i))); }
+    if(backlogUrgHigh.length){ lines.push("\nBACKLOG - URGENT/HIGH (should these be Todo?):"); backlogUrgHigh.forEach(i=>lines.push(fmtIss(i))); }
+    if(overdue.length){ lines.push("\nOVERDUE:"); overdue.slice(0,10).forEach(i=>lines.push(fmtIss(i))); }
   }
   if(HS_DATA){
     const todayMs=new Date().setHours(0,0,0,0);
@@ -2274,7 +2282,7 @@ function buildDataContext(){
 }
 function buildSystemPrompt(){
   const name=CLAUDE_VIEW_NAME||"the user";
-  return "You are a direct, sharp personal productivity assistant for "+name+" at Supplied.eu (B2B SaaS company).\n\nCurrent work data:\n"+buildDataContext()+"\n\nStyle rules: max 120 words unless asked for more. No flattery. Plain text only, no markdown, no bullet points unless specifically asked. Focus on the 3-4 most critical actions. Never repeat context already mentioned in the conversation.";
+  return "You are a direct, sharp personal productivity assistant for "+name+" at Supplied.eu (B2B SaaS company).\n\nYou have full visibility of their Linear issues (id, title, status, priority, assignee, project, initiative, due date), HubSpot deals, calendar, and emails. Use this data to answer specific questions accurately.\n\nCurrent work data:\n"+buildDataContext()+"\n\nStyle rules: be concise but complete when asked specific questions. No flattery. Plain text only. When asked about specific issues, list them with their identifier and key attributes. Never say you lack visibility into individual issues — you have the full list above.";
 }
 async function callClaudeStream(messages,onChunk,onDone,onError){
   const key=getClaudeKey();
