@@ -1,7 +1,16 @@
 {
-  "refreshedAt": "2026-03-18T16:01:37.410Z",
+  "refreshedAt": "2026-03-18T16:20:01.574Z",
   "gmail": {
     "threads": [
+      {
+        "id": "19ce6606ba2e3745",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "Hi Johann, I&#39;ve joined Christophe at Newschool.vc and would be interested to know more about Supplied. I am quite used to fund admin for VC funds (KYC, AML, Reporting) and would be interested to",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19d01a18acb99e4b",
+        "unread": true
+      },
       {
         "id": "19ce6606ba2e3745",
         "subject": "(no subject)",
@@ -12,12 +21,30 @@
         "unread": true
       },
       {
-        "id": "19d002853d1c871a",
+        "id": "19cfc73957f9533b",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Dear Johann Rozario, you have submitted a proposal to FFplus Open Call 2 Type 2 (innovation studies) entitled &quot;HPC-Enabled Generative AI for Standardised, Machine-Assessable Compliance&quot; with",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19d002853d1c871a",
+        "snippet": "Regus Uw Regus ervaring Re: Uw ervaring bij ZWOLLE, Trade Centre Om onze service voortdurend te kunnen verbeteren zijn wij zeer geinteresseeerd naar uw ervaring op uw locatie. Het invullen van de",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cfc73957f9533b",
+        "unread": true
+      },
+      {
+        "id": "19ce2db4070d3a8d",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "Hi Jelena, Please find attached the updated version we discussed today. I also included the . Last step is to build an easy copy-paste from Moneybird. Best, Jack van Asbeck +316 13 98 78 74 Op ma 16",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19ce2db4070d3a8d",
+        "unread": true
+      },
+      {
+        "id": "19ce82e9d0fab621",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "How likely is it that you would recommend Scrut Automation to a friend or colleague? Not at all likely Extremely likely 0 1 2 3 4 5 6 7 8 9 10",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19ce82e9d0fab621",
         "unread": true
       },
       {
@@ -84,21 +111,12 @@
         "unread": true
       },
       {
-        "id": "19ce2db4070d3a8d",
+        "id": "19d002853d1c871a",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Hi Jelena, Please find attached the updated version we discussed today. I also included the . Last step is to build an easy copy-paste from Moneybird. Best, Jack van Asbeck +316 13 98 78 74 Op ma 16",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19ce2db4070d3a8d",
-        "unread": true
-      },
-      {
-        "id": "19cd4f96e1d663cb",
-        "subject": "(no subject)",
-        "from": "",
-        "date": null,
-        "snippet": "Hi Johann, Thanks for the note. I&#39;ve grabbed time for Thursday, March 19 th at 8:30am PST (4:30pm CET). Looking forward to connecting and safe travels! Best, Casey Casey Coppock K1 875 Manhattan",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19cd4f96e1d663cb",
+        "snippet": "Dear Johann Rozario, you have submitted a proposal to FFplus Open Call 2 Type 2 (innovation studies) entitled &quot;HPC-Enabled Generative AI for Standardised, Machine-Assessable Compliance&quot; with",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19d002853d1c871a",
         "unread": true
       },
       {
@@ -108,6 +126,42 @@
         "date": null,
         "snippet": "AWS Cost Management: Anomaly Detection 2026-03-11 AWS Account: supplied-infra (224361002901) Dear AWS Customer, You are receiving this alert because AWS Cost Anomaly Detection has detected higher than",
         "url": "https://mail.google.com/mail/u/0/#inbox/19ce0214716b0ff0",
+        "unread": true
+      },
+      {
+        "id": "19cf4de5565b3976",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "AWS Cost Management: Anomaly Detection 2026-03-15 AWS Account: supplied-infra (224361002901) Dear AWS Customer, You are receiving this alert because AWS Cost Anomaly Detection has detected higher than",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cf4de5565b3976",
+        "unread": true
+      },
+      {
+        "id": "19ce7f12f8358ef7",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "Hi Johann, I came across Supplied and wanted to reach out you - I think (while I am not expert in software ) you&#39;ve built something that serious acquirers would pay a premium for right now.",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19ce7f12f8358ef7",
+        "unread": true
+      },
+      {
+        "id": "19bb7ac8b007233d",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "Good afternoon Vladimir! Good to hear from you again. There&#39;s an easier option we explored and I&#39;d like to update you on that option as well (I&#39;ve already spoken to Johann and Bas about",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19bb7ac8b007233d",
+        "unread": true
+      },
+      {
+        "id": "19cd4f96e1d663cb",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "Hi Johann, Thanks for the note. I&#39;ve grabbed time for Thursday, March 19 th at 8:30am PST (4:30pm CET). Looking forward to connecting and safe travels! Best, Casey Casey Coppock K1 875 Manhattan",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cd4f96e1d663cb",
         "unread": true
       }
     ],
@@ -262,20 +316,20 @@
   "drive": {
     "recent": [
       {
-        "id": "1YHuflrFcDR45fQY4zGwM3yCfZgo698oR5LB82spBlXA",
-        "name": "Development Costs Capitalization and Amortization Procedure",
-        "mimeType": "application/vnd.google-apps.document",
-        "modifiedTime": "2026-03-04T14:08:22.177Z",
-        "url": "https://docs.google.com/document/d/1YHuflrFcDR45fQY4zGwM3yCfZgo698oR5LB82spBlXA/edit?usp=drivesdk",
-        "lastModifiedBy": "Jelena Hmeltnitski"
-      },
-      {
         "id": "1KNwfaUpHj4e0mbh8KiUmYXND8-yValjCl7TZpK8mLrE",
         "name": "Multimedia LLC <> Supplied Technologies",
         "mimeType": "application/vnd.google-apps.document",
         "modifiedTime": "2026-03-16T10:32:11.519Z",
         "url": "https://docs.google.com/document/d/1KNwfaUpHj4e0mbh8KiUmYXND8-yValjCl7TZpK8mLrE/edit?usp=drivesdk",
         "lastModifiedBy": "Julio Lindveld"
+      },
+      {
+        "id": "1YHuflrFcDR45fQY4zGwM3yCfZgo698oR5LB82spBlXA",
+        "name": "Development Costs Capitalization and Amortization Procedure",
+        "mimeType": "application/vnd.google-apps.document",
+        "modifiedTime": "2026-03-04T14:08:22.177Z",
+        "url": "https://docs.google.com/document/d/1YHuflrFcDR45fQY4zGwM3yCfZgo698oR5LB82spBlXA/edit?usp=drivesdk",
+        "lastModifiedBy": "Jelena Hmeltnitski"
       },
       {
         "id": "1Xoc6jProgzRsyBs46oJs3qs3pP_PIB1J3ryMC_8EHHA",
