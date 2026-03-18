@@ -318,5 +318,5 @@ main().catch((err) => {
     path.join(__dirname, "../hubspot-data.json"),
     JSON.stringify(fallback, null, 2)
   );
-  process.exit(1);
+  process.exit(0); // exit 0 so the workflow keeps running
 });

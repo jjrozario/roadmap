@@ -12,7 +12,7 @@ const fs = require("fs");
 const path = require("path");
 
 const API_KEY = process.env.LINEAR_API_KEY;
-if (!API_KEY) { console.error("Missing LINEAR_API_KEY"); process.exit(1); }
+if (!API_KEY) { console.error("⚠️  Missing LINEAR_API_KEY — skipping Linear fetch"); process.exit(0); }
 
 async function gql(query, variables = {}) {
   return new Promise((resolve, reject) => {
@@ -208,4 +208,4 @@ async function main() {
   console.log(`   ${initiatives.length} initiatives, ${projectNodes.length} projects`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => { console.error("❌ fetch-linear.js failed:", e.message || e); console.error("   Keeping existing gantt-data.json untouched."); process.exit(0); });
