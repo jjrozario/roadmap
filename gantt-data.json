@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-17T16:06:30.157Z",
+  "refreshedAt": "2026-03-18T08:41:45.078Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -4548,6 +4548,17 @@
           "targetDate": null,
           "issues": [
             {
+              "id": "9cb26804-a42e-4532-b0df-f1981210b03c",
+              "identifier": "SUP-1214",
+              "title": "Provide the API through the correct domain names",
+              "status": "In Review",
+              "start": "2026-03-17",
+              "end": null,
+              "assignee": "Vladimir Ivanov",
+              "priority": "Urgent",
+              "url": "https://linear.app/supplied/issue/SUP-1214/provide-the-api-through-the-correct-domain-names"
+            },
+            {
               "id": "dc5e08d8-e714-45a4-9fce-0dd06ce35323",
               "identifier": "SUP-1195",
               "title": "500 when admin user tries to get API key",
@@ -5406,7 +5417,7 @@
               "id": "2cbabc37-9ece-4321-a0ce-7b5902ecb01a",
               "identifier": "IMP-33",
               "title": "Review and approve mapping v1 with Tarisio before sample import",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5417,7 +5428,7 @@
               "id": "2c849896-67cc-4cff-90d1-634da6419707",
               "identifier": "IMP-32",
               "title": "Prepare mapping templates for UK DPR and US 1099-K entities",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5428,7 +5439,7 @@
               "id": "89221fe7-ee8e-4601-b66d-35f2a763b6bf",
               "identifier": "IMP-31",
               "title": "Validate mapping logic for DE DAC7 2023-2024 draft reports",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5439,7 +5450,7 @@
               "id": "71896361-35f4-4806-9bbf-3266de61ff47",
               "identifier": "IMP-30",
               "title": "Confirm seller group/category identifiers for segmentation and filters",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5450,7 +5461,7 @@
               "id": "db2fcf05-561a-43af-808c-34054a4c568a",
               "identifier": "IMP-29",
               "title": "Define payout data fields (bank info, cheque flag, payout method)",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5461,7 +5472,7 @@
               "id": "b12f70a4-0c26-42ba-8578-cc605f3a0894",
               "identifier": "IMP-28",
               "title": "Confirm treatment of missing VAT/TIN data and remediation flow",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5472,7 +5483,7 @@
               "id": "151f8291-36a8-40dc-863d-81decb20c76b",
               "identifier": "IMP-27",
               "title": "Draft field mapping v1 (seller identity, TIN/VAT, residency, transactions, fees, payouts, consideration, currency, FX)",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -6682,17 +6693,6 @@
               "assignee": null,
               "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-1010/special-rule-for-receivingcountry-element-in-dac7-xml-for-germany"
-            },
-            {
-              "id": "9a5358dc-d1d9-4006-8dd1-e66494e2a1a6",
-              "identifier": "SUP-1005",
-              "title": "Update earnings on the app to reflect individual property earnings",
-              "status": "Backlog",
-              "start": null,
-              "end": null,
-              "assignee": null,
-              "priority": "Low",
-              "url": "https://linear.app/supplied/issue/SUP-1005/update-earnings-on-the-app-to-reflect-individual-property-earnings"
             },
             {
               "id": "56a9f0e1-75cc-41b3-bade-73764e267af1",
