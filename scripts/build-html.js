@@ -884,6 +884,10 @@ function switchTab(tab){
   document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
   document.getElementById("tab-"+tab+"-btn").classList.add("active");
   document.getElementById("panel-"+tab).classList.add("active");
+  if(tab==="roadmap"||tab==="sales"){
+    const cont=document.getElementById("panel-"+tab);
+    if(cont) renderClaudeBrief(cont, CLAUDE_VIEW_NAME||"Johann", tab);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1991,7 +1995,7 @@ function renderMyDay(){
   const showDrive = MYDAY_SECTION==="drive";
 
   if(MYDAY_SECTION==="all"){
-    renderClaudeBrief(main, viewName);
+    renderClaudeBrief(main, viewName, "myday");
   }
   if(showAll){
     renderSimpleChecklist(main);
@@ -2230,7 +2234,7 @@ function renderMyDay(){
 // CLAUDE AI DAILY BRIEF
 // ═══════════════════════════════════════════════════════════════════════════
 const CLAUDE_KEY_STORAGE = "anthropic_api_key_supplied";
-let CLAUDE_HISTORY = [];
+const CLAUDE_HISTORIES = {myday:[], roadmap:[], sales:[]};
 let CLAUDE_VIEW_NAME = null;
 
 function getClaudeKey(){ return localStorage.getItem(CLAUDE_KEY_STORAGE)||""; }
@@ -2246,8 +2250,15 @@ function saveClaudeKey(){
   const st=document.getElementById("claude-key-status");
   const k=(inp&&inp.value||"").trim();
   if(!k){ if(st) st.textContent="Please enter a key."; return; }
-  setClaudeKey(k); closeClaudeKeyModal(); CLAUDE_HISTORY=[];
-  if(currentTab==="myday") renderMyDay();
+  setClaudeKey(k); closeClaudeKeyModal();
+  Object.keys(CLAUDE_HISTORIES).forEach(t=>{ CLAUDE_HISTORIES[t]=[]; });
+  if(currentTab==="myday"){ renderMyDay(); }
+  else {
+    const old=document.getElementById("claude-panel-"+currentTab);
+    if(old) old.remove();
+    const cont=document.getElementById("panel-"+currentTab);
+    if(cont) renderClaudeBrief(cont, CLAUDE_VIEW_NAME||"Johann", currentTab);
+  }
 }
 function buildDataContext(){
   const lines=[];
@@ -2325,22 +2336,24 @@ async function callClaudeStream(messages,onChunk,onDone,onError){
     onDone();
   }catch(e){ onError("Connection error: "+e.message); }
 }
-function appendClaudeMsg(role,text){
-  const el=document.getElementById("claude-msgs"); if(!el) return;
+function appendClaudeMsg(role,text,tabKey){
+  const tk=tabKey||currentTab;
+  const el=document.getElementById("claude-msgs-"+tk); if(!el) return;
   const wrap=document.createElement("div"); if(role==="user") wrap.className="claude-msg-user";
   const txt=document.createElement("div"); txt.className="claude-msg-text"; txt.textContent=text;
   wrap.appendChild(txt); el.appendChild(wrap); el.scrollTop=el.scrollHeight;
 }
-function streamClaudeReply(userMsg,silent){
-  const msgsEl=document.getElementById("claude-msgs");
-  const sendBtn=document.getElementById("claude-send-btn");
+function streamClaudeReply(userMsg,silent,tabKey){
+  const tk=tabKey||currentTab;
+  const msgsEl=document.getElementById("claude-msgs-"+tk);
+  const sendBtn=document.getElementById("claude-send-btn-"+tk);
   if(sendBtn) sendBtn.disabled=true;
-  CLAUDE_HISTORY.push({role:"user",content:userMsg});
-  if(!silent) appendClaudeMsg("user",userMsg);
+  CLAUDE_HISTORIES[tk].push({role:"user",content:userMsg});
+  if(!silent) appendClaudeMsg("user",userMsg,tk);
   const think=document.createElement("div"); think.className="claude-msg-thinking"; think.textContent="Thinking\u2026";
   if(msgsEl){ msgsEl.appendChild(think); msgsEl.scrollTop=msgsEl.scrollHeight; }
   let full=""; let textEl=null;
-  callClaudeStream(CLAUDE_HISTORY,
+  callClaudeStream(CLAUDE_HISTORIES[tk],
     (chunk)=>{
       if(!textEl){
         if(think.parentNode) think.remove();
@@ -2350,40 +2363,52 @@ function streamClaudeReply(userMsg,silent){
       }
       full+=chunk; textEl.textContent=full; if(msgsEl) msgsEl.scrollTop=msgsEl.scrollHeight;
     },
-    ()=>{ CLAUDE_HISTORY.push({role:"assistant",content:full}); if(sendBtn) sendBtn.disabled=false; },
-    (err)=>{ if(think.parentNode) think.remove(); appendClaudeMsg("assistant","\u26A0\uFE0F "+err); if(sendBtn) sendBtn.disabled=false; }
+    ()=>{ CLAUDE_HISTORIES[tk].push({role:"assistant",content:full}); if(sendBtn) sendBtn.disabled=false; },
+    (err)=>{ if(think.parentNode) think.remove(); appendClaudeMsg("assistant","\u26A0\uFE0F "+err,tk); if(sendBtn) sendBtn.disabled=false; }
   );
 }
-function sendClaudeMsg(){
-  const inp=document.getElementById("claude-inp");
+function sendClaudeMsg(tabKey){
+  const tk=tabKey||currentTab;
+  const inp=document.getElementById("claude-inp-"+tk);
   const msg=(inp&&inp.value||"").trim(); if(!msg) return;
   if(inp) inp.value="";
   if(!getClaudeKey()){ openClaudeKeyModal(); return; }
-  streamClaudeReply(msg,false);
+  streamClaudeReply(msg,false,tk);
 }
-function renderClaudeBrief(container,personName){
-  CLAUDE_VIEW_NAME=personName;
-  const panel=document.createElement("div"); panel.className="claude-panel"; panel.id="claude-panel";
+function renderClaudeBrief(container,personName,tabKey){
+  const tk=tabKey||"myday";
+  if(personName) CLAUDE_VIEW_NAME=personName;
+  // Don\u2019t re-render if panel already exists for this tab
+  if(document.getElementById("claude-panel-"+tk)) return;
+  const BRIEF_LABELS={myday:"DAILY BRIEF",roadmap:"ROADMAP BRIEF",sales:"SALES BRIEF"};
+  const DEFAULT_PROMPTS={
+    myday:"Give me a sharp daily brief \u2014 what are my top 3-4 most important actions right now? Be direct and specific.",
+    roadmap:"Give me a sharp roadmap brief \u2014 which customer commitments are at risk, and what are the top product priority items the team should focus on this sprint?",
+    sales:"Give me a sharp sales brief \u2014 which deals need action this week, what\u2019s at risk of slipping, and what should I prioritise in the pipeline?"
+  };
+  const autoPrompt=DEFAULT_PROMPTS[tk]||DEFAULT_PROMPTS.myday;
+  const placeholders={myday:"Ask me anything about your day\u2026",roadmap:"Ask about roadmap, customer risks, priorities\u2026",sales:"Ask about deals, pipeline, follow-ups\u2026"};
+  const panel=document.createElement("div"); panel.className="claude-panel"; panel.id="claude-panel-"+tk;
   const hdr=document.createElement("div"); hdr.className="claude-panel-hdr";
-  const lbl=document.createElement("span"); lbl.textContent="\uD83E\uDD16  CLAUDE \u00B7 DAILY BRIEF";
+  const lbl=document.createElement("span"); lbl.textContent="\uD83E\uDD16  CLAUDE \u00B7 "+(BRIEF_LABELS[tk]||"BRIEF");
   const keyBtn=document.createElement("button"); keyBtn.className="cpanel-key-btn"; keyBtn.textContent="\u2699 API KEY"; keyBtn.onclick=openClaudeKeyModal;
   hdr.appendChild(lbl); hdr.appendChild(keyBtn); panel.appendChild(hdr);
-  const msgs=document.createElement("div"); msgs.className="claude-msgs"; msgs.id="claude-msgs"; panel.appendChild(msgs);
+  const msgs=document.createElement("div"); msgs.className="claude-msgs"; msgs.id="claude-msgs-"+tk; panel.appendChild(msgs);
   const inRow=document.createElement("div"); inRow.className="claude-input-row";
-  const inp=document.createElement("input"); inp.type="text"; inp.id="claude-inp"; inp.placeholder="Ask me anything about your day\u2026";
-  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); sendClaudeMsg(); } });
-  const btn=document.createElement("button"); btn.className="claude-send-btn"; btn.id="claude-send-btn"; btn.textContent="SEND"; btn.onclick=sendClaudeMsg;
+  const inp=document.createElement("input"); inp.type="text"; inp.id="claude-inp-"+tk; inp.placeholder=placeholders[tk]||"Ask me anything\u2026";
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); sendClaudeMsg(tk); } });
+  const btn=document.createElement("button"); btn.className="claude-send-btn"; btn.id="claude-send-btn-"+tk; btn.textContent="SEND"; btn.onclick=()=>sendClaudeMsg(tk);
   inRow.appendChild(inp); inRow.appendChild(btn); panel.appendChild(inRow);
-  container.appendChild(panel);
+  if(tk==="myday"){ container.appendChild(panel); } else { container.insertBefore(panel,container.firstChild); }
   const key=getClaudeKey();
   if(!key){
     const noKey=document.createElement("div"); noKey.className="claude-msg-text"; noKey.style.cssText="color:var(--text-dim);font-size:11.5px;";
-    noKey.textContent="Connect your Anthropic API key (\u2699 above) to get a personalised daily brief and ask follow-up questions about your day.";
+    noKey.textContent="Connect your Anthropic API key (\u2699 above) to get a personalised brief and ask follow-up questions.";
     msgs.appendChild(noKey);
-  } else if(CLAUDE_HISTORY.length===0){
-    streamClaudeReply("Give me a sharp daily brief \u2014 what are my top 3-4 most important actions right now? Be direct and specific.",true);
+  } else if(CLAUDE_HISTORIES[tk].length===0){
+    streamClaudeReply(autoPrompt,true,tk);
   } else {
-    for(const m of CLAUDE_HISTORY){ if(m.role==="assistant") appendClaudeMsg("assistant",m.content); }
+    for(const m of CLAUDE_HISTORIES[tk]){ if(m.role==="assistant") appendClaudeMsg("assistant",m.content,tk); }
   }
 }
 
