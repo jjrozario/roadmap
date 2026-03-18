@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-18T08:41:45.078Z",
+  "refreshedAt": "2026-03-18T14:50:41.260Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -24,7 +24,7 @@
               "title": "Automatic sending of sales invoices to the ERP MoneyBird",
               "status": "Todo",
               "start": null,
-              "end": "2026-07-30",
+              "end": "2026-06-30",
               "assignee": "Jelena Hmeltnitski",
               "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-984/automatic-sending-of-sales-invoices-to-the-erp-moneybird"
@@ -33,7 +33,7 @@
               "id": "cdaba19c-150b-411f-ac52-3af13a9e94d6",
               "identifier": "SUP-978",
               "title": "Create product documentation section in Admin",
-              "status": "Todo",
+              "status": "Backlog",
               "start": null,
               "end": "2026-08-11",
               "assignee": "Johann Rozario",
@@ -92,7 +92,7 @@
               "start": null,
               "end": "2026-08-05",
               "assignee": "Vladimir Ivanov",
-              "priority": "Medium",
+              "priority": "Low",
               "url": "https://linear.app/supplied/issue/SUP-301/add-analytics-to-admin-panel"
             },
             {
@@ -222,9 +222,9 @@
               "title": "TrustAp — Stripe Account Collection Upload Extremely Slow (~5 Minutes for 18k Records)",
               "status": "Todo",
               "start": null,
-              "end": "2026-05-19",
+              "end": "2026-04-03",
               "assignee": "Vladimir Ivanov",
-              "priority": "High",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-950/trustap-stripe-account-collection-upload-extremely-slow-5-minutes-for"
             },
             {
@@ -631,7 +631,7 @@
               "start": null,
               "end": null,
               "assignee": null,
-              "priority": "High",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-1202/significantly-reduce-the-cost-of-backups-on-staging"
             },
             {
@@ -662,7 +662,7 @@
               "title": "fix frontend 'refresh submission status' button",
               "status": "Todo",
               "start": null,
-              "end": "2026-10-23",
+              "end": "2026-06-30",
               "assignee": null,
               "priority": "Low",
               "url": "https://linear.app/supplied/issue/SUP-922/fix-frontend-refresh-submission-status-button"
@@ -785,7 +785,7 @@
               "start": null,
               "end": null,
               "assignee": "andrei@supplied.eu",
-              "priority": "High",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-657/sentry-capture-errors-investigate-tracing-if-its-required-or-not"
             },
             {
@@ -1429,7 +1429,7 @@
               "id": "c1d0e579-c017-462d-bd26-25363d1fdcd4",
               "identifier": "SUP-1166",
               "title": "Display other owners of property, if any, in Admin app",
-              "status": "Backlog",
+              "status": "Todo",
               "start": null,
               "end": "2026-03-02",
               "assignee": "Ivan Tiniakov",
@@ -1552,7 +1552,7 @@
               "title": "Ability to Sync Supplier Verification Documents and Verification Status to Operation Hub",
               "status": "Todo",
               "start": null,
-              "end": "2026-06-04",
+              "end": "2026-04-08",
               "assignee": null,
               "priority": "High",
               "url": "https://linear.app/supplied/issue/SUP-1072/ability-to-sync-supplier-verification-documents-and-verification"
@@ -1637,7 +1637,7 @@
               "id": "e58be8b2-e0c4-43cd-92a7-d919fc169e1a",
               "identifier": "SUP-997",
               "title": "Issues showing weird services not active",
-              "status": "Backlog",
+              "status": "Duplicate",
               "start": null,
               "end": "2026-03-17",
               "assignee": "Vladislav Suvorov",
@@ -1784,7 +1784,7 @@
               "start": null,
               "end": null,
               "assignee": null,
-              "priority": "Urgent",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-696/supportsuppliedeu-address-marked-as-spam"
             },
             {
@@ -1934,7 +1934,7 @@
               "id": "c6c1859c-e4e6-4b83-98f9-f6ce098d4c66",
               "identifier": "SUP-1101",
               "title": "Create free trial account",
-              "status": "Todo",
+              "status": "Backlog",
               "start": null,
               "end": "2026-08-27",
               "assignee": "Vladimir Ivanov",
@@ -2134,7 +2134,7 @@
               "title": "Billing update information - logic",
               "status": "Todo",
               "start": null,
-              "end": "2026-06-10",
+              "end": "2026-03-20",
               "assignee": "Vladimir Ivanov",
               "priority": "High",
               "url": "https://linear.app/supplied/issue/SUP-867/billing-update-information-logic"
@@ -2246,7 +2246,7 @@
               "start": null,
               "end": "2026-03-03",
               "assignee": "Vladimir Ivanov",
-              "priority": "Urgent",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-769/update-services-to-mention-1099-k-reporting"
             },
             {
@@ -2631,7 +2631,7 @@
               "start": null,
               "end": null,
               "assignee": "Vladislav Suvorov",
-              "priority": "Medium",
+              "priority": "Urgent",
               "url": "https://linear.app/supplied/issue/SUP-499/services-to-enable-based-on-services-in-pricing"
             },
             {
@@ -3572,8 +3572,8 @@
               "id": "ff1d1b8c-4794-4c1d-aa0d-72e66a389e94",
               "identifier": "SUP-1188",
               "title": "HttpException: Failed to find the company for the name authorize",
-              "status": "Backlog",
-              "start": null,
+              "status": "In Test",
+              "start": "2026-03-18",
               "end": null,
               "assignee": "Vladislav Suvorov",
               "priority": "Urgent",
@@ -3847,9 +3847,9 @@
               "id": "50b4af00-6506-4cee-b89f-89a4f25a040f",
               "identifier": "SUP-813",
               "title": "Business and Individual TIN checks",
-              "status": "Todo",
-              "start": null,
-              "end": "2026-06-16",
+              "status": "In Progress",
+              "start": "2026-03-18",
+              "end": "2026-07-03",
               "assignee": "Johann Rozario",
               "priority": "High",
               "url": "https://linear.app/supplied/issue/SUP-813/business-and-individual-tin-checks"
@@ -3928,7 +3928,7 @@
               "start": null,
               "end": "2026-07-06",
               "assignee": null,
-              "priority": "Medium",
+              "priority": "Low",
               "url": "https://linear.app/supplied/issue/SUP-554/hide-get-started-side-bar-when-all-steps-are-completed-1-day"
             },
             {
@@ -4551,7 +4551,7 @@
               "id": "9cb26804-a42e-4532-b0df-f1981210b03c",
               "identifier": "SUP-1214",
               "title": "Provide the API through the correct domain names",
-              "status": "In Review",
+              "status": "In Test",
               "start": "2026-03-17",
               "end": null,
               "assignee": "Vladimir Ivanov",
@@ -5351,7 +5351,7 @@
               "id": "998bef5a-53da-45f0-b3c3-205a93e7e9f1",
               "identifier": "IMP-39",
               "title": "Generate sample seller statements for DE entities",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5362,7 +5362,7 @@
               "id": "167447bd-57f8-4316-b856-47c9e4c5512f",
               "identifier": "IMP-38",
               "title": "Prepare DE DAC7 2023-2024 draft reports for review",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5373,7 +5373,7 @@
               "id": "01805284-6269-4aac-af38-009d51e615ee",
               "identifier": "IMP-37",
               "title": "Confirm DE DAC7 submission status for 2023 and 2024",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5384,7 +5384,7 @@
               "id": "b0008ac5-c35b-4f76-86e1-760dff10ef4a",
               "identifier": "IMP-36",
               "title": "Align on bi-directional financial data sync requirements with Tarisio technical team",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5395,7 +5395,7 @@
               "id": "a48bf964-d3b3-4a2a-a64f-8fb5489c6383",
               "identifier": "IMP-35",
               "title": "Determine approach for clients paid via cheque and recording method",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": null,
@@ -5406,7 +5406,7 @@
               "id": "3a6b31c2-e1c8-4a6b-8539-42fd599651f1",
               "identifier": "IMP-34",
               "title": "Plan payment session to align payout fields, sources, and responsibilities",
-              "status": "Backlog",
+              "status": "Canceled",
               "start": null,
               "end": null,
               "assignee": "julio@supplied.eu",
@@ -5727,7 +5727,7 @@
               "start": null,
               "end": "2026-05-13",
               "assignee": "Ivan Tiniakov",
-              "priority": "High",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-987/block-the-essential-report-generation-when-data-validation-fails"
             },
             {
@@ -6695,6 +6695,17 @@
               "url": "https://linear.app/supplied/issue/SUP-1010/special-rule-for-receivingcountry-element-in-dac7-xml-for-germany"
             },
             {
+              "id": "9a5358dc-d1d9-4006-8dd1-e66494e2a1a6",
+              "identifier": "SUP-1005",
+              "title": "[Operations Hub] Update earnings on the app to reflect individual property earnings",
+              "status": "In Progress",
+              "start": "2026-03-17",
+              "end": null,
+              "assignee": "andrei@supplied.eu",
+              "priority": "High",
+              "url": "https://linear.app/supplied/issue/SUP-1005/operations-hub-update-earnings-on-the-app-to-reflect-individual"
+            },
+            {
               "id": "56a9f0e1-75cc-41b3-bade-73764e267af1",
               "identifier": "SUP-992",
               "title": "[dac7 report upload] Broken filter for case (more 50 transactions less 2000 euro)",
@@ -6777,7 +6788,7 @@
               "title": "Improve the tool tips of the report generation step for the following",
               "status": "Todo",
               "start": null,
-              "end": "2026-06-30",
+              "end": "2026-03-27",
               "assignee": "Vladimir Ivanov",
               "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-933/improve-the-tool-tips-of-the-report-generation-step-for-the-following"
@@ -6790,7 +6801,7 @@
               "start": null,
               "end": "2026-06-26",
               "assignee": null,
-              "priority": "High",
+              "priority": "Low",
               "url": "https://linear.app/supplied/issue/SUP-925/for-sellers-with-immovable-properties-create-2-xml-files-2-destination"
             },
             {
@@ -7822,7 +7833,7 @@
               "title": "Ability to Export files & Rectify issues in the \"Report Review\" step",
               "status": "Todo",
               "start": null,
-              "end": "2026-04-27",
+              "end": "2026-04-03",
               "assignee": null,
               "priority": "High",
               "url": "https://linear.app/supplied/issue/SUP-1092/ability-to-export-files-and-rectify-issues-in-the-report-review-step"
@@ -7888,9 +7899,9 @@
               "title": "[Tarisio] Your current data contains no valid entries for DAC7 report generation",
               "status": "Todo",
               "start": null,
-              "end": "2026-04-08",
+              "end": "2026-04-01",
               "assignee": null,
-              "priority": "Urgent",
+              "priority": "Low",
               "url": "https://linear.app/supplied/issue/SUP-966/tarisio-your-current-data-contains-no-valid-entries-for-dac7-report"
             },
             {
@@ -7978,7 +7989,7 @@
               "start": null,
               "end": "2026-04-15",
               "assignee": null,
-              "priority": "High",
+              "priority": "Urgent",
               "url": "https://linear.app/supplied/issue/SUP-824/global-reporting-no-earnings-connection-for-verification"
             },
             {
