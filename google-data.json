@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-19T09:14:20.935Z",
+  "refreshedAt": "2026-03-19T09:31:23.737Z",
   "gmail": {
     "threads": [
       {
@@ -12,21 +12,30 @@
         "unread": true
       },
       {
-        "id": "19cded4a75632083",
+        "id": "19cfc73957f9533b",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Hi Johann Rozario, A new event has been scheduled. Event Type: 30 Minute Meeting Invitee: Casey Coppock Invitee Email: ccoppock@k1.com Event Date/Time: 16:30 - Thursday, 19 March 2026 (Central European",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19cded4a75632083",
+        "snippet": "Regus Uw Regus ervaring Re: Uw ervaring bij ZWOLLE, Trade Centre Om onze service voortdurend te kunnen verbeteren zijn wij zeer geinteresseeerd naar uw ervaring op uw locatie. Het invullen van de",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cfc73957f9533b",
         "unread": true
       },
       {
-        "id": "19ce0214716b0ff0",
+        "id": "19cded5cddf36048",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "AWS Cost Management: Anomaly Detection 2026-03-11 AWS Account: supplied-infra (224361002901) Dear AWS Customer, You are receiving this alert because AWS Cost Anomaly Detection has detected higher than",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19ce0214716b0ff0",
+        "snippet": "Please click here for important disclaimer information regarding this e-mail communication. By messaging with K1 Investment Management, LLC and its affiliated entities, you consent to the foregoing.",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cded5cddf36048",
+        "unread": true
+      },
+      {
+        "id": "19cd4f96e1d663cb",
+        "subject": "(no subject)",
+        "from": "",
+        "date": null,
+        "snippet": "Hi Johann, Thanks for the note. I&#39;ve grabbed time for Thursday, March 19 th at 8:30am PST (4:30pm CET). Looking forward to connecting and safe travels! Best, Casey Casey Coppock K1 875 Manhattan",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cd4f96e1d663cb",
         "unread": true
       },
       {
@@ -165,39 +174,39 @@
         "unread": true
       },
       {
-        "id": "19ce7f12f8358ef7",
+        "id": "19d0343608b290aa",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Hi Johann, I came across Supplied and wanted to reach out you - I think (while I am not expert in software ) you&#39;ve built something that serious acquirers would pay a premium for right now.",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19ce7f12f8358ef7",
+        "snippet": "Pat Burgess shared a file with you Dear all, I am happy to share the first draft of the proposal with you. Your input has inspired change. important NOTE: I am withholding results from 1.4 as it is on",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19d0343608b290aa",
         "unread": true
       },
       {
-        "id": "19ce6606ba2e3745",
+        "id": "19bb7ac8b007233d",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Meeting Summary General Summary During the meeting, discussions focused on addressing discrepancies found in rental settlements and gross earnings, ensuring seller statements are accurate before",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19ce6606ba2e3745",
+        "snippet": "Good afternoon Vladimir! Good to hear from you again. There&#39;s an easier option we explored and I&#39;d like to update you on that option as well (I&#39;ve already spoken to Johann and Bas about",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19bb7ac8b007233d",
         "unread": true
       },
       {
-        "id": "19cfc73957f9533b",
+        "id": "19ce0214716b0ff0",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Regus Uw Regus ervaring Re: Uw ervaring bij ZWOLLE, Trade Centre Om onze service voortdurend te kunnen verbeteren zijn wij zeer geinteresseeerd naar uw ervaring op uw locatie. Het invullen van de",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19cfc73957f9533b",
+        "snippet": "AWS Cost Management: Anomaly Detection 2026-03-11 AWS Account: supplied-infra (224361002901) Dear AWS Customer, You are receiving this alert because AWS Cost Anomaly Detection has detected higher than",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19ce0214716b0ff0",
         "unread": true
       },
       {
-        "id": "19cded5cddf36048",
+        "id": "19cded4a75632083",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Please click here for important disclaimer information regarding this e-mail communication. By messaging with K1 Investment Management, LLC and its affiliated entities, you consent to the foregoing.",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19cded5cddf36048",
+        "snippet": "Hi Johann Rozario, A new event has been scheduled. Event Type: 30 Minute Meeting Invitee: Casey Coppock Invitee Email: ccoppock@k1.com Event Date/Time: 16:30 - Thursday, 19 March 2026 (Central European",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cded4a75632083",
         "unread": true
       },
       {
@@ -210,21 +219,21 @@
         "unread": true
       },
       {
-        "id": "19cd4f96e1d663cb",
+        "id": "19ce7f12f8358ef7",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "Hi Johann, Thanks for the note. I&#39;ve grabbed time for Thursday, March 19 th at 8:30am PST (4:30pm CET). Looking forward to connecting and safe travels! Best, Casey Casey Coppock K1 875 Manhattan",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19cd4f96e1d663cb",
+        "snippet": "Hi Johann, I came across Supplied and wanted to reach out you - I think (while I am not expert in software ) you&#39;ve built something that serious acquirers would pay a premium for right now.",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19ce7f12f8358ef7",
         "unread": true
       },
       {
-        "id": "19ce82e9d0fab621",
+        "id": "19cde516ee128e60",
         "subject": "(no subject)",
         "from": "",
         "date": null,
-        "snippet": "How likely is it that you would recommend Scrut Automation to a friend or colleague? Not at all likely Extremely likely 0 1 2 3 4 5 6 7 8 9 10",
-        "url": "https://mail.google.com/mail/u/0/#inbox/19ce82e9d0fab621",
+        "snippet": "Hi Johann Rozario, Congratulations! You have passed ISMS Quiz training. Your passing certificate is attached below. You received this email because your company is using Scrut Automation to improve and",
+        "url": "https://mail.google.com/mail/u/0/#inbox/19cde516ee128e60",
         "unread": true
       }
     ],

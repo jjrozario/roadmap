@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-03-19T09:14:19.606Z",
+  "refreshedAt": "2026-03-19T09:31:21.652Z",
   "initiatives": [
     {
       "id": "072b5d8c-ba5b-4b72-a4f8-81cc628fcf66",
@@ -44,7 +44,7 @@
               "id": "be895dec-396b-4e6b-b61c-2d33d5a86804",
               "identifier": "SUP-890",
               "title": "Generate Monthly Customer Report",
-              "status": "Todo",
+              "status": "Backlog",
               "start": null,
               "end": "2026-10-07",
               "assignee": null,
@@ -209,7 +209,7 @@
               "id": "9a695959-3b6d-480b-b76a-ee376f645de0",
               "identifier": "SUP-969",
               "title": "BUG: On Safari browser - the App cannot be opened",
-              "status": "Todo",
+              "status": "Backlog",
               "start": null,
               "end": "2026-12-17",
               "assignee": null,
@@ -231,7 +231,7 @@
               "id": "0293112e-1a59-4438-a561-11329a6d4df4",
               "identifier": "SUP-802",
               "title": "Full email address isn't stored",
-              "status": "Backlog",
+              "status": "Todo",
               "start": null,
               "end": null,
               "assignee": null,
@@ -1982,7 +1982,7 @@
               "start": null,
               "end": "2026-12-23",
               "assignee": null,
-              "priority": "No priority",
+              "priority": "Medium",
               "url": "https://linear.app/supplied/issue/SUP-1060/essential-tier-cant-purchase-white-label"
             },
             {
@@ -6427,7 +6427,7 @@
               "start": null,
               "end": "2026-11-17",
               "assignee": null,
-              "priority": "No priority",
+              "priority": "Low",
               "url": "https://linear.app/supplied/issue/SUP-1163/put-the-language-field-back-into-dac7-generation-in-the-report-builder"
             },
             {
